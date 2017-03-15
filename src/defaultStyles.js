@@ -31,10 +31,10 @@ export default {
     return {
       default: {
         stroke: "#ffffff",
-        fill: choroplethValue ? choroplethValue.value : "#e6e6e6",
+        fill: choroplethValue ? choroplethValue.value : "#e9e7e5",
       },
       hover: {
-        fill: "#ff0000",
+        fill: choroplethValue ? choroplethValue.value : "#d9d7d5",
         stroke: "#ffffff",
         cursor: "pointer",
       },
@@ -43,12 +43,14 @@ export default {
   marker(marker, zoom) {
     return {
       default: {
-        stroke: "#00ffff",
+        stroke: "#ffffff",
         strokeWidth: 1.5,
-        fill: marker.fill || "#000000",
+        fill: marker.fill || "#F44336",
       },
       hover: {
-        fill: "#ff0000",
+        stroke: "#ffffff",
+        strokeWidth: 1.5,
+        fill: "#E53935",
         cursor: "pointer",
       },
     }
