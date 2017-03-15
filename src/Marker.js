@@ -48,7 +48,7 @@ class Marker extends Component {
     return hoverStateChanged || radiusChanged || zoomChanged
   }
   render() {
-    console.log("Rendering marker")
+
     const {
       marker,
       styles,
