@@ -1,2 +1,2 @@
 # react-simple-maps
-A svg map component built with and for React
+An svg map component built with and for React. Please note that this is a work in progress!
