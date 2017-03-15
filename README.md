@@ -29,7 +29,7 @@ import ReactSimpleMap from "react-simple-map"
 class App extends Component {
   render() {
     return(
-      <div>̨
+      <div>
         <ReactSimpleMap
           geographyUrl={ "/path/to/topojson-map-file.json" }
         />
