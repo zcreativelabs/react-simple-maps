@@ -3,23 +3,21 @@ An svg map component built with and for React. Please note that this is a work i
 
 ### Why
 
-There is some overlap between what d3 does and what react does in terms of rendering svg. React Simple Map lets react control svg rendering, thus allowing us to eliminate bloat.
+`React-simple-maps` aims to make working with svg maps in react easier. It handles tasks such as panning, zooming and simple rendering optimization, and takes advantage of d3v4 and d3-geo instead of relying on the entire d3 library.
 
-### Basic usage
+### Prerequisites and installation
 
-React Simple Map is available through npm.
+Since `react-simple-maps` uses [d3-fetch](https://github.com/d3/d3-fetch) internally to fetch topojson files, you need to install [whatwg-fetch](http://github.github.io/fetch/) and [promise-polyfill](https://github.com/taylorhakes/promise-polyfill) depending on which browsers you need to support.
 
-```js
-$ npm install react-simple-map --save
-```
-
-Import `react-simple-map` into your react app.
+To install `react-simple-maps`
 
 ```js
-import ReactSimpleMap from "react-simple-map"
+$ npm install react-simple-maps --save
 ```
 
-`react-simple-map` exposes a simple component that can be used to create any kind of map.
+### Usage
+
+`React-simple-map` exposes a simple component that can be used to create any kind of map. In order to render the map you must provide a reference to a valid topojson file. You can find example topojson files [here](https://github.com/topojson/world-atlas)
 
 ```js
 import React, { Component } from "react"
@@ -31,7 +29,7 @@ class App extends Component {
     return(
       <div>
         <ReactSimpleMap
-          geographyUrl={ "/path/to/topojson-map-file.json" }
+          geographyUrl={ "/path/to/your/topojson-map-file.json" }
         />
       </div>
     )
