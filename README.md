@@ -1,11 +1,11 @@
 # react-simple-maps
 An svg map component built with and for React. Please note that this is a work in progress!
 
-#### Why
+### Why
 
 There is some overlap between what d3 does and what react does in terms of rendering svg. React Simple Map lets react control svg rendering, thus allowing us to eliminate bloat.
 
-#### Basic usage
+### Basic usage
 
 React Simple Map is available through npm.
 
