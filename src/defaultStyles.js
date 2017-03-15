@@ -3,7 +3,7 @@ export default {
   svg() {
     return {
       width: "100%",
-      height: "auto",
+      height: "100%",
     }
   },
   wrapper() {
