@@ -29,5 +29,5 @@ export function calculateResizeFactor(actualDimension, baseDimension) {
 export function calculateMousePosition(direction, projection, props, zoom, resizeFactor) {
   const { center, width, height } = props
   const reference = { x: 0, y: 1 }
-  return (projection()(center)[reference[direction]] - (reference[direction] === 0 ? width : height) / 2) * zoom * (1/resizeFactor)
+  return (projection()([-center[0],-center[1]])[reference[direction]] - (reference[direction] === 0 ? width : height) / 2) * zoom * (1/resizeFactor)
 }

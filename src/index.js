@@ -208,7 +208,7 @@ class ReactSimpleMap extends React.Component {
             handleMouseDown={ this.handleMouseDown }
 
             styles={ styles }
-            center={ center }
+            center={ [-center[0],-center[1]] }
             projection={ this.projection }
             resizeFactorX={ this.state.resizeFactorX }
             resizeFactorY={ this.state.resizeFactorY }
