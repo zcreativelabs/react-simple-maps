@@ -41,7 +41,14 @@ class Marker extends Component {
       this.props.events.onClick(marker, evt)
     }
   }
+  shouldComponentUpdate(nextProps, nextState) {
+    const hoverStateChanged = nextState.hovered !== this.state.hovered
+    const radiusChanged = nextProps.marker.radius !== this.props.marker.radius
+    const zoomChanged = nextProps.zoom !== this.props.zoom
+    return hoverStateChanged || radiusChanged || zoomChanged
+  }
   render() {
+    console.log("Rendering marker")
     const {
       marker,
       styles,

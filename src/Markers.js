@@ -10,7 +10,7 @@ class Markers extends React.Component {
         {
           this.props.markers.map((marker, i) => (
             <Marker
-              key={ i }
+              key={ `${Math.abs(marker.coordinates[0])}-${Math.abs(marker.coordinates[1])}-${i}` }
               projection={ this.props.projection }
               marker={ marker }
               styles={ this.props.styles.marker }
