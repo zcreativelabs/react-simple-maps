@@ -58,16 +58,6 @@ class Geography extends React.Component {
       choroplethValue,
     } = this.props
 
-    // return (
-    //   <path
-    //     d={ geoPath().projection(projection())(geography) }
-    //     onMouseEnter={(evt) => this.handleMouseEnter(geography, evt) }
-    //     onMouseLeave={(evt) => this.handleMouseLeave(geography, evt) }
-    //     onClick={(evt) => this.handleClick(geography, evt) }
-    //     style={ createChoroplethStyles(styles, choroplethValue) }
-    //     className="rsm-geography"
-    //   />
-    // )
     return (
       <path
         d={ geoPath().projection(projection())(geography) }
@@ -86,7 +76,6 @@ Geography.propTypes = {
   geography: PropTypes.object.isRequired,
   projection: PropTypes.func.isRequired,
   choroplethValue: PropTypes.object,
-  // styles: PropTypes.object,
   events: PropTypes.object,
 }
 
