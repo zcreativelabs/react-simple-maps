@@ -9,30 +9,36 @@ There is some overlap between what d3 does and what react does in terms of rende
 
 React Simple Map is available through npm.
 
-    $ npm install react-simple-map --save
+```js
+$ npm install react-simple-map --save
+```
 
 Import `react-simple-map` into your react app.
 
-    import ReactSimpleMap from "react-simple-map"
+```js
+import ReactSimpleMap from "react-simple-map"
+```
 
 `react-simple-map` exposes a simple component that can be used to create any kind of map.
 
-    import React, { Component } from "react"
-    import ReactDOM from "react-dom"
-    import ReactSimpleMap from "react-simple-map"
+```js
+import React, { Component } from "react"
+import ReactDOM from "react-dom"
+import ReactSimpleMap from "react-simple-map"
 
-    class App extends Component {
-      render() {
-        return(
-          <div>̨
-            <ReactSimpleMap
-              geographyUrl={ "/path/to/topojson-map-file.json" }
-            />
-          </div>
-        )
-      }
-    }
+class App extends Component {
+  render() {
+    return(
+      <div>̨
+        <ReactSimpleMap
+          geographyUrl={ "/path/to/topojson-map-file.json" }
+        />
+      </div>
+    )
+  }
+}
 
-    document.addEventListener("DOMContentLoaded", () => {
-      ReactDOM.render(<App />, document.getElementById("app"))
-    })
+document.addEventListener("DOMContentLoaded", () => {
+  ReactDOM.render(<App />, document.getElementById("app"))
+})
+```
