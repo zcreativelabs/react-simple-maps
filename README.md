@@ -42,3 +42,6 @@ document.addEventListener("DOMContentLoaded", () => {
   ReactDOM.render(<App />, document.getElementById("app"))
 })
 ```
+
+### License
+MIT Licensed. Copyright (c) Richard Zimerman 2017.
