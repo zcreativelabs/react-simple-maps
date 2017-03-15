@@ -26,7 +26,7 @@
     "geo",
     "d3"
   ],
-  "author": "Richard Zimerman <r.zimerman33@gmail.com> (https://github.com/zimrick)",
+  "author": "Richard Zimerman <richard@zcreativelabs.com> (https://github.com/zimrick)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/zcreativelabs/react-simple-maps/issues"
