@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
 | geographyUrl     | String          | null                           |
 | geographyPaths   | Array           | `[]`                           |
 | projection       | String/Function | "Times"                        |
-| projectionConfig | Object          | [*see projection](#Projection) |
+| projectionConfig | Object          | [*see projection](#projection) |
 | markers          | Array           | `[]`                           |
 | choropleth       | Object          | `{}`                           |
 | include          | Array           | `[]`                           |
@@ -59,11 +59,11 @@ document.addEventListener("DOMContentLoaded", () => {
 | Zoom             | Number          | 1                              |
 | minZoom          | Number          | 1                              |
 | maxZoom          | Number          | 8                              |
-| events           | Object          | [*see events](#Events)         |
-| styles           | Object          | [*see styles](#Styles)         |
+| events           | Object          | [*see events](#events)         |
+| styles           | Object          | [*see styles](#styles)         |
 | showControls     | Boolean         | false                          |
 
-### Projection
+### <a name="projection"></a> Projection
 
 The projection can be set and configured in a number of ways. Basic projections such as `mercator`, `miller`, and `times` are offered out of the box and can be set via the projection property.
 
@@ -109,7 +109,7 @@ import { geoEckert1 } from "d3-geo-projections"
 />
 ```
 
-### Events
+### <a name="events"></a> Events
 
 There are two groups of events, one for the geographies (any country or administrative area paths), and one for the markers. Currently supported events are `onMouseEnter`, `onMouseLeave`, `onMouseMove`, and `onClick`.
 
@@ -131,7 +131,7 @@ There are two groups of events, one for the geographies (any country or administ
 />
 ```
 
-### Styles
+### <a name="styles"></a> Styles
 
 The styles object consists of a set of functions, which expose a number of parameters. The following examples also shows the default settings of the map.
 
