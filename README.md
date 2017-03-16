@@ -3,7 +3,7 @@ An svg map component built with and for React. Please note that this is a work i
 
 ### Why
 
-`React-simple-maps` aims to make working with svg maps in react easier. It handles tasks such as panning, zooming and simple rendering optimization, and takes advantage of d3v4 and d3-geo instead of relying on the entire d3 library.
+`React-simple-maps` aims to make working with svg maps in react easier. It handles tasks such as panning, zooming and simple rendering optimization, and takes advantage of parts of d3v4 and [d3-geo](https://github.com/d3/d3-geo) instead of relying on the entire d3 library.
 
 ### Prerequisites and installation
 
