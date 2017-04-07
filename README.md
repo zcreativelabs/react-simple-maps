@@ -17,7 +17,7 @@ $ npm install react-simple-maps --save
 
 ### Usage
 
-`React-simple-map` exposes a simple component that can be used to create any kind of map. In order to render the map you must provide a reference to a valid topojson file. You can find example topojson files in the `topojson-maps` folder or [here](https://github.com/topojson/world-atlas)
+`React-simple-map` exposes a simple component that can be used to create any kind of map. In order to render the map you must provide a reference to a valid topojson file. You can find example topojson files in the `topojson-maps` folder or [here](https://github.com/topojson/world-atlas). To learn how to make your own topojson maps from shapefiles, please read ["How to convert and prepare TopoJSON files for interactive mapping with d3"](https://hackernoon.com/how-to-convert-and-prepare-topojson-files-for-interactive-mapping-with-d3-499cf0ced5f) on medium.
 
 ```js
 import React, { Component } from "react"
