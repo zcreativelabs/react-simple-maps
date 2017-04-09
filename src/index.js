@@ -1,6 +1,5 @@
 
 import React, { PropTypes } from "react"
-import { json } from "d3-fetch"
 import { feature } from "topojson-client"
 
 import Loader from "./Loader"
@@ -57,15 +56,25 @@ class ReactSimpleMap extends React.Component {
   }
   fetchGeographies(geographyUrl) {
     if(!this.props.geographyUrl) return
-    json(geographyUrl).then((geographyPaths) => {
-      this.setState({
-        geographyPaths: feature(geographyPaths, geographyPaths.objects[Object.keys(geographyPaths.objects)[0]]).features
-      })
-    }).catch((err) => {
-      this.setState({
-        loadingError: err
-      })
-    })
+
+    const request = new XMLHttpRequest()
+    request.open("GET", geographyUrl, true)
+    request.onload = () => {
+      if (request.status >= 200 && request.status < 400) {
+        const geographyPaths = JSON.parse(request.responseText)
+        this.setState({
+          geographyPaths: feature(geographyPaths, geographyPaths.objects[Object.keys(geographyPaths.objects)[0]]).features,
+        })
+      } else {
+        this.setState({
+          loadingError: String(request.status),
+        })
+      }
+    }
+    request.onerror = () => {
+      console.log("There was a connection error...")
+    }
+    request.send()
   }
   projection() {
     if(typeof this.props.projection !== "function") {
