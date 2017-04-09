@@ -5,19 +5,17 @@ An svg map component built with and for React. Please note that this is a work i
 
 `React-simple-maps` aims to make working with svg maps in react easier. It handles tasks such as panning, zooming and simple rendering optimization, and takes advantage of parts of d3v4 and [d3-geo](https://github.com/d3/d3-geo) instead of relying on the entire d3 library.
 
-### Prerequisites and installation
-
-Since `react-simple-maps` uses [d3-fetch](https://github.com/d3/d3-fetch) internally to fetch topojson files, you need to install [whatwg-fetch](http://github.github.io/fetch/) and [promise-polyfill](https://github.com/taylorhakes/promise-polyfill) depending on which browsers you need to support.
+### Installation
 
 To install `react-simple-maps`
 
 ```js
-$ npm install react-simple-maps --save
+$ npm install react react-dom react-simple-maps --save
 ```
 
 ### Usage
 
-`React-simple-map` exposes a simple component that can be used to create any kind of map. In order to render the map you must provide a reference to a valid topojson file. You can find example topojson files in the `topojson-maps` folder or [here](https://github.com/topojson/world-atlas). To learn how to make your own topojson maps from shapefiles, please read ["How to convert and prepare TopoJSON files for interactive mapping with d3"](https://hackernoon.com/how-to-convert-and-prepare-topojson-files-for-interactive-mapping-with-d3-499cf0ced5f) on medium.
+`React-simple-maps` exposes a simple component that can be used to create any kind of map. In order to render the map you must provide a reference to a valid topojson file. You can find example topojson files in the `topojson-maps` folder or [here](https://github.com/topojson/world-atlas). To learn how to make your own topojson maps from shapefiles, please read ["How to convert and prepare TopoJSON files for interactive mapping with d3"](https://hackernoon.com/how-to-convert-and-prepare-topojson-files-for-interactive-mapping-with-d3-499cf0ced5f) on medium.
 
 ```js
 import React, { Component } from "react"
