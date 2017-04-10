@@ -61,6 +61,40 @@ document.addEventListener("DOMContentLoaded", () => {
 | styles           | Object          | [*see styles](#styles)         |
 | showControls     | Boolean         | false                          |
 
+### <a name="choropleth"></a> Choropleth
+
+To make a choropleth map, you have to pass an object to the `choropleth` property. The keys in this object should correspond to the ids of your topojson paths. The example below would add different shades of red to Sweden (SWE), United States (USA), Brazil (BRA), China (CHN), Australia (AUS), and India (IND). The world-50m map in the `topojson-maps` folder uses these iso3 codes as ids.
+
+```js
+<ReactSimpleMap
+  geographyUrl={ "/path/to/your/topojson-map-file.json" }
+  choropleth={{
+    "SWE": { value: "#F44336" },
+    "USA": { value: "#E53935" },
+    "BRA": { value: "#D32F2F" },
+    "CHN": { value: "#C62828" },
+    "AUS": { value: "#B71C1C" },
+    "IND": { value: "#EF5350" },
+  }}
+/>
+```
+
+### <a name="markers"></a> Markers
+
+To use markers you need to pass an array to the markers property. Each item in the array should have `coordinates` and a `radius`. You can also specify the `fill` for each marker separately. [*See the styles section](#styles) for more info on styling markers.
+
+```js
+<ReactSimpleMap
+  geographyUrl={ "/path/to/your/topojson-map-file.json" }
+  markers={[
+    { name: "Singapore", coordinates: [103.819836, 1.352083], radius: 6 },
+    { name: "Zurich", coordinates: [8.541694, 47.376887], radius: 6 },
+    { name: "San Francisco", coordinates: [-122.419416, 37.774929], radius: 6 },
+  ]}
+/>
+```
+
+
 ### <a name="projection"></a> Projection
 
 The projection can be set and configured in a number of ways. Basic projections such as `mercator`, `miller`, and `times` are offered out of the box and can be set via the projection property.
