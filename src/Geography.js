@@ -1,87 +1,132 @@
 
-import React, { PropTypes } from "react"
+import React, { Component } from "react"
 import { geoPath } from "d3-geo"
-import defaultStyles from "./defaultStyles"
-import { createChoroplethStyles } from "./utils"
 
-class Geography extends React.Component {
+import { roundPath } from "./utils"
+
+class Geography extends Component {
   constructor() {
     super()
 
     this.state = {
-      hovered: false,
+      hover: false,
+      pressed: false,
     }
 
     this.handleMouseEnter = this.handleMouseEnter.bind(this)
-    this.handleMouseLeave = this.handleMouseLeave.bind(this)
     this.handleMouseMove = this.handleMouseMove.bind(this)
-    this.handleClick = this.handleClick.bind(this)
+    this.handleMouseLeave = this.handleMouseLeave.bind(this)
+    this.handleMouseDown = this.handleMouseDown.bind(this)
+    this.handleMouseUp = this.handleMouseUp.bind(this)
+    this.handleMouseClick = this.handleMouseClick.bind(this)
+    this.handleFocus = this.handleFocus.bind(this)
+    this.handleBlur = this.handleBlur.bind(this)
   }
-  handleMouseEnter(geography, evt) {
-    evt.preventDefault()
-    this.setState({ hovered: true })
-    if(this.props.events.onMouseEnter) {
-      this.props.events.onMouseEnter(geography, evt)
+  handleMouseClick(evt) {
+    evt.persist()
+    const { onClick, geography } = this.props
+    return onClick && onClick(geography, evt)
+  }
+  handleMouseEnter(evt) {
+    evt.persist()
+    const { onMouseEnter, geography } = this.props
+    this.setState({
+      hover: true,
+    }, () => onMouseEnter && onMouseEnter(geography, evt))
+  }
+  handleMouseMove(evt) {
+    evt.persist()
+    if (this.state.pressed) return
+    const { onMouseMove, geography } = this.props
+    if (!this.state.hover) {
+      this.setState({
+        hover: true,
+      }, () => onMouseMove && onMouseMove(geography, evt))
     }
+    else if (onMouseMove) onMouseMove(geography, evt)
+    else return
   }
-  handleMouseLeave(geography, evt) {
-    evt.preventDefault()
-    this.setState({ hovered: false })
-    if(this.props.events.onMouseLeave) {
-      this.props.events.onMouseLeave(geography, evt)
-    }
+  handleMouseLeave(evt) {
+    evt.persist()
+    const { onMouseLeave, geography } = this.props
+    this.setState({
+      hover: false,
+    }, () => onMouseLeave && onMouseLeave(geography, evt))
   }
-  handleMouseMove(geography, evt) {
-    evt.preventDefault()
-    if(this.props.events.onMouseMove) {
-      this.props.events.onMouseMove(geography, evt)
-    }
+  handleMouseDown(evt) {
+    evt.persist()
+    const { onMouseDown, geography } = this.props
+    this.setState({
+      pressed: true,
+    }, () => onMouseDown && onMouseDown(geography, evt))
   }
-  handleClick(geography, evt) {
-    evt.preventDefault()
-    if(this.props.events.onClick) {
-      this.props.events.onClick(geography, evt)
-    }
+  handleMouseUp(evt) {
+    evt.persist()
+    const { onMouseUp, geography } = this.props
+    this.setState({
+      pressed: false,
+    }, () => onMouseUp && onMouseUp(geography, evt))
   }
-  shouldComponentUpdate(nextProps, nextState) {
-    const changedHoverState = this.state.hovered !== nextState.hovered
-    const changedChoroplethValue = this.props.choroplethValue !== nextProps.choroplethValue
-    const changedGeography = this.props.geography !== nextProps.geography
-    return changedGeography || changedChoroplethValue || changedHoverState
+  handleFocus(evt) {
+    evt.persist()
+    const { onFocus, geography } = this.props
+    this.setState({
+      hover: true,
+    }, () => onFocus && onFocus(geography, evt))
+  }
+  handleBlur(evt) {
+    evt.persist()
+    const { onBlur, geography } = this.props
+    this.setState({
+      hover: false,
+    }, () => onBlur && onBlur(geography, evt))
   }
   render() {
 
     const {
       geography,
       projection,
-      styles,
-      choroplethValue,
+      round,
+      precision,
+      tabable,
+      style,
     } = this.props
+
+    const {
+      hover,
+      pressed,
+    } = this.state
+
+    const pathString = geoPath().projection(projection())(geography)
 
     return (
       <path
-        d={ geoPath().projection(projection())(geography) }
-        onMouseEnter={(evt) => this.handleMouseEnter(geography, evt) }
-        onMouseLeave={(evt) => this.handleMouseLeave(geography, evt) }
-        onMouseMove={(evt) => this.handleMouseMove(geography, evt) }
-        onClick={(evt) => this.handleClick(geography, evt) }
-        style={ styles(choroplethValue, geography)[ this.state.hovered ? "hover" : "default" ] || styles(choroplethValue, geography)["default"] }
-        className="rsm-geography"
+        d={ round ? roundPath(pathString, precision) : pathString }
+        className={ `rsm-geography${ pressed && " rsm-geography--pressed" }${ hover && " rsm-geography--hover" }` }
+        style={ style[pressed || hover ? (pressed ? "pressed" : "hover") : "default"] }
+        onClick={ this.handleMouseClick }
+        onMouseEnter={ this.handleMouseEnter }
+        onMouseMove={ this.handleMouseMove }
+        onMouseLeave={ this.handleMouseLeave }
+        onMouseDown={ this.handleMouseDown }
+        onMouseUp={ this.handleMouseUp }
+        onFocus={ tabable && this.handleFocus }
+        onBlur={ tabable && this.handleBlur }
+        tabIndex={ tabable ? 0 : -1 }
       />
     )
   }
 }
 
-Geography.propTypes = {
-  geography: PropTypes.object.isRequired,
-  projection: PropTypes.func.isRequired,
-  choroplethValue: PropTypes.object,
-  events: PropTypes.object,
-}
-
 Geography.defaultProps = {
-  styles: defaultStyles.geography,
-  events: {},
+  precision: 0.1,
+  round: true,
+  tabable: true,
+  style: {
+    default: {},
+    hover: {},
+    pressed: {},
+  }
 }
 
 export default Geography
