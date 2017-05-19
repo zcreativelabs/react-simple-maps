@@ -12,9 +12,9 @@ class ComposableMap extends Component {
   projection() {
     const {
       projection,
+      projectionConfig,
       width,
       height,
-      projectionConfig
     } = this.props
 
     return typeof projection !== "function" ?
@@ -26,9 +26,9 @@ class ComposableMap extends Component {
     const {
       width,
       height,
-      children,
       style,
       showCenter,
+      children,
     } = this.props
 
     return (
