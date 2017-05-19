@@ -1,5 +1,5 @@
 
-import React, { Component } from "r
+import React, { Component } from "react"
 
 import projections from "./projections"
 import defaultProjectionConfig from "./projectionConfig"
