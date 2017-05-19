@@ -31,7 +31,7 @@ import {
   ZoomableGroup,
   Geographies,
   Geography,
-} from "react-simple-map"
+} from "react-simple-maps"
 
 class App extends Component {
   render() {
