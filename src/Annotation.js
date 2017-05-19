@@ -25,7 +25,7 @@ class Annotation extends Component {
 
     return (
       <g
-        className="annotation"
+        className="rsm-annotation"
         style={{ style }}
         transform={ `translate(
           ${ projection()(subject)[0] + dx / zoom }

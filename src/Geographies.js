@@ -72,6 +72,7 @@ class Geographies extends Component {
 Geographies.defaultProps = {
   componentIdentifier: "Geographies",
   disableOptimization: false,
+  geographyUrl: "",
   geographyPaths: [],
 }
 
