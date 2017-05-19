@@ -16,6 +16,8 @@ class Annotation extends Component {
       dx,
       dy,
       zoom,
+      stroke,
+      strokeWdith,
       children,
     } = this.props
 
@@ -32,7 +34,7 @@ class Annotation extends Component {
         textAnchor={ createTextAnchor(dx) }
         >
         { children }
-        <path d={ connectorPath } stroke={this.props.stroke} strokeWidth={this.props.strokeWidth} />
+        <path d={ connectorPath } stroke={ stroke } strokeWidth={ strokeWidth } />
       </g>
     )
   }
