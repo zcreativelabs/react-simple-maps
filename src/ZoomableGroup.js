@@ -141,7 +141,7 @@ class ZoomableGroup extends Component {
           y={ height/2 }
           width={ width }
           height={ height }
-          fill="rgba(0,0,0,0.05)"
+          fill="transparent"
           transform={ `translate(-${ width / 2 }, -${ height / 2 })` }
           style={{ strokeWidth: 0 }}
         />

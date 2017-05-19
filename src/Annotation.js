@@ -17,7 +17,7 @@ class Annotation extends Component {
       dy,
       zoom,
       stroke,
-      strokeWdith,
+      strokeWidth,
       children,
     } = this.props
 
