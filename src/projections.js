@@ -24,8 +24,8 @@ export default function(width, height, config, projectionName) {
   const precision = config.precision || defaultProjectionConfig.precision
 
   return projectionReference[projectionName]()
-           .scale(scale)
-           .translate([ xOffset + width / 2, yOffset + height / 2 ])
-           .rotate(rotation)
-           .precision(precision)
+      .scale(scale)
+      .translate([ xOffset + width / 2, yOffset + height / 2 ])
+      .rotate(rotation)
+      .precision(precision)
 }
