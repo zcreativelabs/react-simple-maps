@@ -1,66 +1,78 @@
 
-import React, { PropTypes } from "react"
-import defaultStyles from "./defaultStyles"
-import { replaceStrokeWidth } from "./utils"
-import Geography from "./Geography"
+import React, { Component } from "react"
+import { feature } from "topojson-client"
 
-class Geographies extends React.Component {
-  shouldComponentUpdate(nextProps) {
-    const geoPathsChanged = nextProps.geographyPaths.length !== this.props.geographyPaths.length
-    const includesChanged = nextProps.include.length !== this.props.include.length
-    const excludesChanged = nextProps.exclude.length !== this.props.exclude.length
+class Geographies extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      geographyPaths: props.geographyPaths,
+    }
+
+    this.fetchGeographies = this.fetchGeographies.bind(this)
+  }
+  fetchGeographies(geographyUrl) {
+    const { width, height } = this.props
+
+    if(!geographyUrl) return
+
+    const request = new XMLHttpRequest()
+    request.open("GET", geographyUrl, true)
+
+    request.onload = () => {
+      if (request.status >= 200 && request.status < 400) {
+        const geographyPaths = JSON.parse(request.responseText)
+        this.setState({
+          geographyPaths: feature(geographyPaths, geographyPaths.objects[Object.keys(geographyPaths.objects)[0]]).features,
+        }, () => {
+          if (!this.props.onGeographiesLoaded) return
+          this.props.onGeographyPathsLoaded(String(request.status))
+        })
+      } else {
+        if (!this.props.onGeographiesLoaded) return
+        this.props.onGeographyPathsLoaded(String(request.status))
+      }
+    }
+    request.onerror = () => {
+      console.log("There was a connection error...")
+    }
+    request.send()
+  }
+  componentWillReceiveProps(nextProps) {;
+    if (!nextProps.geographyUrl) return
+    if (nextProps.geographyUrl !== this.props.geographyUrl) {
+      this.fetchGeographies(nextProps.geographyUrl)
+    }
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    const geoPathsChanged = nextState.geographyPaths.length !== this.state.geographyPaths.length
     const choroplethChanged = JSON.stringify(nextProps.choropleth) !== JSON.stringify(this.props.choropleth)
-    return !this.props.freezeGeographyPaths || geoPathsChanged || includesChanged || excludesChanged || choroplethChanged
+    return geoPathsChanged || choroplethChanged || nextProps.disableOptimization
+  }
+  componentDidMount() {
+    this.fetchGeographies(this.props.geographyUrl)
   }
   render() {
 
-    const styles = this.props.styles.geography || defaultStyles.geography
+    const {
+      projection,
+      style,
+      children,
+    } = this.props
 
     return (
-      <g className="rsm-geographies">
-        {
-          this.props.geographyPaths.map((geography, i) => {
-            const included = this.props.include.indexOf(geography.id) !== -1
-            const notExcluded = this.props.exclude.indexOf(geography.id) === -1
-            const shouldInclude = this.props.include.length > 0 ? included : notExcluded
-
-            return shouldInclude ? (
-              <Geography
-                zoom={ this.props.zoom }
-                key={ geography.id ? `${geography.id}-${i}` : i }
-                geography={ geography }
-                projection={ this.props.projection }
-                choroplethValue={ this.props.choropleth[geography.id] }
-                styles={ styles }
-                events={ this.props.events }
-              />
-            ) : null
-          })
-        }
+      <g className="rsm-geographies" style={ style }>
+        { children(this.state.geographyPaths, projection) }
       </g>
     )
   }
 }
 
-Geographies.propTypes = {
-  geographyPaths: PropTypes.array,
-  projection: PropTypes.func.isRequired,
-  freezeGeographyPaths: PropTypes.bool,
-  exclude: PropTypes.array,
-  include: PropTypes.array,
-  styles: PropTypes.object,
-  choropleth: PropTypes.object,
-  events: PropTypes.object,
-}
-
 Geographies.defaultProps = {
+  componentIdentifier: "Geographies",
+  disableOptimization: false,
   geographyPaths: [],
-  freezeGeographyPaths: true,
-  exclude: [],
-  include: [],
-  styles: defaultStyles,
-  choropleth: {},
-  events: {},
 }
 
 export default Geographies
