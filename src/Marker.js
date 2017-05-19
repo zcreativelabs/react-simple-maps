@@ -1,103 +1,129 @@
 
-import React, { Component, PropTypes } from "react"
-import defaultStyles from "./defaultStyles"
+import React, { Component } from "react"
 
 class Marker extends Component {
   constructor() {
     super()
 
     this.state = {
-      hovered: false,
+      hover: false,
+      pressed: false,
     }
 
     this.handleMouseEnter = this.handleMouseEnter.bind(this)
     this.handleMouseLeave = this.handleMouseLeave.bind(this)
+    this.handleMouseDown = this.handleMouseDown.bind(this)
+    this.handleMouseUp = this.handleMouseUp.bind(this)
+    this.handleMouseClick = this.handleMouseClick.bind(this)
     this.handleMouseMove = this.handleMouseMove.bind(this)
-    this.handleClick = this.handleClick.bind(this)
+    this.handleFocus = this.handleFocus.bind(this)
+    this.handleBlur = this.handleBlur.bind(this)
   }
-  handleMouseEnter(marker, evt) {
-    evt.preventDefault()
-    this.setState({ hovered: true })
-    if(this.props.events.onMouseEnter) {
-      this.props.events.onMouseEnter(marker, evt)
+  handleMouseEnter(evt) {
+    evt.persist()
+    const { onMouseEnter, marker } = this.props
+    this.setState({
+      hover: true,
+    }, () => onMouseEnter && onMouseEnter(marker, evt))
+  }
+  handleMouseMove(evt) {
+    evt.persist()
+    if (this.state.pressed) return
+    const { onMouseMove, marker } = this.props
+    if (!this.state.hover) {
+      this.setState({
+        hover: true
+      }, () => onMouseMove && onMouseMove(marker, evt))
     }
+    else if (onMouseMove) onMouseMove(marker, evt)
+    else return
   }
-  handleMouseLeave(marker, evt) {
-    evt.preventDefault()
-    this.setState({ hovered: false })
-    if(this.props.events.onMouseLeave) {
-      this.props.events.onMouseLeave(marker, evt)
-    }
+  handleMouseLeave(evt) {
+    evt.persist()
+    const { onMouseLeave, marker } = this.props
+    this.setState({
+      hover: false,
+    }, () => onMouseLeave && onMouseLeave(marker, evt))
   }
-  handleMouseMove(marker, evt) {
-    evt.preventDefault()
-    if(this.props.events.onMouseMove) {
-      this.props.events.onMouseMove(marker, evt)
-    }
+  handleMouseDown(evt) {
+    evt.persist()
+    const { onMouseDown, marker } = this.props
+    this.setState({
+      pressed: true,
+    }, () => onMouseDown && onMouseDown(marker, evt))
   }
-  handleClick(marker, evt) {
-    evt.preventDefault()
-    if(this.props.events.onClick) {
-      this.props.events.onClick(marker, evt)
-    }
+  handleMouseUp(evt) {
+    evt.persist()
+    const { onMouseUp, marker } = this.props
+    this.setState({
+      pressed: false,
+    }, () => onMouseUp && onMouseUp(marker, evt))
   }
-  shouldComponentUpdate(nextProps, nextState) {
-    const hoverStateChanged = nextState.hovered !== this.state.hovered
-    const radiusChanged = nextProps.marker.radius !== this.props.marker.radius
-    const zoomChanged = nextProps.zoom !== this.props.zoom
-    return hoverStateChanged || radiusChanged || zoomChanged
+  handleMouseClick(evt) {
+    if (!this.props.onClick) return
+    evt.persist()
+    const { onClick, marker, projection } = this.props
+    return onClick && onClick(marker, projection()(marker.coordinates), evt)
+  }
+  handleFocus(evt) {
+    evt.persist()
+    const { onFocus, marker } = this.props
+    this.setState({
+      hover: true,
+    }, () => onFocus && onFocus(marker, evt))
+  }
+  handleBlur(evt) {
+    evt.persist()
+    const { onBlur, marker } = this.props
+    this.setState({
+      hover: false,
+    }, () => onBlur && onBlur(marker, evt))
   }
   render() {
 
     const {
-      marker,
-      styles,
-      zoom,
       projection,
+      marker,
+      style,
+      tabable,
+      children,
     } = this.props
 
+    const {
+      pressed,
+      hover,
+    } = this.state
+
     return (
-      <circle
-        cx={ projection()(marker.coordinates)[0] }
-        cy={ projection()(marker.coordinates)[1] }
-        r={ marker.radius }
-        style={ styles(marker, zoom)[ this.state.hovered ? "hover" : "default" ] || styles(marker, zoom)["default"] }
-        className="rsm-marker"
-        onMouseEnter={ (evt) => this.handleMouseEnter(marker, evt) }
-        onMouseLeave={ (evt) => this.handleMouseLeave(marker, evt) }
-        onMouseMove={ (evt) => this.handleMouseMove(marker, evt) }
-        onClick={ (evt) => this.handleClick(marker, evt) }
-        transform={`
-          translate(
-            ${ projection()(marker.coordinates)[0] }
-            ${ projection()(marker.coordinates)[1] }
-          )
-          scale(
-            ${ 1/zoom }
-          )
-          translate(
-            ${ -projection()(marker.coordinates)[0] }
-            ${ -projection()(marker.coordinates)[1] }
-          )
-        `}
-      />
+      <g className={ `rsm-marker${ pressed && " rsm-marker--pressed" }${ hover && " rsm-marker--hover" }` }
+         transform={ `translate(
+           ${ projection()(marker.coordinates)[0] }
+           ${ projection()(marker.coordinates)[1] }
+         )`}
+         style={ style[pressed || hover ? (pressed ? "pressed" : "hover") : "default"] }
+         onMouseEnter={ this.handleMouseEnter }
+         onMouseLeave={ this.handleMouseLeave }
+         onMouseDown={ this.handleMouseDown }
+         onMouseUp={ this.handleMouseUp }
+         onClick={ this.handleMouseClick }
+         onMouseMove={ this.handleMouseMove }
+         onFocus={ this.handleFocus }
+         onBlur={ this.handleBlur }
+         tabIndex={ tabable ? 0 : -1 }
+       >
+        { children }
+      </g>
     )
   }
 }
 
-Marker.propTypes = {
-  marker: PropTypes.object,
-  zoom: PropTypes.number,
-  events: PropTypes.object,
-  projection: PropTypes.func,
-  styles: PropTypes.func,
-}
-
 Marker.defaultProps = {
-  marker: {},
-  zoom: 1,
-  events: {},
-  styles: defaultStyles.marker,
+  style: {
+    default: {},
+    hover: {},
+    pressed: {},
+  },
+  tabable: true,
 }
 
 export default Marker
