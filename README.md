@@ -121,7 +121,7 @@ The above results in the following svg structure rendered by react:
 | width            | Number          | 800                            |
 | height           | Array           | 450                            |
 | projection       | String/Function | "times"                        |
-| projectionConfig | Object          | [*see projection](#projection) |
+| projectionConfig | Object          | *see examples below            |
 
 ##### Configuring projections
 
