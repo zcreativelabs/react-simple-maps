@@ -242,17 +242,32 @@ The `<Marker />` component represents each marker and uses coordinates to positi
 | tabable             | Boolean         | true                           |
 | style               | Object          | *see below examples            |
 
+##### Marker location
+
+Marker data is added to the `marker` prop and should contain the coordinates of the marker.
+
+```js
+<Markers>
+  <Marker marker={{ coordinates: [ 8.5, 47.3 ] }}>
+    <circle cx={ 0 } cy={ 0 } r={ 10 } />
+  </Marker>
+</Markers>
+```
+
 ##### Styling and shape
 
 There are no styles assigned to the style prop, and the marker does not have a shape by default.
 
 ```js
 ...
-<Marker style={{
-  default: { fill: "#666" },
-  hover:   { fill: "#999" },
-  pressed: { fill: "#000" },
-}}>
+<Marker
+  marker={{ coordinates: [ 8.5, 47.3 ] }}
+  style={{
+    default: { fill: "#666" },
+    hover:   { fill: "#999" },
+    pressed: { fill: "#000" },
+  }
+}>
   <circle cx={ 0 } cy={ 0 } r={ 10 } />
 </Marker>
 ...
