@@ -241,6 +241,50 @@ document.addEventListener("DOMContentLoaded", () => {
 | geographyUrl        | String          | ""                             |
 | geographyPaths      | Array           | []                             |
 
+##### Choropleth map
+
+The below example uses the [world-50m-with-data.json](https://github.com/zcreativelabs/react-simple-maps/tree/master/topojson-maps) TopoJSON file.
+
+```js
+import React, { Component } from "react"
+import { scaleLinear } from "d3-scale"
+
+const colorScale = scaleLinear()
+  .domain([0, 100000000, 1338612970]) // Max is based on China
+  .range(["#FFF176", "#FFC107", "#E65100"])
+
+class ChoroplethMap extends Component {
+  render() {
+    return (
+      <div>
+        <ComposableMap style={{ width: "100%" }}>
+          <ZoomableGroup>
+            <Geographies geographyUrl={ "/path/to/world-50m-with-data.json" }>
+              {(geographies, projection) => geographies.map((geography, i) => (
+                <Geography
+                  key={ `geography-${i}` }
+                  geography={ geography }
+                  projection={ projection }
+                  style={{
+                    default: {
+                      fill: colorScale(geography.properties.pop_est),
+                      stroke: "#FFF",
+                      strokeWidth: 0.5,
+                      outline: "none",
+                    },
+                  }}
+                />
+              ))}
+            </Geographies>
+          </ZoomableGroup>
+        </ComposableMap>
+      </div>
+    )
+  }
+}
+
+export default ChoroplethMap
+```
 
 #### <a name="Geography-component"></a> `<Geography />`
 
