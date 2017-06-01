@@ -37,19 +37,19 @@ class App extends Component {
   render() {
     return(
       <div>
-      <ComposableMap>
-        <ZoomableGroup>
-        <Geographies geographyUrl={ "/path/to/your/topojson-map-file.json" }>
-          {(geographies, projection) => geographies.map((geography, i) => (
-            <Geography
-              key={ `geography-${i}` }
-              geography={ geography }
-              projection={ projection }
-              />
-          ))}
-        </Geographies>
-        </ZoomableGroup>
-      </ComposableMap>
+        <ComposableMap>
+          <ZoomableGroup>
+          <Geographies geographyUrl={ "/path/to/your/topojson-map-file.json" }>
+            {(geographies, projection) => geographies.map((geography, i) => (
+              <Geography
+                key={ `geography-${i}` }
+                geography={ geography }
+                projection={ projection }
+                />
+            ))}
+          </Geographies>
+          </ZoomableGroup>
+        </ComposableMap>
       </div>
     )
   }
@@ -165,6 +165,69 @@ The default configuration of the projection:
 | disablePanning   | Boolean         | false                          |
 | style            | Object          | {}                             |
 
+##### Zooming
+
+The `ZoomableGroup` component exposes a zoom property, which can be updated from a wrapper component via setState.
+
+```js
+import React, { Component } from "react"
+import ReactDOM from "react-dom"
+import {
+  ComposableMap,
+  ZoomableGroup,
+  Geographies,
+  Geography,
+} from "react-simple-maps"
+
+class App extends Component {
+  constructor() {
+    super()
+
+    this.state = {
+      zoom: 1,
+    }
+
+    this.handleZoomIn = this.handleZoomIn.bind(this)
+    this.handleZoomOut = this.handleZoomOut.bind(this)
+  }
+  handleZoomIn() {
+    this.setState({
+      zoom: this.state.zoom * 2,
+    })
+  }
+  handleZoomOut() {
+    this.setState({
+      zoom: this.state.zoom / 2,
+    })
+  }
+  render() {
+    return(
+      <div>
+        <button onClick={ this.handleZoomIn }>{ "Zoom in" }</button>
+        <button onClick={ this.handleZoomOut }>{ "Zoom out" }</button>
+        <hr />
+        <ComposableMap>
+          <ZoomableGroup zoom={ this.state.zoom }>
+          <Geographies geographyUrl={ "/path/to/your/topojson-map-file.json" }>
+            {(geographies, projection) => geographies.map((geography, i) => (
+              <Geography
+                key={ `geography-${i}` }
+                geography={ geography }
+                projection={ projection }
+                />
+            ))}
+          </Geographies>
+          </ZoomableGroup>
+        </ComposableMap>
+      </div>
+    )
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  ReactDOM.render(<App />, document.getElementById("app"))
+})
+```
 
 #### <a name="Geographies-component"></a> `<Geographies />`
 
