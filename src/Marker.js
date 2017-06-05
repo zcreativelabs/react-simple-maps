@@ -123,6 +123,9 @@ Marker.defaultProps = {
     hover: {},
     pressed: {},
   },
+  marker: {
+    coordinates: [0,0],
+  },
   tabable: true,
 }
 
