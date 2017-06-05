@@ -15,7 +15,7 @@ class Markers extends Component {
         {
           !children ?
             null :
-            !children.length && !children.length === 0 ?
+            children.length === undefined ?
               React.cloneElement(children, {
                 projection,
               }) :
