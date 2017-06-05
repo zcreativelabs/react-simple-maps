@@ -39,6 +39,7 @@ export function isChildOfType(child, expectedType) {
 }
 
 export function createNewChildren(children, props) {
+  if (!children) return
   if (!children.length) {
     return isChildOfType(children, "Geographies") ? React.cloneElement(children, {
       geographyPaths: props.geographyPaths,
@@ -50,6 +51,7 @@ export function createNewChildren(children, props) {
   }
   else {
     return children.map((child, i) => {
+      if (!child) return
       return isChildOfType(child, "Geographies") ?
         React.cloneElement(child, {
           key: `zoomable-child-${i}`,

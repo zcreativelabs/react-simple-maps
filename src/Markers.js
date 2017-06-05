@@ -13,16 +13,20 @@ class Markers extends Component {
     return (
       <g className="rsm-markers" style={ style }>
         {
-          !children.length ?
-            React.cloneElement(children, {
-              projection,
-            }) :
-            children.map((child, i) => (
-              React.cloneElement(child, {
-                key: child.key || `marker-${i}`,
+          !children ?
+            null :
+            !children.length && !children.length === 0 ?
+              React.cloneElement(children, {
                 projection,
-              })
-            ))
+              }) :
+              children.map((child, i) =>
+                !child ?
+                  null :
+                  React.cloneElement(child, {
+                    key: child.key || `marker-${i}`,
+                    projection,
+                  })
+              )
         }
       </g>
     )
