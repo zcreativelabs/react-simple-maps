@@ -6,7 +6,7 @@
   "scripts": {
     "build": "babel src --out-dir lib",
     "watch": "babel --watch src --out-dir lib",
-    "prepublish": "npm run build",
+    "prepare": "npm run build",
     "test": "mocha './tests/**/*.spec.js' --compilers js:babel-core/register"
   },
   "babel": {
