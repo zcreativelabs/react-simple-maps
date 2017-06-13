@@ -120,7 +120,7 @@ class Geography extends Component {
 
 Geography.defaultProps = {
   precision: 0.1,
-  round: true,
+  round: false,
   tabable: true,
   style: {
     default: {},

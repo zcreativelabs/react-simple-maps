@@ -295,7 +295,7 @@ The `<Geography />` component represents each shape converted with topojson. The
 | Property            | Type            | Default                        |
 | ------------------- |:--------------- | :----------------------------- |
 | precision           | Number          | 0.1                            |
-| round               | Boolean         | true                           |
+| round               | Boolean         | false                          |
 | geography           | Object          | *see examples below            |
 | tabable             | Boolean         | true                           |
 | style               | Object          | *see examples below            |
