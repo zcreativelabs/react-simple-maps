@@ -1,7 +1,7 @@
 {
   "name": "zoom-pan",
   "version": "1.0.0",
-  "description": "",
+  "description": "Example showing how to use setState to zoom and pan.",
   "main": "index.js",
   "scripts": {
     "dev": "next",

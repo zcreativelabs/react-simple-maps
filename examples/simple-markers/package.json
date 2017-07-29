@@ -1,7 +1,7 @@
 {
   "name": "simple-markers",
   "version": "1.0.0",
-  "description": "",
+  "description": "Example showing how to add basic circle markers to a map.",
   "main": "index.js",
   "scripts": {
     "dev": "next",

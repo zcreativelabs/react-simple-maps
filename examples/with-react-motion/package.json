@@ -1,7 +1,7 @@
 {
   "name": "with-react-motion",
   "version": "1.0.0",
-  "description": "",
+  "description": "Example showing how to add animations to a world map using react-motion.",
   "main": "index.js",
   "scripts": {
     "dev": "next",

@@ -1,7 +1,7 @@
 {
   "name": "custom-svg-markers",
   "version": "1.0.0",
-  "description": "",
+  "description": "Example of using react-simple-maps to create a map with custom SVG location markers.",
   "main": "index.js",
   "scripts": {
     "dev": "next",

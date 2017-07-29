@@ -1,7 +1,7 @@
 {
   "name": "basic-map",
   "version": "1.0.0",
-  "description": "",
+  "description": "Example of using react-simple-maps to create a basic world map.",
   "main": "index.js",
   "scripts": {
     "dev": "next",
