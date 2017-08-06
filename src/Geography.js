@@ -51,6 +51,7 @@ class Geography extends Component {
     const { onMouseLeave, geography } = this.props
     this.setState({
       hover: false,
+      pressed: false,
     }, () => onMouseLeave && onMouseLeave(geography, evt))
   }
   handleMouseDown(evt) {
