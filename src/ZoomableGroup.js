@@ -115,11 +115,6 @@ class ZoomableGroup extends Component {
       resizeFactorY,
     } = this.state
 
-    const backdropDimensions = [
-      (projection().scale()) / 100 * width,
-      (projection().scale()) / 100 * height,
-    ]
-
     return (
       <g className="rsm-zoomable-group"
          ref={ zoomableGroupNode => this.zoomableGroupNode = zoomableGroupNode }
