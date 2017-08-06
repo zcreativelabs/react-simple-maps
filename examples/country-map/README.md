@@ -3,6 +3,8 @@
 
 Example of using `react-simple-maps` to map out a country with subnational administrative units.
 
+[Live example](https://www.react-simple-maps.io/country-map-with-admin-units)
+
 ## How to use
 
 Download this example map [or clone the repo](https://github.com/zcreativelabs/react-simple-maps):

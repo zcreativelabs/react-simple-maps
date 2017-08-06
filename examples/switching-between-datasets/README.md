@@ -3,6 +3,8 @@
 
 Example of using `react-simple-maps` to create a choropleth map of the world that can toggle between displaying population data or the subregions of the world according to the [UN Statistics Division](https://unstats.un.org/unsd/methodology/m49/).
 
+[Live example](https://www.react-simple-maps.io/switching-between-datasets)
+
 ## How to use
 
 Download this example map [or clone the repo](https://github.com/zcreativelabs/react-simple-maps):

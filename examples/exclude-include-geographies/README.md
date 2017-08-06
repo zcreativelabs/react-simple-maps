@@ -3,6 +3,8 @@
 
 Example showing how to manage which geographies get displayed.
 
+[Live example](https://www.react-simple-maps.io/exclude-include-geographies)
+
 ## How to use
 
 Download this example map [or clone the repo](https://github.com/zcreativelabs/react-simple-maps):

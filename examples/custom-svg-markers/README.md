@@ -3,6 +3,8 @@
 
 Example of using `react-simple-maps` to create a map with custom SVG location markers.
 
+[Live example](https://www.react-simple-maps.io/custom-svg-markers)
+
 ## How to use
 
 Download this example map [or clone the repo](https://github.com/zcreativelabs/react-simple-maps):

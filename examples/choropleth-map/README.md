@@ -3,6 +3,8 @@
 
 Example of using `react-simple-maps` to create a choropleth map, using `world-50m.json` with population data.
 
+[Live example](https://www.react-simple-maps.io/choropleth-map)
+
 ## How to use
 
 Download this example map [or clone the repo](https://github.com/zcreativelabs/react-simple-maps):

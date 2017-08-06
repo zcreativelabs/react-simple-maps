@@ -3,6 +3,8 @@
 
 Example of using `react-simple-maps` to add annotations to a map.
 
+[Live example](https://www.react-simple-maps.io/annotations)
+
 ## How to use
 
 Download this example map [or clone the repo](https://github.com/zcreativelabs/react-simple-maps):
