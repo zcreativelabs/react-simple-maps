@@ -2,9 +2,12 @@
 import {
   geoTimes,
   geoMiller,
+  geoRobinson,
+  geoWinkel3,
+  geoEckert4,
 } from "d3-geo-projection"
 import {
-  geoMercator
+  geoMercator,
 } from "d3-geo"
 
 import defaultProjectionConfig from "./projectionConfig"
@@ -13,6 +16,9 @@ const projectionReference = {
   mercator: geoMercator,
   miller: geoMiller,
   times: geoTimes,
+  robinson: geoRobinson,
+  winkel3: geoWinkel3,
+  eckert4: geoEckert4,
 }
 
 export default function(width, height, config, projectionName) {
