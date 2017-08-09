@@ -4,6 +4,26 @@ import { geoPath } from "d3-geo"
 
 import { roundPath } from "./utils"
 
+const pathCache = {}
+
+const renderPath = (cacheId, geography, projection, round, precision) => {
+  if (pathCache[cacheId]) return pathCache[cacheId]
+
+  const pathString = cacheId
+    ? pathCache[cacheId]
+      ? pathCache[cacheId]
+      : round
+        ? roundPath(geoPath().projection(projection())(geography), precision)
+        : geoPath().projection(projection())(geography)
+    : round
+      ? roundPath(geoPath().projection(projection())(geography), precision)
+      : geoPath().projection(projection())(geography)
+
+  if (cacheId) pathCache[cacheId] = pathString
+
+  return pathString
+}
+
 class Geography extends Component {
   constructor() {
     super()
@@ -88,6 +108,7 @@ class Geography extends Component {
       geography,
       projection,
       round,
+      cacheId,
       precision,
       tabable,
       style,
@@ -98,11 +119,11 @@ class Geography extends Component {
       pressed,
     } = this.state
 
-    const pathString = geoPath().projection(projection())(geography)
+    const pathString = renderPath(cacheId, geography, projection, round, precision)
 
     return (
       <path
-        d={ round ? roundPath(pathString, precision) : pathString }
+        d={ pathString }
         className={ `rsm-geography${ pressed && " rsm-geography--pressed" }${ hover && " rsm-geography--hover" }` }
         style={ style[pressed || hover ? (pressed ? "pressed" : "hover") : "default"] }
         onClick={ this.handleMouseClick }
@@ -121,6 +142,7 @@ class Geography extends Component {
 
 Geography.defaultProps = {
   precision: 0.1,
+  cacheId: null,
   round: false,
   tabable: true,
   style: {

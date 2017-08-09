@@ -231,7 +231,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 #### <a name="Geographies-component"></a> `<Geographies />`
 
-`<Geographies />` is a group wrapper around the geographies paths. It returns a function that contains the geographies extracted from the geographiesUrl passed in. Note that the Geographies component is optimised using shouldComponentUpdate to enable zoom and panning animation with react-motion. You can bypass this optimization via the disableOptimization prop, however this is not recommended. Rerendering all of the country paths can take a serious toll on rendering performance. If you do not want `react-simple-maps` to load your topojson and pass it down automatically, you can also pass your topojson converted `features` directly into the `Geographies` component.
+`<Geographies />` is a group wrapper around the geographies paths. It returns a function that contains the geographies extracted from the geographiesUrl passed in.
+
+React-simple-maps offers a couple of ways to optimise the performance of the map:
+
+1. By default the `<Geographies />` component uses `shouldComponentUpdate` to prevent the paths from being rerendered. This optimisation can be bypassed using the `disableOptimization` prop. This is useful when making choropleth maps that are updated on user interaction.
+
+2. A second way in which react-simple-maps can optimise maps is by setting a `cacheId` on the individual geographies. See the [`<Geography />`](#ComposableMap-component) component for more info. The unique cacheIds help to cache the paths and significantly accelerate rerenders. This second method is the recommended way of optimising maps with react-simple-maps.
+
+If you do not want `react-simple-maps` to load your topojson and pass it down automatically, you can also pass your topojson converted `features` directly into the `Geographies` component.
 
 ##### Props
 
@@ -294,6 +302,7 @@ The `<Geography />` component represents each shape converted with topojson. The
 
 | Property            | Type            | Default                        |
 | ------------------- |:--------------- | :----------------------------- |
+| cacheId             | Number/String   | null                           |
 | precision           | Number          | 0.1                            |
 | round               | Boolean         | false                          |
 | geography           | Object          | *see examples below            |
