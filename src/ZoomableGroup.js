@@ -29,6 +29,7 @@ class ZoomableGroup extends Component {
   }
   handleMouseMove({ pageX, pageY }) {
     if (this.props.disablePanning) return
+
     if(this.state.isPressed) {
       this.setState({
         mouseX: pageX - this.state.mouseXStart,
@@ -122,8 +123,8 @@ class ZoomableGroup extends Component {
          ref={ zoomableGroupNode => this.zoomableGroupNode = zoomableGroupNode }
          transform={`
            translate(
-             ${ width / 2 + resizeFactorX * mouseX }
-             ${ height / 2 + resizeFactorY * mouseY }
+             ${ Math.round(width / 2 + resizeFactorX * mouseX) }
+             ${ Math.round(height / 2 + resizeFactorY * mouseY) }
            )
            scale(${ zoom })
            translate(${ -width / 2 } ${ -height / 2 })
