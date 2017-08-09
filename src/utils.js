@@ -68,6 +68,7 @@ export function createNewChildren(children, props) {
 }
 
 export function roundPath(path, precision) {
+  if (!path) return
   const query = /[\d\.-][\d\.e-]*/g
   return path.replace(query, n => Math.round(n * (1/precision)) / (1/precision))
 }
