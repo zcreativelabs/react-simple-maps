@@ -22,10 +22,10 @@ class ZoomableGroup extends Component {
       resizeFactorX: 1,
       resizeFactorY: 1,
       backdrop: {
-        width: props.projection()([180,0])[0] - props.projection()([-180,0])[0],
-        height: props.projection()([0,-90])[1] - props.projection()([0,90])[1],
-        x: props.projection()([-180,0])[0],
-        y: props.projection()([0,90])[1],
+        width: Math.round(props.projection()([props.backdrop.x[1],0])[0] - props.projection()([props.backdrop.x[0],0])[0]),
+        height: Math.round(props.projection()([0,props.backdrop.y[1]])[1] - props.projection()([0,props.backdrop.y[0]])[1]),
+        x: Math.round(props.projection()([props.backdrop.x[0],0])[0]),
+        y: Math.round(props.projection()([0,props.backdrop.y[0]])[1]),
       },
     }
 
@@ -157,6 +157,10 @@ class ZoomableGroup extends Component {
 
 ZoomableGroup.defaultProps = {
   center: [ 0, 0 ],
+  backdrop: {
+    x: [-179.9, 179.9],
+    y: [89.9, -89.9],
+  },
   zoom: 1,
   disablePanning: false,
 }

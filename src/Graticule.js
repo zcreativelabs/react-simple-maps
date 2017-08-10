@@ -10,6 +10,21 @@ import { roundPath } from "./utils"
 const graticuleCache = {}
 
 class Graticule extends Component {
+  constructor() {
+    super()
+    this.state = {
+      renderGraticule: false,
+    }
+    this.renderGraticule = this.renderGraticule.bind(this)
+  }
+  componentDidMount() {
+    this.renderGraticule()
+  }
+  renderGraticule() {
+    this.setState({
+      renderGraticule: true,
+    })
+  }
   shouldComponentUpdate(nextProps) {
     return nextProps.disableOptimization
   }
@@ -35,7 +50,7 @@ class Graticule extends Component {
     if (!graticuleCache.graticule) graticuleCache.graticule = graticulePath
     if (!graticuleCache.outline) graticuleCache.outline = graticuleOutline
 
-    return (
+    return this.state.renderGraticule && (
       <g className="rsm-graticule">
         <path
           fill={fill}
