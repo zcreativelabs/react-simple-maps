@@ -1,5 +1,6 @@
 
 import React, { Component } from "react"
+import { geoPath } from "d3-geo"
 
 import {
   calculateResizeFactor,
@@ -20,6 +21,12 @@ class ZoomableGroup extends Component {
       isPressed: false,
       resizeFactorX: 1,
       resizeFactorY: 1,
+      backdrop: {
+        width: props.projection()([180,0])[0] - props.projection()([-180,0])[0],
+        height: props.projection()([0,-90])[1] - props.projection()([0,90])[1],
+        x: props.projection()([-180,0])[0],
+        y: props.projection()([0,90])[1],
+      },
     }
 
     this.handleMouseMove = this.handleMouseMove.bind(this)
@@ -123,8 +130,8 @@ class ZoomableGroup extends Component {
          ref={ zoomableGroupNode => this.zoomableGroupNode = zoomableGroupNode }
          transform={`
            translate(
-             ${ Math.round(width / 2 + resizeFactorX * mouseX) }
-             ${ Math.round(height / 2 + resizeFactorY * mouseY) }
+             ${ Math.round((width / 2 + resizeFactorX * mouseX) * 100) / 100 }
+             ${ Math.round((height / 2 + resizeFactorY * mouseY) * 100) / 100 }
            )
            scale(${ zoom })
            translate(${ -width / 2 } ${ -height / 2 })
@@ -135,12 +142,11 @@ class ZoomableGroup extends Component {
          style={ style }
       >
         <rect
-          x={ width/2 }
-          y={ height/2 }
-          width={ width }
-          height={ height }
+          x={ this.state.backdrop.x }
+          y={ this.state.backdrop.y }
+          width={ this.state.backdrop.width }
+          height={ this.state.backdrop.height }
           fill="transparent"
-          transform={ `translate(-${ width / 2 }, -${ height / 2 })` }
           style={{ strokeWidth: 0 }}
         />
         { createNewChildren(children, this.props) }
