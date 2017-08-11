@@ -108,7 +108,7 @@ The above results in the following svg structure rendered by react:
 - [`<Markers />`](#Markers-component)
 - [`<Marker />`](#Marker-component)
 - [`<Annotation />`](#Annotation-component)
-- [`<Graticule />`](#Graticule)
+- [`<Graticule />`](#Graticule-component)
 
 
 #### <a name="ComposableMap-component"></a> `<ComposableMap />`
