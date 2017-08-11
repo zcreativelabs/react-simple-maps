@@ -108,6 +108,7 @@ The above results in the following svg structure rendered by react:
 - [`<Markers />`](#Markers-component)
 - [`<Marker />`](#Marker-component)
 - [`<Annotation />`](#Annotation-component)
+- [`<Graticule />`](#Graticule)
 
 
 #### <a name="ComposableMap-component"></a> `<ComposableMap />`
@@ -442,6 +443,23 @@ The following example shows how to add a sample annotation for the city of Zuric
 </Annotation>
 ...
 ```
+
+#### <a name="Graticule-component"></a> `<Graticule />`
+
+The `<Graticule />` component can be used to add a graticule to the map. Note that you can place the graticule before (behind) or after (on top of) the other elements.
+
+##### Props
+
+| Property            | Type            | Default                        |
+| ------------------- |:--------------- | :----------------------------- |
+| step                | Array           | [10,10]                        |
+| round               | Boolean         | true                           |
+| precision           | Nmber           | 0.1                            |
+| outline             | Boolean         | true                           |
+| stroke              | String          | "#DDDDDD"                      |
+| fill                | String          | "transparent"                  |
+| style               | Object          | `{ pointerEvents: "none" }`    |
+| disableOptimization | Boolean         | true                           |
 
 ### License
 MIT licensed. Copyright (c) Richard Zimerman 2017. See [LICENSE.md](https://github.com/zcreativelabs/react-simple-maps/blob/master/LICENSE) for more details.
