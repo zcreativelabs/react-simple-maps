@@ -13,6 +13,11 @@ class ZoomableGroup extends Component {
   constructor(props) {
     super(props)
 
+    const backdropX = props.projection().rotate([0,0,0])([props.backdrop.x[0],0])[0]
+    const backdropY = props.projection().rotate([0,0,0])([0,props.backdrop.y[0]])[1]
+    const backdropWidth = props.projection().rotate([0,0,0])([props.backdrop.x[1],0])[0] - props.projection().rotate([0,0,0])([props.backdrop.x[0],0])[0]
+    const backdropHeight = props.projection().rotate([0,0,0])([0,props.backdrop.y[1]])[1] - props.projection().rotate([0,0,0])([0,props.backdrop.y[0]])[1]
+
     this.state = {
       mouseX: calculateMousePosition("x", props.projection, props, props.zoom, 1),
       mouseY: calculateMousePosition("y", props.projection, props, props.zoom, 1),
@@ -22,10 +27,10 @@ class ZoomableGroup extends Component {
       resizeFactorX: 1,
       resizeFactorY: 1,
       backdrop: {
-        width: Math.round(props.projection()([props.backdrop.x[1],0])[0] - props.projection()([props.backdrop.x[0],0])[0]),
-        height: Math.round(props.projection()([0,props.backdrop.y[1]])[1] - props.projection()([0,props.backdrop.y[0]])[1]),
-        x: Math.round(props.projection()([props.backdrop.x[0],0])[0]),
-        y: Math.round(props.projection()([0,props.backdrop.y[0]])[1]),
+        width: Math.round(backdropWidth),
+        height: Math.round(backdropHeight),
+        x: Math.round(backdropX),
+        y: Math.round(backdropY),
       },
     }
 
