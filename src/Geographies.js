@@ -40,7 +40,12 @@ class Geographies extends Component {
     request.send()
   }
   componentWillReceiveProps(nextProps) {;
-    if (!nextProps.geographyUrl) return
+    if (!nextProps.geographyUrl && !nextProps.geographyPaths.length !== this.props.geographyPaths.length) {
+      this.setState({
+        geographyPaths: nextProps.geographyPaths,
+      })
+      return
+    }
     if (nextProps.geographyUrl !== this.props.geographyUrl) {
       this.fetchGeographies(nextProps.geographyUrl)
     }
