@@ -1,0 +1,23 @@
+{
+  "name": "with-redux-tooltip",
+  "version": "1.0.0",
+  "description": "Example of using react-simple-maps with redux-tooltip to create a world map that shows country names on hover.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Richard Zimerman <richard@zcreativelabs.com> (https://github.com/zimrick)",
+  "license": "ISC",
+  "dependencies": {
+    "next": "3.0.3",
+    "next-redux-wrapper": "1.3.2",
+    "react": "15.6.1",
+    "react-dom": "15.6.1",
+    "react-redux": "5.0.6",
+    "react-simple-maps": "0.6.1",
+    "redux": "3.7.2",
+    "redux-tooltip": "0.7.2"
+  }
+}
