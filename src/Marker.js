@@ -95,7 +95,7 @@ class Marker extends Component {
     } = this.state
 
     return (
-      <g className={ `rsm-marker${ pressed && " rsm-marker--pressed" }${ hover && " rsm-marker--hover" }` }
+      <g className={ `rsm-marker${ pressed ? " rsm-marker--pressed" : "" }${ hover ? " rsm-marker--hover" : "" }` }
          transform={ `translate(
            ${ projection()(marker.coordinates)[0] }
            ${ projection()(marker.coordinates)[1] }

@@ -124,7 +124,7 @@ class Geography extends Component {
     return (
       <path
         d={ pathString }
-        className={ `rsm-geography${ pressed && " rsm-geography--pressed" }${ hover && " rsm-geography--hover" }` }
+        className={ `rsm-geography${ pressed ? " rsm-geography--pressed" : "" }${ hover ? " rsm-geography--hover" : "" }` }
         style={ style[pressed || hover ? (pressed ? "pressed" : "hover") : "default"] }
         onClick={ this.handleMouseClick }
         onMouseEnter={ this.handleMouseEnter }
