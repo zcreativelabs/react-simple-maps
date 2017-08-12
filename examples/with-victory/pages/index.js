@@ -87,6 +87,17 @@ class MapWithVictory extends Component {
                 <Marker
                   key={ `canton-${canton.id}` }
                   marker={ canton }
+                  style={{
+                    default: {
+                      outline: "none",
+                    },
+                    hover: {
+                      outline: "none",
+                    },
+                    pressed: {
+                      outline: "none",
+                    },
+                  }}
                 >
                   <g transform="translate(-15,-15)">
                     <circle cx={20} cy={20} r={21} fill="transparent" stroke="#607D8B" />
@@ -99,13 +110,13 @@ class MapWithVictory extends Component {
                       innerRadius={ 10 }
                       style={{
                         labels: { fill: "transparent" },
-                        data: { stroke: "#ECEFF1" }
+                        data: { stroke: "#ECEFF1" },
                       }}
                       data={[
-                        { x: 1, y: canton.languages[0].value, fill: "#FF5722" },
-                        { x: 2, y: canton.languages[1].value, fill: "#00BCD4" },
-                        { x: 3, y: canton.languages[2].value, fill: "#FFC107" },
-                        { x: 4, y: canton.languages[3].value, fill: "#8BC34A" },
+                        { x: null, y: canton.languages[0].value, fill: "#FF5722" },
+                        { x: null, y: canton.languages[1].value, fill: "#00BCD4" },
+                        { x: null, y: canton.languages[2].value, fill: "#FFC107" },
+                        { x: null, y: canton.languages[3].value, fill: "#8BC34A" },
                       ]}
                     />
                   </g>
