@@ -7,13 +7,19 @@ import {
 
 import { roundPath } from "./utils"
 
-const graticuleCache = {}
+const computeGraticule = (projection, step) =>
+  geoPath().projection(projection())(geoGraticule().step(step)())
+
+const computeOutline = (projection) =>
+  geoPath().projection(projection())(geoGraticule().outline())
 
 class Graticule extends Component {
   constructor() {
     super()
     this.state = {
       renderGraticule: false,
+      graticulePath: "",
+      outlinePath: "",
     }
     this.renderGraticule = this.renderGraticule.bind(this)
   }
@@ -21,9 +27,42 @@ class Graticule extends Component {
     this.renderGraticule()
   }
   renderGraticule() {
+
+    const {
+      step,
+      projection,
+      round,
+      precision,
+    } = this.props
+
     this.setState({
       renderGraticule: true,
+      graticulePath: round
+        ? roundPath(computeGraticule(projection, step), precision)
+        : computeGraticule(projection, step),
+      outlinePath: round
+        ? roundPath(computeOutline(projection), precision)
+        : computeOutline(projection),
     })
+  }
+  componentWillReceiveProps(nextProps) {
+    const {
+      step,
+      projection,
+      round,
+      precision,
+    } = this.props
+
+    if (nextProps.round !== round || nextProps.precision !== precision) {
+      this.setState({
+        graticulePath: nextProps.round
+          ? roundPath(computeGraticule(projection, step), precision)
+          : computeGraticule(projection, step),
+        outlinePath: nextProps.round
+          ? roundPath(computeOutline(projection), precision)
+          : computeOutline(projection),
+      })
+    }
   }
   shouldComponentUpdate(nextProps) {
     return nextProps.disableOptimization
@@ -32,30 +71,18 @@ class Graticule extends Component {
 
     const {
       zoom,
-      projection,
-      round,
-      precision,
       style,
-      step,
       outline,
       fill,
       stroke,
     } = this.props
-
-    const graticulePath = graticuleCache.graticule || geoPath()
-      .projection(projection())(geoGraticule().step(step)())
-    const graticuleOutline = graticuleCache.outline || geoPath()
-      .projection(projection())(geoGraticule().outline())
-
-    if (!graticuleCache.graticule) graticuleCache.graticule = graticulePath
-    if (!graticuleCache.outline) graticuleCache.outline = graticuleOutline
 
     return this.state.renderGraticule && (
       <g className="rsm-graticule">
         <path
           fill={fill}
           stroke={stroke}
-          d={round ? roundPath(graticulePath, precision) : graticulePath}
+          d={this.state.graticulePath}
           style={style}
         />
         {
@@ -63,7 +90,7 @@ class Graticule extends Component {
             <path
               fill={fill}
               stroke={stroke}
-              d={round ? roundPath(graticuleOutline, precision) : graticuleOutline}
+              d={this.state.outlinePath}
               style={style}
             />
           )
