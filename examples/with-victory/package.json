@@ -1,0 +1,21 @@
+{
+  "name": "with-victory",
+  "version": "1.0.0",
+  "description": "Example of using react-simple-maps with victory charts.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Cristina Poiata <cristina@zcreativelabs.com> (https://github.com/this-is-cris)",
+  "license": "ISC",
+  "dependencies": {
+    "d3-geo": "1.6.4",
+    "next": "3.0.3",
+    "react": "15.6.1",
+    "react-dom": "15.6.1",
+    "react-simple-maps": "0.7.1",
+    "victory": "0.21.4"
+  }
+}
