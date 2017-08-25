@@ -121,6 +121,15 @@ class Geography extends Component {
 
     const pathString = renderPath(cacheId, geography, projection, round, precision)
 
+    const excludeProps = ["geography", "projection", "round", "cacheId", "precision", "tabable", "style"]
+
+    const restProps = Object.keys(this.props)
+      .filter(key => !excludeProps.includes(key))
+      .reduce((obj, key) => {
+        obj[key] = this.props[key]
+        return obj
+      }, {})
+
     return (
       <path
         d={ pathString }
@@ -135,6 +144,7 @@ class Geography extends Component {
         onFocus={ tabable && this.handleFocus }
         onBlur={ tabable && this.handleBlur }
         tabIndex={ tabable ? 0 : -1 }
+        { ...restProps }
       />
     )
   }
