@@ -121,7 +121,23 @@ class Geography extends Component {
 
     const pathString = renderPath(cacheId, geography, projection, round, precision)
 
-    const excludeProps = ["geography", "projection", "round", "cacheId", "precision", "tabable", "style"]
+    const excludeProps = [
+      "geography",
+      "projection",
+      "round",
+      "cacheId",
+      "precision",
+      "tabable",
+      "style",
+      "onClick",
+      "onMouseEnter",
+      "onMouseMove",
+      "onMouseLeave",
+      "onMouseDown",
+      "onMouseUp",
+      "onFocus",
+      "onBlur",
+    ]
 
     const restProps = Object.keys(this.props)
       .filter(key => !excludeProps.includes(key))
