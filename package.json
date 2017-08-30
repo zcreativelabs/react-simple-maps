@@ -1,6 +1,6 @@
 {
   "name": "react-simple-maps",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "An svg map component built with and for React",
   "main": "lib/index.js",
   "scripts": {
