@@ -140,7 +140,7 @@ class Geography extends Component {
     ]
 
     const restProps = Object.keys(this.props)
-      .filter(key => !excludeProps.includes(key))
+      .filter(key => excludeProps.indexOf(key) === -1)
       .reduce((obj, key) => {
         obj[key] = this.props[key]
         return obj
