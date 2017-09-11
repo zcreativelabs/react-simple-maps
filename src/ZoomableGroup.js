@@ -51,9 +51,11 @@ class ZoomableGroup extends Component {
   }
   handleMouseUp() {
     if (this.props.disablePanning) return
-    this.setState({
-      isPressed: false,
-    })
+    if (this.state.isPressed) {
+      this.setState({
+        isPressed: false,
+      })
+    }
   }
   handleMouseDown({ pageX, pageY }) {
     if (this.props.disablePanning) return
