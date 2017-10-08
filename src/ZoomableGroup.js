@@ -37,7 +37,10 @@ class ZoomableGroup extends Component {
     this.handleMouseMove = this.handleMouseMove.bind(this)
     this.handleMouseUp = this.handleMouseUp.bind(this)
     this.handleMouseDown = this.handleMouseDown.bind(this)
+    this.handleTouchStart = this.handleTouchStart.bind(this)
+    this.handleTouchMove = this.handleTouchMove.bind(this)
     this.handleResize = this.handleResize.bind(this)
+    
   }
   handleMouseMove({ pageX, pageY }) {
     if (this.props.disablePanning) return
@@ -48,6 +51,9 @@ class ZoomableGroup extends Component {
         mouseY: pageY - this.state.mouseYStart,
       })
     }
+  }
+  handleTouchMove({ touches }){
+    this.handleMouseMove(touches[0]);
   }
   handleMouseUp() {
     if (this.props.disablePanning) return
@@ -64,6 +70,9 @@ class ZoomableGroup extends Component {
       mouseXStart: pageX - this.state.mouseX,
       mouseYStart: pageY - this.state.mouseY,
     })
+  }
+  handleTouchStart({ touches }){
+    this.handleMouseDown(touches[0]);
   }
   componentWillReceiveProps(nextProps) {
     const { mouseX, mouseY, resizeFactorX, resizeFactorY } = this.state
@@ -115,7 +124,6 @@ class ZoomableGroup extends Component {
     window.removeEventListener("mouseup", this.handleMouseUp)
   }
   render() {
-
     const {
       width,
       height,
@@ -146,6 +154,9 @@ class ZoomableGroup extends Component {
          onMouseMove={ this.handleMouseMove }
          onMouseUp={ this.handleMouseUp }
          onMouseDown={ this.handleMouseDown }
+         onTouchStart={ this.handleTouchStart }
+         onTouchMove={ this.handleTouchMove }
+         onTouchEnd={ this.handleMouseUp }
          style={ style }
       >
         <rect
