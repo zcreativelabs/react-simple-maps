@@ -40,7 +40,7 @@ class ZoomableGroup extends Component {
     this.handleTouchStart = this.handleTouchStart.bind(this)
     this.handleTouchMove = this.handleTouchMove.bind(this)
     this.handleResize = this.handleResize.bind(this)
-    
+
   }
   handleMouseMove({ pageX, pageY }) {
     if (this.props.disablePanning) return
@@ -73,6 +73,9 @@ class ZoomableGroup extends Component {
   }
   handleTouchStart({ touches }){
     this.handleMouseDown(touches[0]);
+  }
+  preventTouchScroll(evt) {
+    evt.preventDefault()
   }
   componentWillReceiveProps(nextProps) {
     const { mouseX, mouseY, resizeFactorX, resizeFactorY } = this.state
@@ -118,10 +121,12 @@ class ZoomableGroup extends Component {
 
     window.addEventListener("resize", this.handleResize)
     window.addEventListener('mouseup', this.handleMouseUp)
+    this.zoomableGroupNode.addEventListener("touchmove", this.preventTouchScroll)
   }
   componentWillUnmount() {
     window.removeEventListener("resize", this.handleResize)
     window.removeEventListener("mouseup", this.handleMouseUp)
+    this.zoomableGroupNode.removeEventListener("touchmove", this.preventTouchScroll)
   }
   render() {
     const {
