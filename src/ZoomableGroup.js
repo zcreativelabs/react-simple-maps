@@ -44,35 +44,46 @@ class ZoomableGroup extends Component {
   }
   handleMouseMove({ pageX, pageY }) {
     if (this.props.disablePanning) return
-
-    if(this.state.isPressed) {
-      this.setState({
-        mouseX: pageX - this.state.mouseXStart,
-        mouseY: pageY - this.state.mouseYStart,
-      })
-    }
+    if (!this.state.isPressed) return
+    this.setState({
+      mouseX: pageX - this.state.mouseXStart,
+      mouseY: pageY - this.state.mouseYStart,
+    })
   }
-  handleTouchMove({ touches }){
-    this.handleMouseMove(touches[0]);
+  handleTouchMove({ touches }) {
+    this.handleMouseMove(touches[0])
   }
   handleMouseUp() {
     if (this.props.disablePanning) return
-    if (this.state.isPressed) {
-      this.setState({
-        isPressed: false,
-      })
-    }
+    if (!this.state.isPressed) return
+    this.setState({
+      isPressed: false,
+    })
+    if (!this.props.onMoveEnd) return
+    const { mouseX, mouseY, resizeFactorX, resizeFactorY } = this.state
+    const { zoom, width, height, projection, onMoveEnd } = this.props
+    const x = width / 2 - (mouseX * resizeFactorX / zoom)
+    const y = height / 2 - (mouseY * resizeFactorY / zoom)
+    const newCenter = projection().invert([ x, y ])
+    onMoveEnd(newCenter)
   }
   handleMouseDown({ pageX, pageY }) {
     if (this.props.disablePanning) return
+    const { mouseX, mouseY, resizeFactorX, resizeFactorY } = this.state
+    const { zoom, width, height, projection, onMoveStart } = this.props
     this.setState({
       isPressed: true,
-      mouseXStart: pageX - this.state.mouseX,
-      mouseYStart: pageY - this.state.mouseY,
+      mouseXStart: pageX - mouseX,
+      mouseYStart: pageY - mouseY,
     })
+    if (!onMoveStart) return
+    const x = width / 2 - (mouseX * resizeFactorX / zoom)
+    const y = height / 2 - (mouseY * resizeFactorY / zoom)
+    const currentCenter = projection().invert([ x, y ])
+    onMoveStart(currentCenter)
   }
-  handleTouchStart({ touches }){
-    this.handleMouseDown(touches[0]);
+  handleTouchStart({ touches }) {
+    this.handleMouseDown(touches[0])
   }
   preventTouchScroll(evt) {
     evt.preventDefault()
