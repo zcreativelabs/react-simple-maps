@@ -14,7 +14,7 @@ class ComposableMap extends Component {
       projection,
       projectionConfig,
       width,
-      height,
+      height
     } = this.props
 
     return typeof projection !== "function" ?
@@ -29,6 +29,7 @@ class ComposableMap extends Component {
       style,
       showCenter,
       children,
+      aspectRatio
     } = this.props
 
     return (
@@ -36,7 +37,8 @@ class ComposableMap extends Component {
            height={ height }
            viewBox={ `0 0 ${width} ${height}` }
            className="rsm-svg"
-           style={ style }>
+           style={ style }
+           preserveAspectRatio={ aspectRatio }>
         {
           React.cloneElement(this.props.children, {
             projection: this.projection,
@@ -62,6 +64,7 @@ ComposableMap.defaultProps = {
   height: 450,
   projection: "times",
   projectionConfig: defaultProjectionConfig,
+  aspectRatio: "xMidYMid"
 }
 
 export default ComposableMap
