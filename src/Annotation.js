@@ -19,9 +19,11 @@ class Annotation extends Component {
       stroke,
       strokeWidth,
       children,
+      curve,
+      markerEnd,
     } = this.props
 
-    const connectorPath = createConnectorPath(null, [-dx/zoom,-dy/zoom])
+    const connectorPath = createConnectorPath(null, [-dx/zoom,-dy/zoom], curve)
 
     return (
       <g
@@ -39,6 +41,7 @@ class Annotation extends Component {
           stroke={ stroke }
           strokeWidth={ strokeWidth }
           fill="none"
+          markerEnd={ markerEnd }
         />
       </g>
     )
@@ -46,6 +49,8 @@ class Annotation extends Component {
 }
 
 Annotation.defaultProps = {
+  curve: 0,
+  markerEnd: "none",
   componentIdentifier: "Annotation",
   stroke: "#000000",
   strokeWidth: 1,
