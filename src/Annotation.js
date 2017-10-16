@@ -34,7 +34,12 @@ class Annotation extends Component {
         textAnchor={ createTextAnchor(dx) }
         >
         { children }
-        <path d={ connectorPath } stroke={ stroke } strokeWidth={ strokeWidth } />
+        <path
+          d={ connectorPath }
+          stroke={ stroke }
+          strokeWidth={ strokeWidth }
+          fill="none"
+        />
       </g>
     )
   }
