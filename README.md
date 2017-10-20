@@ -107,6 +107,7 @@ The above results in the following svg structure rendered by react:
 - [`<Geography />`](#Geography-component)
 - [`<Markers />`](#Markers-component)
 - [`<Marker />`](#Marker-component)
+- [`<Annotations />`](#Annotations-component)
 - [`<Annotation />`](#Annotation-component)
 - [`<Graticule />`](#Graticule-component)
 
@@ -420,6 +421,10 @@ handleClick(marker, evt) {
 
 Currently supported events are `onMouseEnter`, `onMouseLeave`, `onMouseDown`, `onMouseUp`, `onClick`, `onMouseMove`, `onFocus`, `onBlur`.
 
+#### <a name="Annotations-component"></a> `<Annotations />`
+
+`<Annotations />` is a simple wrapper component for the individual annotations.
+
 #### <a name="Annotation-component"></a> `<Annotation />`
 
 `<Annotation />` components can be used to add textual annotations. To position an annotation you have to specify the coordinates of the subject of the annotation, and then pass in numbers for dx and dy to specify the offset of the annotation itself.
@@ -435,6 +440,8 @@ Currently supported events are `onMouseEnter`, `onMouseLeave`, `onMouseDown`, `o
 | stroke              | String          | "#000000"                      |
 | strokeWidth         | Number          | 1                              |
 | style               | Object          | {}                             |
+| markerEnd           | String          | "none"                         |
+| curve               | Number          | 0                              |
 
 ##### Example annotation
 
@@ -443,6 +450,90 @@ The following example shows how to add a sample annotation for the city of Zuric
 ```js
 ...
 <Annotation dx={ -30 } dy={ 30 } subject={ [ 8.5, 47.3 ] } strokeWidth={ 1 }>
+  <text>
+    { "Zurich" }
+  </text>
+</Annotation>
+...
+```
+
+You can also use the `<Annotations />` component to iterate over annotations.
+
+```js
+...
+<Annotations>
+  {
+    annotations.map((annotation, i) => (
+      <Annotation
+        key={i}
+        dx={ -30 }
+        dy={ 30 }
+        subject={ annotation.coordinates }
+        strokeWidth={ 1 }
+        >
+        <text>
+          { annotation.label }
+        </text>
+      </Annotation>
+    ))
+  }
+</Annotations>
+...
+```
+
+##### Annotations with a curved connector
+
+The following example shows how to add an annotation with a curved connector for the city of Zurich on a world map. The `curve` prop can take either a positive number (e.g. 0.5), or a negative number (e.g. -0.5) to create connectors with varying curve intensity. The default value of 0 will connect the annotation through a straight line with no curve.
+
+```js
+...
+<Annotation
+  dx={ -30 }
+  dy={ 30 }
+  subject={ [ 8.5, 47.3 ] }
+  strokeWidth={ 1 }
+  curve={0.5}
+  >
+  <text>
+    { "Zurich" }
+  </text>
+</Annotation>
+...
+```
+
+##### Annotations with an arrow connector
+
+To make the connector an arrow, you can pass a custom SVG marker id to the `markerEnd` prop of the `<Annotation />` component.
+
+```js
+...
+<Annotation
+  dx={ -30 }
+  dy={ 30 }
+  subject={ [ 8.5, 47.3 ] }
+  stroke="#000"
+  strokeWidth={ 1 }
+  curve={0.5}
+  markerEnd="url(#custom-arrow)"
+  >
+  <defs>
+   <marker
+     id="custom-arrow"
+     markerWidth={10}
+     markerHeight={10}
+     refX={7}
+     refY={5}
+     orient="auto"
+     markerUnits="userSpaceOnUse"
+     >
+     <path
+       d="M1,1 L7,5 L1,9"
+       fill="none"
+       stroke="#000"
+       strokeWidth={1}
+     />
+   </marker>
+  </defs>
   <text>
     { "Zurich" }
   </text>
