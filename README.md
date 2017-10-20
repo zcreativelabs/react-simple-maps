@@ -344,7 +344,13 @@ Currently supported events are `onMouseEnter`, `onMouseLeave`, `onMouseDown`, `o
 
 #### <a name="Markers-component"></a> `<Markers />`
 
-`<Markers />` is a simple wrapper component for the individual markers.
+`<Markers />` is a simple wrapper component for the individual markers. You can choose to preserve the markers aspect/size when in a `<ZoomableGroup />`
+
+##### Props
+
+| Property            | Type            | Default                        |
+| ------------------- |:--------------- | :----------------------------- |
+| preserveAspectRatio | Boolean         | true                           |
 
 
 #### <a name="Marker-component"></a> `<Marker />`
