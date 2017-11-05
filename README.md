@@ -372,26 +372,21 @@ Currently supported events are `onMouseEnter`, `onMouseLeave`, `onMouseDown`, `o
 
 #### <a name="Markers-component"></a> `<Markers />`
 
-`<Markers />` is a simple wrapper component for the individual markers. You can choose to preserve the markers aspect/size when in a `<ZoomableGroup />`
-
-##### Props
-
-| Property            | Type            | Default                        |
-| ------------------- |:--------------- | :----------------------------- |
-| preserveAspectRatio | Boolean         | true                           |
+`<Markers />` is a simple wrapper component for the individual markers.
 
 
 #### <a name="Marker-component"></a> `<Marker />`
 
-The `<Marker />` component represents each marker and uses coordinates to position the marker on the map. It does not make any assumptions about what your marker looks like, so you have to specify yourself what shape it should have. See the example below for how to make the recommended circular marker. The component can be used to assign events to individual markers on the map, and to specify the hover, focus and click behavior.
+The `<Marker />` component represents each marker and uses coordinates to position the marker on the map. It does not make any assumptions about what your marker looks like, so you have to specify yourself what shape it should have. See the example below for how to make the recommended circular marker. The component can be used to assign events to individual markers on the map, and to specify the hover, focus and click behavior. You can also choose to preserve the markers aspect/size when in a `<ZoomableGroup />` via the `preserveMarkerAspect` prop.
 
 ##### Props
 
-| Property            | Type            | Default                        |
-| ------------------- |:--------------- | :----------------------------- |
-| marker              | Object          | *see below examples            |
-| tabable             | Boolean         | true                           |
-| style               | Object          | *see below examples            |
+| Property             | Type            | Default                        |
+| -------------------- |:--------------- | :----------------------------- |
+| marker               | Object          | *see below examples            |
+| tabable              | Boolean         | true                           |
+| style                | Object          | *see below examples            |
+| preserveMarkerAspect | Boolean         | true                           |
 
 ##### Marker location
 

@@ -9,7 +9,6 @@ class Markers extends Component {
       projection,
       style,
       zoom,
-      preserveMarkerAspect,
     } = this.props
     return (
       <g className="rsm-markers" style={ style }>
@@ -20,7 +19,6 @@ class Markers extends Component {
               React.cloneElement(children, {
                 projection,
                 zoom,
-                preserveMarkerAspect
               }) :
               children.map((child, i) =>
                 !child ?
@@ -29,7 +27,6 @@ class Markers extends Component {
                     key: child.key || `marker-${i}`,
                     projection,
                     zoom,
-                    preserveMarkerAspect
                   })
               )
         }
@@ -40,7 +37,6 @@ class Markers extends Component {
 
 Markers.defaultProps = {
   componentIdentifier: "Markers",
-  preserveMarkerAspect: true
 }
 
 export default Markers
