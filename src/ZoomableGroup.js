@@ -86,7 +86,7 @@ class ZoomableGroup extends Component {
     this.handleMouseDown(touches[0])
   }
   handleTouchStart({ touches }) {
-    if (touches.length > 1){
+    if (touches.length > 1) {
       this.handleMouseDown(touches[0])
     }
     else {
@@ -94,7 +94,9 @@ class ZoomableGroup extends Component {
     }
   }
   preventTouchScroll(evt) {
-    evt.preventDefault()
+    if (evt.touches.length > 1) {
+      evt.preventDefault()
+    }
   }
   componentWillReceiveProps(nextProps) {
     const { mouseX, mouseY, resizeFactorX, resizeFactorY } = this.state
