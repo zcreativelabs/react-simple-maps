@@ -231,6 +231,33 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 ```
 
+##### Move events
+
+The `ZoomableGroup` component allows you to hook into the `onMoveStart` and `onMoveEnd` event, and exposes the new center of the map in the callback.
+
+```js
+
+handleMoveStart(newCenter) {
+  console.log("New center: ", newCenter)
+}
+
+handleMoveEnd(newCenter) {
+  console.log("New center: ", newCenter)
+}
+
+...
+<ZoomableGroup
+  onMoveStart={this.handleMoveStart}
+  onMoveEnd={this.handleMoveEnd}
+>
+  <Geographies>
+    ...
+  </Geographies>
+</ZoomableGroup>
+...
+```
+
+
 #### <a name="Geographies-component"></a> `<Geographies />`
 
 `<Geographies />` is a group wrapper around the geographies paths. It returns a function that contains the geographies extracted from the geographiesUrl passed in.
