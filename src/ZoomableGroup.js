@@ -155,7 +155,6 @@ class ZoomableGroup extends Component {
       resizeFactorX,
       resizeFactorY,
     } = this.state
-
     return (
       <g className="rsm-zoomable-group"
          ref={ zoomableGroupNode => this.zoomableGroupNode = zoomableGroupNode }
