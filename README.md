@@ -323,6 +323,51 @@ class ChoroplethMap extends Component {
 export default ChoroplethMap
 ```
 
+##### Custom TopoJSON via geographyPaths
+
+If you want to transform your own TopoJSON maps with `topojson-client`, you can use `geographyPaths` to inject your own array of paths into `react-simple-maps`.
+
+```js
+import React, { Component } from "react"
+import { get } from "axios"
+import { feature } from "topojson-client"
+
+class CustomMap extends Component {
+  contructor() {
+    super()
+    this.state = {
+      geographyPaths: [],
+    }
+    this.loadPaths = this.loadPaths.bind(this)
+  }
+  componentDidMount() {
+    this.loadPaths()
+  }
+  loadPaths() {
+    get("/path/to/world-topojson.json")
+      .then(res => {
+        if (res.status !== 200) return
+        const world = res.data
+        const geographyPaths = feature(
+          world,
+          world.objects[Object.keys(world.objects)[0]]
+        ).features
+        this.setState({ geographyPaths })
+      })
+  }
+  render() {
+    return (
+      ...
+      <Geographies geographyPaths={this.state.geographyPaths} disableOptimization>
+        ...
+      </Geographies>
+      ...
+    )
+  }
+```
+
+Check out the [custom-json-geographyPaths example](https://github.com/zcreativelabs/react-simple-maps/tree/master/examples/custom-json-geographyPaths) to see how to do this.
+
 #### <a name="Geography-component"></a> `<Geography />`
 
 The `<Geography />` component represents each shape converted with topojson. The component can be used to assign events to individual shapes on the map, and to specify their hover, focus and click behavior.
