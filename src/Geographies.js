@@ -12,42 +12,49 @@ class Geographies extends Component {
 
     this.fetchGeographies = this.fetchGeographies.bind(this)
   }
-  fetchGeographies(geographyUrl) {
+  fetchGeographies(geography) {
     const { width, height } = this.props
 
-    if(!geographyUrl) return
+    if(!geography) return
 
-    const request = new XMLHttpRequest()
-    request.open("GET", geographyUrl, true)
+    else if (typeof geography === 'object') {
+      this.setState({
+          geographyPaths: feature(geographyPaths, geographyPaths.objects[Object.keys(geographyPaths.objects)[0]]).features
+        })
+    }
+    else {
+      const request = new XMLHttpRequest()
+      request.open("GET", geography, true)
 
-    request.onload = () => {
-      if (request.status >= 200 && request.status < 400) {
-        const geographyPaths = JSON.parse(request.responseText)
-        this.setState({
-          geographyPaths: feature(geographyPaths, geographyPaths.objects[Object.keys(geographyPaths.objects)[0]]).features,
-        }, () => {
+      request.onload = () => {
+        if (request.status >= 200 && request.status < 400) {
+          const geographyPaths = JSON.parse(request.responseText)
+          this.setState({
+            geographyPaths: feature(geographyPaths, geographyPaths.objects[Object.keys(geographyPaths.objects)[0]]).features,
+          }, () => {
+            if (!this.props.onGeographiesLoaded) return
+            this.props.onGeographyPathsLoaded(String(request.status))
+          })
+        } else {
           if (!this.props.onGeographiesLoaded) return
           this.props.onGeographyPathsLoaded(String(request.status))
-        })
-      } else {
-        if (!this.props.onGeographiesLoaded) return
-        this.props.onGeographyPathsLoaded(String(request.status))
+        }
       }
+      request.onerror = () => {
+        console.log("There was a connection error...")
+      }
+      request.send()
     }
-    request.onerror = () => {
-      console.log("There was a connection error...")
-    }
-    request.send()
   }
-  componentWillReceiveProps(nextProps) {;
-    if (!nextProps.geographyUrl && !nextProps.geographyPaths.length !== this.props.geographyPaths.length) {
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.geography && !nextProps.geographyPaths.length !== this.props.geographyPaths.length) {
       this.setState({
         geographyPaths: nextProps.geographyPaths,
       })
       return
     }
-    if (nextProps.geographyUrl !== this.props.geographyUrl) {
-      this.fetchGeographies(nextProps.geographyUrl)
+    if (nextProps.geography !== this.props.geography) {
+      this.fetchGeographies(nextProps.geography)
     }
   }
   shouldComponentUpdate(nextProps, nextState) {
@@ -56,7 +63,7 @@ class Geographies extends Component {
     return geoPathsChanged || choroplethChanged || nextProps.disableOptimization
   }
   componentDidMount() {
-    this.fetchGeographies(this.props.geographyUrl)
+    this.fetchGeographies(this.props.geography)
   }
   render() {
 
@@ -77,7 +84,7 @@ class Geographies extends Component {
 Geographies.defaultProps = {
   componentIdentifier: "Geographies",
   disableOptimization: false,
-  geographyUrl: "",
+  geography: "",
   geographyPaths: [],
 }
 
