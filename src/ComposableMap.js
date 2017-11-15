@@ -29,13 +29,14 @@ class ComposableMap extends Component {
       style,
       showCenter,
       children,
-      aspectRatio
+      aspectRatio,
+      viewBox
     } = this.props
 
     return (
       <svg width={ width }
            height={ height }
-           viewBox={ `0 0 ${width} ${height}` }
+           viewBox={ viewBox ? viewBox : `0 0 ${width} ${height}` }
            className="rsm-svg"
            style={ style }
            preserveAspectRatio={ aspectRatio }>
@@ -64,7 +65,8 @@ ComposableMap.defaultProps = {
   height: 450,
   projection: "times",
   projectionConfig: defaultProjectionConfig,
-  aspectRatio: "xMidYMid"
+  aspectRatio: "xMidYMid",
+  viewBox: null
 }
 
 export default ComposableMap
