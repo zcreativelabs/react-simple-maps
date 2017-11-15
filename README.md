@@ -107,6 +107,7 @@ The above results in the following svg structure rendered by react:
 - [`<Geography />`](#Geography-component)
 - [`<Markers />`](#Markers-component)
 - [`<Marker />`](#Marker-component)
+- [`<Annotations />`](#Annotations-component)
 - [`<Annotation />`](#Annotation-component)
 - [`<Graticule />`](#Graticule-component)
 
@@ -230,6 +231,33 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 ```
 
+##### Move events
+
+The `ZoomableGroup` component allows you to hook into the `onMoveStart` and `onMoveEnd` event, and exposes the new center of the map in the callback.
+
+```js
+
+handleMoveStart(newCenter) {
+  console.log("New center: ", newCenter)
+}
+
+handleMoveEnd(newCenter) {
+  console.log("New center: ", newCenter)
+}
+
+...
+<ZoomableGroup
+  onMoveStart={this.handleMoveStart}
+  onMoveEnd={this.handleMoveEnd}
+>
+  <Geographies>
+    ...
+  </Geographies>
+</ZoomableGroup>
+...
+```
+
+
 #### <a name="Geographies-component"></a> `<Geographies />`
 
 `<Geographies />` is a group wrapper around the geographies paths. It returns a function that contains the geographies extracted from the geographiesUrl passed in.
@@ -295,6 +323,51 @@ class ChoroplethMap extends Component {
 export default ChoroplethMap
 ```
 
+##### Custom TopoJSON via geographyPaths
+
+If you want to transform your own TopoJSON maps with `topojson-client`, you can use `geographyPaths` to inject your own array of paths into `react-simple-maps`.
+
+```js
+import React, { Component } from "react"
+import { get } from "axios"
+import { feature } from "topojson-client"
+
+class CustomMap extends Component {
+  contructor() {
+    super()
+    this.state = {
+      geographyPaths: [],
+    }
+    this.loadPaths = this.loadPaths.bind(this)
+  }
+  componentDidMount() {
+    this.loadPaths()
+  }
+  loadPaths() {
+    get("/path/to/world-topojson.json")
+      .then(res => {
+        if (res.status !== 200) return
+        const world = res.data
+        const geographyPaths = feature(
+          world,
+          world.objects[Object.keys(world.objects)[0]]
+        ).features
+        this.setState({ geographyPaths })
+      })
+  }
+  render() {
+    return (
+      ...
+      <Geographies geographyPaths={this.state.geographyPaths} disableOptimization>
+        ...
+      </Geographies>
+      ...
+    )
+  }
+```
+
+Check out the [custom-json-geographyPaths example](https://github.com/zcreativelabs/react-simple-maps/tree/master/examples/custom-json-geographyPaths) to see how to do this.
+
 #### <a name="Geography-component"></a> `<Geography />`
 
 The `<Geography />` component represents each shape converted with topojson. The component can be used to assign events to individual shapes on the map, and to specify their hover, focus and click behavior.
@@ -349,15 +422,16 @@ Currently supported events are `onMouseEnter`, `onMouseLeave`, `onMouseDown`, `o
 
 #### <a name="Marker-component"></a> `<Marker />`
 
-The `<Marker />` component represents each marker and uses coordinates to position the marker on the map. It does not make any assumptions about what your marker looks like, so you have to specify yourself what shape it should have. See the example below for how to make the recommended circular marker. The component can be used to assign events to individual markers on the map, and to specify the hover, focus and click behavior.
+The `<Marker />` component represents each marker and uses coordinates to position the marker on the map. It does not make any assumptions about what your marker looks like, so you have to specify yourself what shape it should have. See the example below for how to make the recommended circular marker. The component can be used to assign events to individual markers on the map, and to specify the hover, focus and click behavior. You can also choose to preserve the markers aspect/size when in a `<ZoomableGroup />` via the `preserveMarkerAspect` prop.
 
 ##### Props
 
-| Property            | Type            | Default                        |
-| ------------------- |:--------------- | :----------------------------- |
-| marker              | Object          | *see below examples            |
-| tabable             | Boolean         | true                           |
-| style               | Object          | *see below examples            |
+| Property             | Type            | Default                        |
+| -------------------- |:--------------- | :----------------------------- |
+| marker               | Object          | *see below examples            |
+| tabable              | Boolean         | true                           |
+| style                | Object          | *see below examples            |
+| preserveMarkerAspect | Boolean         | true                           |
 
 ##### Marker location
 
@@ -414,6 +488,10 @@ handleClick(marker, evt) {
 
 Currently supported events are `onMouseEnter`, `onMouseLeave`, `onMouseDown`, `onMouseUp`, `onClick`, `onMouseMove`, `onFocus`, `onBlur`.
 
+#### <a name="Annotations-component"></a> `<Annotations />`
+
+`<Annotations />` is a simple wrapper component for the individual annotations.
+
 #### <a name="Annotation-component"></a> `<Annotation />`
 
 `<Annotation />` components can be used to add textual annotations. To position an annotation you have to specify the coordinates of the subject of the annotation, and then pass in numbers for dx and dy to specify the offset of the annotation itself.
@@ -429,6 +507,8 @@ Currently supported events are `onMouseEnter`, `onMouseLeave`, `onMouseDown`, `o
 | stroke              | String          | "#000000"                      |
 | strokeWidth         | Number          | 1                              |
 | style               | Object          | {}                             |
+| markerEnd           | String          | "none"                         |
+| curve               | Number          | 0                              |
 
 ##### Example annotation
 
@@ -437,6 +517,90 @@ The following example shows how to add a sample annotation for the city of Zuric
 ```js
 ...
 <Annotation dx={ -30 } dy={ 30 } subject={ [ 8.5, 47.3 ] } strokeWidth={ 1 }>
+  <text>
+    { "Zurich" }
+  </text>
+</Annotation>
+...
+```
+
+You can also use the `<Annotations />` component to iterate over annotations.
+
+```js
+...
+<Annotations>
+  {
+    annotations.map((annotation, i) => (
+      <Annotation
+        key={i}
+        dx={ -30 }
+        dy={ 30 }
+        subject={ annotation.coordinates }
+        strokeWidth={ 1 }
+        >
+        <text>
+          { annotation.label }
+        </text>
+      </Annotation>
+    ))
+  }
+</Annotations>
+...
+```
+
+##### Annotations with a curved connector
+
+The following example shows how to add an annotation with a curved connector for the city of Zurich on a world map. The `curve` prop can take either a positive number (e.g. 0.5), or a negative number (e.g. -0.5) to create connectors with varying curve intensity. The default value of 0 will connect the annotation through a straight line with no curve.
+
+```js
+...
+<Annotation
+  dx={ -30 }
+  dy={ 30 }
+  subject={ [ 8.5, 47.3 ] }
+  strokeWidth={ 1 }
+  curve={0.5}
+  >
+  <text>
+    { "Zurich" }
+  </text>
+</Annotation>
+...
+```
+
+##### Annotations with an arrow connector
+
+To make the connector an arrow, you can pass a custom SVG marker id to the `markerEnd` prop of the `<Annotation />` component.
+
+```js
+...
+<Annotation
+  dx={ -30 }
+  dy={ 30 }
+  subject={ [ 8.5, 47.3 ] }
+  stroke="#000"
+  strokeWidth={ 1 }
+  curve={0.5}
+  markerEnd="url(#custom-arrow)"
+  >
+  <defs>
+   <marker
+     id="custom-arrow"
+     markerWidth={10}
+     markerHeight={10}
+     refX={7}
+     refY={5}
+     orient="auto"
+     markerUnits="userSpaceOnUse"
+     >
+     <path
+       d="M1,1 L7,5 L1,9"
+       fill="none"
+       stroke="#000"
+       strokeWidth={1}
+     />
+   </marker>
+  </defs>
   <text>
     { "Zurich" }
   </text>

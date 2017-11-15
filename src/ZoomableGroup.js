@@ -85,8 +85,18 @@ class ZoomableGroup extends Component {
   handleTouchStart({ touches }) {
     this.handleMouseDown(touches[0])
   }
+  handleTouchStart({ touches }) {
+    if (touches.length > 1) {
+      this.handleMouseDown(touches[0])
+    }
+    else {
+      this.handleMouseUp()
+    }
+  }
   preventTouchScroll(evt) {
-    evt.preventDefault()
+    if (evt.touches.length > 1) {
+      evt.preventDefault()
+    }
   }
   componentWillReceiveProps(nextProps) {
     const { mouseX, mouseY, resizeFactorX, resizeFactorY } = this.state
@@ -155,7 +165,6 @@ class ZoomableGroup extends Component {
       resizeFactorX,
       resizeFactorY,
     } = this.state
-
     return (
       <g className="rsm-zoomable-group"
          ref={ zoomableGroupNode => this.zoomableGroupNode = zoomableGroupNode }

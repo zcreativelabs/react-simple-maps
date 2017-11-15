@@ -157,8 +157,8 @@ class Geography extends Component {
         onMouseLeave={ this.handleMouseLeave }
         onMouseDown={ this.handleMouseDown }
         onMouseUp={ this.handleMouseUp }
-        onFocus={ tabable && this.handleFocus }
-        onBlur={ tabable && this.handleBlur }
+        onFocus={ this.handleFocus }
+        onBlur={ this.handleBlur }
         tabIndex={ tabable ? 0 : -1 }
         { ...restProps }
       />

@@ -86,7 +86,9 @@ class Marker extends Component {
       marker,
       style,
       tabable,
+      zoom,
       children,
+      preserveMarkerAspect,
     } = this.props
 
     const {
@@ -94,12 +96,14 @@ class Marker extends Component {
       hover,
     } = this.state
 
+    const scale = preserveMarkerAspect ? ` scale(${1/zoom})` : ""
+
     return (
       <g className={ `rsm-marker${ pressed ? " rsm-marker--pressed" : "" }${ hover ? " rsm-marker--hover" : "" }` }
          transform={ `translate(
            ${ projection()(marker.coordinates)[0] }
            ${ projection()(marker.coordinates)[1] }
-         )`}
+         ) ${scale}`}
          style={ style[pressed || hover ? (pressed ? "pressed" : "hover") : "default"] }
          onMouseEnter={ this.handleMouseEnter }
          onMouseLeave={ this.handleMouseLeave }
@@ -127,6 +131,7 @@ Marker.defaultProps = {
     coordinates: [0,0],
   },
   tabable: true,
+  preserveMarkerAspect: true,
 }
 
 export default Marker
