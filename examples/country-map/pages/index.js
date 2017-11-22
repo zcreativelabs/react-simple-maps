@@ -28,7 +28,7 @@ class CountryMap extends Component {
           }}
           >
           <ZoomableGroup center={[ 8.2, 46.8 ]} disablePanning>
-            <Geographies geographyUrl="/static/ch-with-cantons.json">
+            <Geographies geography="/static/ch-with-cantons.json">
               {(geographies, projection) =>
                 geographies.map((geography, i) =>
                   geography.id !== "ATA" && (

@@ -27,6 +27,7 @@ $ npm install react react-dom react-simple-maps --save
 import React, { Component } from "react"
 import ReactDOM from "react-dom"
 import {
+
   ComposableMap,
   ZoomableGroup,
   Geographies,
@@ -39,7 +40,7 @@ class App extends Component {
       <div>
         <ComposableMap>
           <ZoomableGroup>
-          <Geographies geographyUrl={ "/path/to/your/topojson-map-file.json" }>
+          <Geographies geography={ "/path/to/your/topojson-map-file.json or geography object" }>
             {(geographies, projection) => geographies.map((geography, i) => (
               <Geography
                 key={ `geography-${i}` }
@@ -65,7 +66,7 @@ Here is the complete simplified component structure of any map created with `rea
 ```js
 <ComposableMap>
   <ZoomableGroup>
-    <Geographies geographyUrl={ "/path/to/your/topojson-map-file.json" }>
+    <Geographies geography={ "/path/to/your/topojson-map-file.json or geography object" }>
       {(geographies, projection) => geographies.map((geography, i) => (
         <Geography key={ i } geography={ geography } projection={ projection } />
       ))}
@@ -209,7 +210,7 @@ class App extends Component {
         <hr />
         <ComposableMap>
           <ZoomableGroup zoom={ this.state.zoom }>
-          <Geographies geographyUrl={ "/path/to/your/topojson-map-file.json" }>
+          <Geographies geography={ "/path/to/your/topojson-map-file.json or geography object" }>
             {(geographies, projection) => geographies.map((geography, i) => (
               <Geography
                 key={ `geography-${i}` }
@@ -247,7 +248,7 @@ If you do not want `react-simple-maps` to load your topojson and pass it down au
 | Property            | Type            | Default                        |
 | ------------------- |:--------------- | :----------------------------- |
 | disableOptimization | Boolean         | false                          |
-| geographyUrl        | String          | ""                             |
+| geography           | String or Object| ""                             |
 | geographyPaths      | Array           | []                             |
 
 ##### Choropleth map
@@ -257,6 +258,7 @@ The below example uses the [world-50m-with-data.json](https://github.com/zcreati
 ```js
 import React, { Component } from "react"
 import { scaleLinear } from "d3-scale"
+import geographyObject from "/path/to/world-50m-with-data.json" // If you want to use an object instead of requesting a file
 
 const colorScale = scaleLinear()
   .domain([0, 100000000, 1338612970]) // Max is based on China
@@ -268,7 +270,7 @@ class ChoroplethMap extends Component {
       <div>
         <ComposableMap style={{ width: "100%" }}>
           <ZoomableGroup>
-            <Geographies geographyUrl={ "/path/to/world-50m-with-data.json" }>
+            <Geographies geography={ "/path/to/world-50m-with-data.json or geography object" } > // if you are using the object, then geography={geographyObject}
               {(geographies, projection) => geographies.map((geography, i) => (
                 <Geography
                   key={ `geography-${i}` }
@@ -332,7 +334,7 @@ handleClick(geography, evt) {
   console.log("Geography data: ", geography)
 }
 ...
-<Geographies geographyUrl={ "/path/to/your/topojson-map-file.json" }>
+<Geographies geography={ "/path/to/your/topojson-map-file.json" }>
   {(geographies, projection) => geographies.map((geography, i) => (
     <Geography key={ i } geography={ geography } projection={ projection } />
   ))}

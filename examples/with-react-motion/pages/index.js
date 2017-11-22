@@ -95,7 +95,7 @@ class AnimatedMap extends Component {
               }}
               >
               <ZoomableGroup center={[x,y]} zoom={zoom}>
-                <Geographies geographyUrl="/static/world-110m.json">
+                <Geographies geography="/static/world-110m.json">
                   {(geographies, projection) =>
                     geographies.map((geography, i) => geography.id !== "010" && (
                       <Geography

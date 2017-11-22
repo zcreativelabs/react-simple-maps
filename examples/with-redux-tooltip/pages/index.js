@@ -47,7 +47,7 @@ class WithReduxExample extends Component {
       <div style={wrapperStyles}>
         <ComposableMap>
           <ZoomableGroup>
-            <Geographies geographyUrl="/static/world-50m.json">
+            <Geographies geography="/static/world-50m.json">
               {(geographies, projection) =>
                 geographies.map((geography, i) => (
                   <Geography

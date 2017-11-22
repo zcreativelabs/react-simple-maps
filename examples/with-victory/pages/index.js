@@ -51,7 +51,7 @@ class MapWithVictory extends Component {
           }}
           >
           <ZoomableGroup center={[-8.3,-46.8]} disablePanning>
-            <Geographies geographyUrl="/static/cantons.json">
+            <Geographies geography="/static/cantons.json">
               {(geographies, projection) =>
                 geographies.map((geography, i) =>
                   <Geography

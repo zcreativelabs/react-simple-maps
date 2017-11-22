@@ -67,7 +67,7 @@ class SubregionsMap extends Component {
           }}
           >
           <ZoomableGroup center={[0,20]}>
-            <Geographies geographyUrl={ "/static/world-50m-with-population.json" }>
+            <Geographies geography={ "/static/world-50m-with-population.json" }>
               {(geographies, projection) =>
                 geographies.map((geography, i) => (
                   <Geography
