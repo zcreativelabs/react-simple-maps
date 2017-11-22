@@ -269,15 +269,14 @@ React-simple-maps offers a couple of ways to optimise the performance of the map
 
 2. A second way in which react-simple-maps can optimise maps is by setting a `cacheId` on the individual geographies. See the [`<Geography />`](#ComposableMap-component) component for more info. The unique cacheIds help to cache the paths and significantly accelerate rerenders. This second method is the recommended way of optimising maps with react-simple-maps.
 
-If you do not want `react-simple-maps` to load your topojson and pass it down automatically, you can also pass your topojson converted `features` directly into the `Geographies` component.
+If you do not want `react-simple-maps` to load your topojson and pass it down automatically, you can also pass your topojson converted `features` directly into the `Geographies` component, or an object containing the topojson data.
 
 ##### Props
 
-| Property            | Type            | Default                        |
-| ------------------- |:--------------- | :----------------------------- |
-| disableOptimization | Boolean         | false                          |
-| geography           | String or Object| ""                             |
-| geographyPaths      | Array           | []                             |
+| Property            | Type                      | Default                        |
+| ------------------- |:--------------------------| :----------------------------- |
+| disableOptimization | Boolean                   | false                          |
+| geography           | String or Object, or Array| ""                             |
 
 ##### Choropleth map
 
@@ -286,7 +285,8 @@ The below example uses the [world-50m-with-data.json](https://github.com/zcreati
 ```js
 import React, { Component } from "react"
 import { scaleLinear } from "d3-scale"
-import geographyObject from "/path/to/world-50m-with-data.json" // If you want to use an object instead of requesting a file
+// If you want to use an object instead of requesting a file:
+import geographyObject from "/path/to/world-50m-with-data.json"
 
 const colorScale = scaleLinear()
   .domain([0, 100000000, 1338612970]) // Max is based on China
@@ -360,7 +360,7 @@ class CustomMap extends Component {
   render() {
     return (
       ...
-      <Geographies geographyPaths={this.state.geographyPaths} disableOptimization>
+      <Geographies geography={this.state.geographyPaths} disableOptimization>
         ...
       </Geographies>
       ...

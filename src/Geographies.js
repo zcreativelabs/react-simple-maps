@@ -7,7 +7,7 @@ class Geographies extends Component {
     super(props)
 
     this.state = {
-      geographyPaths: props.geographyPaths,
+      geographyPaths: props.geography,
     }
 
     this.fetchGeographies = this.fetchGeographies.bind(this)
@@ -17,11 +17,16 @@ class Geographies extends Component {
 
     if(!geography) return
 
-    else if (typeof geography === 'object') {
+    else if (Object.prototype.toString.call(geography) === '[object Object]') {
       this.setState({
           geographyPaths: feature(geographyPaths, geographyPaths.objects[Object.keys(geographyPaths.objects)[0]]).features
         })
     }
+
+    else if (Array.isArray(geography)) {
+      this.setState({ geographyPaths: geography })
+      }
+
     else {
       const request = new XMLHttpRequest()
       request.open("GET", geography, true)
@@ -84,7 +89,6 @@ Geographies.defaultProps = {
   componentIdentifier: "Geographies",
   disableOptimization: false,
   geography: "",
-  geographyPaths: [],
 }
 
 export default Geographies
