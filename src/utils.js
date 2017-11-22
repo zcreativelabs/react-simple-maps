@@ -43,7 +43,8 @@ export function createNewChildren(children, props) {
   if (!children.length) {
     return isChildOfType(children, "Geographies") ? React.cloneElement(children, {
       projection: props.projection,
-    }) : (isChildOfType(children, "Markers") || isChildOfType(children, "Annotation") || isChildOfType(child, "Graticule") ? React.cloneElement(children, {
+    }) : (isChildOfType(children, "Markers") || isChildOfType(children, "Annotations") || isChildOfType(children, "Annotation") || isChildOfType(child, "Graticule") ?
+    React.cloneElement(children, {
       projection: props.projection,
       zoom: props.zoom,
     }) : children)
@@ -55,12 +56,12 @@ export function createNewChildren(children, props) {
         React.cloneElement(child, {
           key: `zoomable-child-${i}`,
           projection: props.projection,
-        }) : (isChildOfType(child, "Markers") || isChildOfType(child, "Annotation") || isChildOfType(child, "Graticule") ?
+        }) : (isChildOfType(child, "Markers") || isChildOfType(child, "Annotations") || isChildOfType(child, "Annotation") || isChildOfType(child, "Graticule") ?
         React.cloneElement(child, {
           key: `zoomable-child-${i}`,
           projection: props.projection,
           zoom: props.zoom,
-        }): child)
+        }) : child)
     })
   }
 }
@@ -71,8 +72,10 @@ export function roundPath(path, precision) {
   return path.replace(query, n => Math.round(n * (1/precision)) / (1/precision))
 }
 
-export function createConnectorPath(connectorType, endPoint) {
-  return `M0,0 L${endPoint[0]},${endPoint[1]}`
+export function createConnectorPath(connectorType, endPoint, curve) {
+  const e0 = endPoint[0]
+  const e1 = endPoint[1]
+  return `M0,0 Q ${(curve + 1) / 2 * e0},${e1-((curve + 1) / 2 * e1)} ${e0},${e1}`
 }
 
 export function createTextAnchor(dx) {

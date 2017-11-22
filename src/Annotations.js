@@ -1,32 +1,30 @@
 
 import React, { Component } from "react"
 
-class Markers extends Component {
+class Annotations extends Component {
   render() {
 
     const {
       children,
       projection,
       style,
-      zoom,
     } = this.props
+
     return (
-      <g className="rsm-markers" style={ style }>
+      <g className="rsm-annotations" style={ style }>
         {
           !children ?
             null :
             children.length === undefined ?
               React.cloneElement(children, {
                 projection,
-                zoom,
               }) :
               children.map((child, i) =>
                 !child ?
                   null :
                   React.cloneElement(child, {
-                    key: child.key || `marker-${i}`,
+                    key: child.key || `annotation-${i}`,
                     projection,
-                    zoom,
                   })
               )
         }
@@ -35,8 +33,8 @@ class Markers extends Component {
   }
 }
 
-Markers.defaultProps = {
-  componentIdentifier: "Markers",
+Annotations.defaultProps = {
+  componentIdentifier: "Annotations",
 }
 
-export default Markers
+export default Annotations

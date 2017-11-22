@@ -72,7 +72,6 @@ class Geographies extends Component {
       style,
       children,
     } = this.props
-
     return (
       <g className="rsm-geographies" style={ style }>
         { children(this.state.geographyPaths, projection) }
