@@ -60,7 +60,6 @@ class UpdatableChoropleth extends Component {
     super()
 
     this.state = {
-      optimizationDisabled: false,
       populationData: true,
     }
 
@@ -68,25 +67,11 @@ class UpdatableChoropleth extends Component {
     this.switchToRegions = this.switchToRegions.bind(this)
   }
   switchToPopulation() {
-    this.setState({
-      populationData: true,
-      optimizationDisabled: true,
-    }, () => {
-      this.setState({
-        optimizationDisabled: false,
-      })
-    })
+    this.setState({ populationData: true })
   }
 
   switchToRegions() {
-    this.setState({
-      populationData: false,
-      optimizationDisabled: true,
-    }, () => {
-      this.setState({
-        optimizationDisabled: false,
-      })
-    })
+    this.setState({ populationData: false })
   }
   render() {
     return (
@@ -115,15 +100,17 @@ class UpdatableChoropleth extends Component {
             <ZoomableGroup center={[0,20]}>
               <Geographies
                 geography={ "/static/world-50m-with-population.json" }
-                disableOptimization={ this.state.optimizationDisabled }
+                disableOptimization
                 >
                 {(geographies, projection) =>
                   geographies.map((geography, i) => (
                     <Geography
-                      key={ i }
+                      key={`${geography.properties.iso_a3}-${i}`}
+                      cacheId={`${geography.properties.iso_a3}-${i}`}
                       geography={ geography }
                       projection={ projection }
                       onClick={ this.handleClick }
+                      round
                       style={{
                         default: {
                           fill: this.state.populationData
