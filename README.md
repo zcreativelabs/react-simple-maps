@@ -7,9 +7,9 @@ An svg map component built with and for React. It allows the creation of pure re
 
 Since `react-simple-maps` leaves DOM work to react, it can also be easily used with other libraries, such as [react-motion](https://github.com/chenglou/react-motion) and [redux-tooltip](https://github.com/kuy/redux-tooltip).
 
-### API changes from 0.4 to 0.5
+### API changes from 0.9 to 0.10
 
-`React-simple-maps` has been rewritten to allow more creative freedom and low-level access for developers. The `<ReactSimpleMap />` component has been replaced with a `<ComposableMap />` component and a set of smaller components that define each part of the interactive map.
+In version `0.10` the method of passing geography data to `react-simple-maps` has changed. Where previously `geographyUrl` and `geographyPaths` were separate, they are now handled together through the `geography` prop. If you are upgrading from version `0.9`, simply change `geographyUrl` or `geographyPaths` to `geography` and you should be good to go.
 
 ### Installation
 
