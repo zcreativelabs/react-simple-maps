@@ -7,7 +7,7 @@ class Geographies extends Component {
     super(props)
 
     this.state = {
-      geographyPaths: props.geography,
+      geographyPaths: "",
     }
 
     this.fetchGeographies = this.fetchGeographies.bind(this)
@@ -79,7 +79,7 @@ class Geographies extends Component {
     } = this.props
     return (
       <g className="rsm-geographies" style={ style }>
-        { children(this.state.geographyPaths, projection) }
+        { children(this.state.geographyPaths || [], projection) }
       </g>
     )
   }
