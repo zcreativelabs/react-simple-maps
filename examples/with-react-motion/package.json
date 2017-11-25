@@ -16,6 +16,7 @@
     "next": "2.4.9",
     "react": "15.6.1",
     "react-dom": "15.6.1",
-    "react-motion": "0.5.0"
+    "react-motion": "0.5.0",
+    "react-simple-maps": "0.10.0"
   }
 }
