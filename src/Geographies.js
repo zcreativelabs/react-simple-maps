@@ -52,12 +52,6 @@ class Geographies extends Component {
     }
   }
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.geography && !nextProps.geographyPaths.length !== this.props.geographyPaths.length) {
-      this.setState({
-        geographyPaths: nextProps.geographyPaths,
-      })
-      return
-    }
     if (nextProps.geography !== this.props.geography) {
       this.fetchGeographies(nextProps.geography)
     }
@@ -68,10 +62,12 @@ class Geographies extends Component {
     return geoPathsChanged || choroplethChanged || nextProps.disableOptimization
   }
   componentDidMount() {
+    if (this.props.geographyUrl || this.props.geographyPaths) {
+      console.warn("You are using the deprecated geographyUrl or geographyPaths props. Use the new geography prop instead. Check out the new docs here: https://github.com/zcreativelabs/react-simple-maps#Geographies-component")
+    }
     this.fetchGeographies(this.props.geography)
   }
   render() {
-
     const {
       projection,
       style,
