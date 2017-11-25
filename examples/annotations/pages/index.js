@@ -32,7 +32,7 @@ class AnnotatedMap extends Component {
           }}
           >
           <ZoomableGroup center={[-76,13.5]} disablePanning>
-            <Geographies geographyUrl="/static/world-50m.json">
+            <Geographies geography="/static/world-50m.json">
               {(geographies, projection) =>
                 geographies.map((geography, i) => (
                   <Geography

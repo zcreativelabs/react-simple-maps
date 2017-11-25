@@ -27,6 +27,7 @@ $ npm install react react-dom react-simple-maps --save
 import React, { Component } from "react"
 import ReactDOM from "react-dom"
 import {
+
   ComposableMap,
   ZoomableGroup,
   Geographies,
@@ -39,7 +40,7 @@ class App extends Component {
       <div>
         <ComposableMap>
           <ZoomableGroup>
-          <Geographies geographyUrl={ "/path/to/your/topojson-map-file.json" }>
+          <Geographies geography={ "/path/to/your/topojson-map-file.json or geography object" }>
             {(geographies, projection) => geographies.map((geography, i) => (
               <Geography
                 key={ `geography-${i}` }
@@ -65,7 +66,7 @@ Here is the complete simplified component structure of any map created with `rea
 ```js
 <ComposableMap>
   <ZoomableGroup>
-    <Geographies geographyUrl={ "/path/to/your/topojson-map-file.json" }>
+    <Geographies geography={ "/path/to/your/topojson-map-file.json or geography object" }>
       {(geographies, projection) => geographies.map((geography, i) => (
         <Geography key={ i } geography={ geography } projection={ projection } />
       ))}
@@ -210,7 +211,7 @@ class App extends Component {
         <hr />
         <ComposableMap>
           <ZoomableGroup zoom={ this.state.zoom }>
-          <Geographies geographyUrl={ "/path/to/your/topojson-map-file.json" }>
+          <Geographies geography={ "/path/to/your/topojson-map-file.json or geography object" }>
             {(geographies, projection) => geographies.map((geography, i) => (
               <Geography
                 key={ `geography-${i}` }
@@ -268,15 +269,14 @@ React-simple-maps offers a couple of ways to optimise the performance of the map
 
 2. A second way in which react-simple-maps can optimise maps is by setting a `cacheId` on the individual geographies. See the [`<Geography />`](#ComposableMap-component) component for more info. The unique cacheIds help to cache the paths and significantly accelerate rerenders. This second method is the recommended way of optimising maps with react-simple-maps.
 
-If you do not want `react-simple-maps` to load your topojson and pass it down automatically, you can also pass your topojson converted `features` directly into the `Geographies` component.
+If you do not want `react-simple-maps` to load your topojson and pass it down automatically, you can also pass your topojson converted `features` directly into the `Geographies` component, or an object containing the topojson data.
 
 ##### Props
 
-| Property            | Type            | Default                        |
-| ------------------- |:--------------- | :----------------------------- |
-| disableOptimization | Boolean         | false                          |
-| geographyUrl        | String          | ""                             |
-| geographyPaths      | Array           | []                             |
+| Property            | Type                      | Default                        |
+| ------------------- |:--------------------------| :----------------------------- |
+| disableOptimization | Boolean                   | false                          |
+| geography           | String or Object, or Array| ""                             |
 
 ##### Choropleth map
 
@@ -285,6 +285,8 @@ The below example uses the [world-50m-with-data.json](https://github.com/zcreati
 ```js
 import React, { Component } from "react"
 import { scaleLinear } from "d3-scale"
+// If you want to use an object instead of requesting a file:
+import geographyObject from "/path/to/world-50m-with-data.json"
 
 const colorScale = scaleLinear()
   .domain([0, 100000000, 1338612970]) // Max is based on China
@@ -296,7 +298,7 @@ class ChoroplethMap extends Component {
       <div>
         <ComposableMap style={{ width: "100%" }}>
           <ZoomableGroup>
-            <Geographies geographyUrl={ "/path/to/world-50m-with-data.json" }>
+            <Geographies geography={ "/path/to/world-50m-with-data.json or geography object" } > // if you are using the object, then geography={geographyObject}
               {(geographies, projection) => geographies.map((geography, i) => (
                 <Geography
                   key={ `geography-${i}` }
@@ -358,7 +360,7 @@ class CustomMap extends Component {
   render() {
     return (
       ...
-      <Geographies geographyPaths={this.state.geographyPaths} disableOptimization>
+      <Geographies geography={this.state.geographyPaths} disableOptimization>
         ...
       </Geographies>
       ...
@@ -405,7 +407,7 @@ handleClick(geography, evt) {
   console.log("Geography data: ", geography)
 }
 ...
-<Geographies geographyUrl={ "/path/to/your/topojson-map-file.json" }>
+<Geographies geography={ "/path/to/your/topojson-map-file.json" }>
   {(geographies, projection) => geographies.map((geography, i) => (
     <Geography key={ i } geography={ geography } projection={ projection } />
   ))}

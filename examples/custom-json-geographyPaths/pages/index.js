@@ -53,7 +53,7 @@ class CustomMap extends Component {
           }}
           >
           <ZoomableGroup>
-            <Geographies geographyPaths={this.state.geographyPaths} disableOptimization>
+            <Geographies geography={this.state.geographyPaths} disableOptimization>
               {(geographies, projection) =>
                 geographies.map((geography, i) =>
                   <Geography

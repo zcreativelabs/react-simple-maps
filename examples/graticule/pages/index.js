@@ -31,7 +31,7 @@ class GraticuleMap extends Component {
           }}
           >
           <ZoomableGroup center={[0,0]}>
-            <Geographies geographyUrl="/static/world-50m.json">
+            <Geographies geography="/static/world-50m.json">
               {(geographies, projection) => geographies.map((geography, i) => (
                 <Geography
                   key={i}

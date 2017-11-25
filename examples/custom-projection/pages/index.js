@@ -37,7 +37,7 @@ class CustomProjectionMap extends Component {
           }}
           >
           <ZoomableGroup center={[10,52]}>
-            <Geographies geographyUrl="/static/world-50m.json">
+            <Geographies geography="/static/world-50m.json">
               {(geographies, projection) => geographies.map((geography, i) => (
                 <Geography
                   key={i}

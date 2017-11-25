@@ -99,7 +99,7 @@ class UpdatableChoropleth extends Component {
             >
             <ZoomableGroup center={[0,20]}>
               <Geographies
-                geographyUrl={ "/static/world-50m-with-population.json" }
+                geography={ "/static/world-50m-with-population.json" }
                 disableOptimization
                 >
                 {(geographies, projection) =>

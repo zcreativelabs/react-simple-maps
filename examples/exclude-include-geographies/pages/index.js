@@ -37,7 +37,7 @@ class ExcludeIncludeGeographies extends Component {
           }}
           >
           <ZoomableGroup center={[ 20, 0 ]} disablePanning>
-            <Geographies geographyUrl="/static/world-50m.json">
+            <Geographies geography="/static/world-50m.json">
               {(geographies, projection) =>
                 geographies.map((geography, i) =>
                   include.indexOf(geography.id) !== -1 && (

@@ -48,7 +48,7 @@ class CustomSVGMarkers extends Component {
           }}
           >
           <ZoomableGroup center={[ -60, -25 ]} disablePanning>
-            <Geographies geographyUrl="/static/world-50m.json">
+            <Geographies geography="/static/world-50m.json">
               {(geographies, projection) =>
                 geographies.map((geography, i) =>
                   include.indexOf(geography.id) !== -1 && (
