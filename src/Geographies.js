@@ -58,8 +58,7 @@ class Geographies extends Component {
   }
   shouldComponentUpdate(nextProps, nextState) {
     const geoPathsChanged = nextState.geographyPaths.length !== this.state.geographyPaths.length
-    const choroplethChanged = JSON.stringify(nextProps.choropleth) !== JSON.stringify(this.props.choropleth)
-    return geoPathsChanged || choroplethChanged || nextProps.disableOptimization
+    return geoPathsChanged || nextProps.disableOptimization
   }
   componentDidMount() {
     if (this.props.geographyUrl || this.props.geographyPaths) {
