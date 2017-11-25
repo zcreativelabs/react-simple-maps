@@ -282,13 +282,13 @@ If you do not want `react-simple-maps` to load your topojson and pass it down au
 
 ##### Choropleth map
 
-The below example uses the [world-50m-with-data.json](https://github.com/zcreativelabs/react-simple-maps/tree/master/topojson-maps) TopoJSON file.
+The below example uses the [world-50m.json](https://github.com/zcreativelabs/react-simple-maps/tree/master/topojson-maps) TopoJSON file.
 
 ```js
 import React, { Component } from "react"
 import { scaleLinear } from "d3-scale"
 // If you want to use an object instead of requesting a file:
-import geographyObject from "/path/to/world-50m-with-data.json"
+import geographyObject from "/path/to/world-50m.json"
 
 const colorScale = scaleLinear()
   .domain([0, 100000000, 1338612970]) // Max is based on China
@@ -300,7 +300,7 @@ class ChoroplethMap extends Component {
       <div>
         <ComposableMap style={{ width: "100%" }}>
           <ZoomableGroup>
-            <Geographies geography={ "/path/to/world-50m-with-data.json or geography object" } disableOptimization> // if you are using the object, then geography={geographyObject}
+            <Geographies geography={ "/path/to/world-50m.json or geography object" } disableOptimization> // if you are using the object, then geography={geographyObject}
               {(geographies, projection) => geographies.map((geography, i) => (
                 <Geography
                   key={ `geography-${i}` }
