@@ -19,7 +19,7 @@ class Geographies extends Component {
 
     else if (Object.prototype.toString.call(geography) === '[object Object]') {
       this.setState({
-          geographyPaths: feature(geographyPaths, geographyPaths.objects[Object.keys(geographyPaths.objects)[0]]).features
+          geographyPaths: feature(geography, geography.objects[Object.keys(geography.objects)[0]]).features
         })
     }
 
