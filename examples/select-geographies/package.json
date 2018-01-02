@@ -1,0 +1,19 @@
+{
+  "name": "select-geographies",
+  "version": "1.0.0",
+  "description": "Example of using react-simple-maps to create a basic world map, with selectable countries.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Richard Zimerman <richard@zcreativelabs.com> (https://github.com/zimrick)",
+  "license": "ISC",
+  "dependencies": {
+    "next": "4.2.1",
+    "react": "16.2.0",
+    "react-dom": "16.2.0",
+    "react-simple-maps": "0.10.1"
+  }
+}
