@@ -31,7 +31,8 @@ class ComposableMap extends Component {
       showCenter,
       children,
       aspectRatio,
-      viewBox
+      viewBox,
+      defs
     } = this.props
 
     return (
@@ -41,6 +42,13 @@ class ComposableMap extends Component {
            className={ `rsm-svg ${className || ''}` }
            style={ style }
            preserveAspectRatio={ aspectRatio }>
+        {
+          defs && (
+            <defs>
+              {defs}
+            </defs>
+          )
+        }
         {
           React.cloneElement(this.props.children, {
             projection: this.projection,
