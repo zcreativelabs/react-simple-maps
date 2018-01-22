@@ -24,14 +24,15 @@ class Annotation extends Component {
     } = this.props
 
     const connectorPath = createConnectorPath(null, [-dx/zoom,-dy/zoom], curve)
+    const translation = projection()(subject)
 
     return (
       <g
         className="rsm-annotation"
         style={{ style }}
         transform={ `translate(
-          ${ projection()(subject)[0] + dx / zoom }
-          ${ projection()(subject)[1] + dy / zoom }
+          ${ translation[0] + dx / zoom }
+          ${ translation[1] + dy / zoom }
         )`}
         textAnchor={ createTextAnchor(dx) }
         >
