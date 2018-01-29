@@ -37,11 +37,11 @@ class Geographies extends Component {
           this.setState({
             geographyPaths: feature(geographyPaths, geographyPaths.objects[Object.keys(geographyPaths.objects)[0]]).features,
           }, () => {
-            if (!this.props.onGeographiesLoaded) return
+            if (!this.props.onGeographyPathsLoaded) return
             this.props.onGeographyPathsLoaded(String(request.status))
           })
         } else {
-          if (!this.props.onGeographiesLoaded) return
+          if (!this.props.onGeographyPathsLoaded) return
           this.props.onGeographyPathsLoaded(String(request.status))
         }
       }
