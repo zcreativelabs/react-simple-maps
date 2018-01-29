@@ -7,53 +7,20 @@ class Geographies extends Component {
     super(props)
 
     this.state = {
-      geographyPaths: "",
-    }
-
-    this.fetchGeographies = this.fetchGeographies.bind(this)
-  }
-  fetchGeographies(geography) {
-    const { width, height } = this.props
-
-    if(!geography) return
-
-    else if (Object.prototype.toString.call(geography) === '[object Object]') {
-      this.setState({
-          geographyPaths: feature(geography, geography.objects[Object.keys(geography.objects)[0]]).features
-        })
-    }
-
-    else if (Array.isArray(geography)) {
-      this.setState({ geographyPaths: geography })
-      }
-
-    else {
-      const request = new XMLHttpRequest()
-      request.open("GET", geography, true)
-
-      request.onload = () => {
-        if (request.status >= 200 && request.status < 400) {
-          const geographyPaths = JSON.parse(request.responseText)
-          this.setState({
-            geographyPaths: feature(geographyPaths, geographyPaths.objects[Object.keys(geographyPaths.objects)[0]]).features,
-          }, () => {
-            if (!this.props.onGeographyPathsLoaded) return
-            this.props.onGeographyPathsLoaded(String(request.status))
-          })
-        } else {
-          if (!this.props.onGeographyPathsLoaded) return
-          this.props.onGeographyPathsLoaded(String(request.status))
-        }
-      }
-      request.onerror = () => {
-        console.log("There was a connection error...")
-      }
-      request.send()
+      geographyPaths:
+        this.shouldFetchGeographies(props.geography) ? [] :
+          this.parseGeographies(props.geography)
     }
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.geography !== this.props.geography) {
-      this.fetchGeographies(nextProps.geography)
+      if (this.shouldFetchGeographies(nextProps.geography)) {
+        this.fetchGeographies(nextProps.geography)
+      } else {
+        this.setState({
+          geographyPaths: this.parseGeographies(nextProps.geography)
+        })
+      }
     }
   }
   shouldComponentUpdate(nextProps, nextState) {
@@ -64,7 +31,12 @@ class Geographies extends Component {
     if (this.props.geographyUrl || this.props.geographyPaths) {
       console.warn("You are using the deprecated geographyUrl or geographyPaths props. Use the new geography prop instead. Check out the new docs here: https://github.com/zcreativelabs/react-simple-maps#Geographies-component")
     }
-    this.fetchGeographies(this.props.geography)
+    if (this.shouldFetchGeographies(this.props.geography)) {
+      this.fetchGeographies(this.props.geography)
+    }
+  }
+  componentWillUnmount() {
+    this.cancelPendingRequest()
   }
   render() {
     const {
@@ -77,6 +49,53 @@ class Geographies extends Component {
         { children(this.state.geographyPaths || [], projection) }
       </g>
     )
+  }
+  shouldFetchGeographies(geography) {
+    return typeof(geography) === 'string'
+  }
+  parseGeographies(geography) {
+    if (Array.isArray(geography)) {
+      return geography
+    }
+
+    if (Object.prototype.toString.call(geography) === '[object Object]') {
+      return feature(geography, geography.objects[Object.keys(geography.objects)[0]]).features
+    }
+
+    return []
+  }
+  fetchGeographies(geography) {
+    const request = new XMLHttpRequest()
+    request.open("GET", geography, true)
+    request.onload = () => {
+      if (request.status >= 200 && request.status < 400) {
+        const geographyPaths = JSON.parse(request.responseText)
+        this.setState({
+          geographyPaths: this.parseGeographies(geographyPaths),
+        }, () => {
+          if (this.props.onGeographyPathsLoaded) {
+            this.props.onGeographyPathsLoaded(String(request.status))
+          }
+        })
+      } else {
+        if (this.props.onGeographyPathsLoaded) {
+          this.props.onGeographyPathsLoaded(String(request.status))
+        }
+      }
+    }
+    request.onerror = () => {
+      console.log("There was a connection error...")
+    }
+    request.send()
+
+    this.cancelPendingRequest()
+    this._xhr = request
+  }
+  cancelPendingRequest() {
+    if (this._xhr) {
+      this._xhr.abort()
+      thix._xhr = null
+    }
   }
 }
 
