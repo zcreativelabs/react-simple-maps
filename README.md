@@ -125,6 +125,7 @@ The above results in the following svg structure rendered by react:
 | height           | Array           | 450                            |
 | projection       | String/Function | "times"                        |
 | projectionConfig | Object          | *see examples below            |
+| defs             | SVG Def Element       | *see [defs spec](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/defs)         |
 
 ##### Configuring projections
 
