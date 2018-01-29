@@ -11,6 +11,47 @@ class Geographies extends Component {
         this.shouldFetchGeographies(props.geography) ? [] :
           this.parseGeography(props.geography)
     }
+
+    this.fetchGeographies = this.fetchGeographies.bind(this)
+  }
+  fetchGeographies(geography) {
+    const { width, height } = this.props
+
+    if(!geography) return
+
+    else if (Object.prototype.toString.call(geography) === '[object Object]') {
+      this.setState({
+          geographyPaths: feature(geography, geography.objects[Object.keys(geography.objects)[0]]).features
+        })
+    }
+
+    else if (Array.isArray(geography)) {
+      this.setState({ geographyPaths: geography })
+      }
+
+    else {
+      const request = new XMLHttpRequest()
+      request.open("GET", geography, true)
+
+      request.onload = () => {
+        if (request.status >= 200 && request.status < 400) {
+          const geographyPaths = JSON.parse(request.responseText)
+          this.setState({
+            geographyPaths: feature(geographyPaths, geographyPaths.objects[Object.keys(geographyPaths.objects)[0]]).features,
+          }, () => {
+            if (!this.props.onGeographyPathsLoaded) return
+            this.props.onGeographyPathsLoaded(String(request.status))
+          })
+        } else {
+          if (!this.props.onGeographyPathsLoaded) return
+          this.props.onGeographyPathsLoaded(String(request.status))
+        }
+      }
+      request.onerror = () => {
+        console.log("There was a connection error...")
+      }
+      request.send()
+    }
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.geography !== this.props.geography) {

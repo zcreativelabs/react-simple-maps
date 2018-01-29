@@ -15,9 +15,9 @@
   "dependencies": {
     "axios": "0.16.2",
     "d3-scale": "1.0.6",
-    "next": "2.4.9",
-    "react": "15.6.1",
-    "react-dom": "15.6.1",
+    "next": "^4.2.3",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
     "react-simple-maps": "0.10.0"
   }
 }

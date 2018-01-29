@@ -13,9 +13,9 @@
   "author": "Richard Zimerman <richard@zcreativelabs.com> (https://github.com/zimrick)",
   "license": "ISC",
   "dependencies": {
-    "next": "4.2.1",
-    "react": "16.2.0",
-    "react-dom": "16.2.0",
+    "next": "^4.2.3",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
     "react-simple-maps": "0.10.1"
   }
 }
