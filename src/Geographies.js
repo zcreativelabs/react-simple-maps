@@ -94,7 +94,7 @@ class Geographies extends Component {
   cancelPendingRequest() {
     if (this._xhr) {
       this._xhr.abort()
-      thix._xhr = null
+      this._xhr = null
     }
   }
 }
