@@ -7,16 +7,14 @@ import {
   calculateMousePosition,
   isChildOfType,
   createNewChildren,
+  computeBackdrop,
 } from "./utils"
 
 class ZoomableGroup extends Component {
   constructor(props) {
     super(props)
 
-    const backdropX = props.projection().rotate([0,0,0])([props.backdrop.x[0],0])[0]
-    const backdropY = props.projection().rotate([0,0,0])([0,props.backdrop.y[0]])[1]
-    const backdropWidth = props.projection().rotate([0,0,0])([props.backdrop.x[1],0])[0] - props.projection().rotate([0,0,0])([props.backdrop.x[0],0])[0]
-    const backdropHeight = props.projection().rotate([0,0,0])([0,props.backdrop.y[1]])[1] - props.projection().rotate([0,0,0])([0,props.backdrop.y[0]])[1]
+    const backdrop = computeBackdrop(props.projection, props.backdrop)
 
     this.state = {
       mouseX: calculateMousePosition("x", props.projection, props, props.zoom, 1),
@@ -27,10 +25,10 @@ class ZoomableGroup extends Component {
       resizeFactorX: 1,
       resizeFactorY: 1,
       backdrop: {
-        width: Math.round(backdropWidth),
-        height: Math.round(backdropHeight),
-        x: Math.round(backdropX),
-        y: Math.round(backdropY),
+        width: Math.round(backdrop.width),
+        height: Math.round(backdrop.height),
+        x: Math.round(backdrop.x),
+        y: Math.round(backdrop.y),
       },
     }
 
@@ -138,7 +136,7 @@ class ZoomableGroup extends Component {
     })
 
     window.addEventListener("resize", this.handleResize)
-    window.addEventListener('mouseup', this.handleMouseUp)
+    window.addEventListener("mouseup", this.handleMouseUp)
     this.zoomableGroupNode.addEventListener("touchmove", this.preventTouchScroll)
   }
   componentWillUnmount() {
@@ -162,6 +160,7 @@ class ZoomableGroup extends Component {
       resizeFactorX,
       resizeFactorY,
     } = this.state
+
     return (
       <g className="rsm-zoomable-group"
          ref={ zoomableGroupNode => this.zoomableGroupNode = zoomableGroupNode }
