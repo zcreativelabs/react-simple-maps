@@ -1,6 +1,6 @@
 {
   "name": "react-simple-maps",
-  "version": "0.10.3",
+  "version": "0.11.0",
   "description": "An svg map component built with and for React",
   "main": "lib/index.js",
   "scripts": {
@@ -14,7 +14,9 @@
       "env",
       "react"
     ],
-    "plugins": ["transform-object-rest-spread"]
+    "plugins": [
+      "transform-object-rest-spread"
+    ]
   },
   "repository": {
     "type": "git",
