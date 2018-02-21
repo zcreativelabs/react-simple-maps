@@ -8,6 +8,8 @@ class Annotations extends Component {
       children,
       projection,
       style,
+      width,
+      height,
     } = this.props
 
     return (
@@ -18,6 +20,8 @@ class Annotations extends Component {
             children.length === undefined ?
               React.cloneElement(children, {
                 projection,
+                width,
+                height,
               }) :
               children.map((child, i) =>
                 !child ?
@@ -25,6 +29,8 @@ class Annotations extends Component {
                   React.cloneElement(child, {
                     key: child.key || `annotation-${i}`,
                     projection,
+                    width,
+                    height,
                   })
               )
         }

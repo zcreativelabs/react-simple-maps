@@ -128,8 +128,8 @@ describe("calculateMousePosition", () => {
     const projection = () => projections(testProps.width, testProps.height, projectionConfig, "times")
 
     const offsets = [
-      calculateMousePosition("x", projection, testProps, testProps.zoom, 1),
-      calculateMousePosition("y", projection, testProps, testProps.zoom, 1),
+      calculateMousePosition("x", projection(), testProps, testProps.zoom, 1),
+      calculateMousePosition("y", projection(), testProps, testProps.zoom, 1),
     ]
 
     const sums = [

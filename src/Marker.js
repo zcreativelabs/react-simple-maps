@@ -1,5 +1,6 @@
 
 import React, { Component } from "react"
+import { geoLength } from "d3-geo"
 
 class Marker extends Component {
   constructor() {
@@ -63,7 +64,7 @@ class Marker extends Component {
     if (!this.props.onClick) return
     evt.persist()
     const { onClick, marker, projection } = this.props
-    return onClick && onClick(marker, projection()(marker.coordinates), evt)
+    return onClick && onClick(marker, projection(marker.coordinates), evt)
   }
   handleFocus(evt) {
     evt.persist()
@@ -89,6 +90,8 @@ class Marker extends Component {
       zoom,
       children,
       preserveMarkerAspect,
+      width,
+      height,
     } = this.props
 
     const {
@@ -97,7 +100,20 @@ class Marker extends Component {
     } = this.state
 
     const scale = preserveMarkerAspect ? ` scale(${1/zoom})` : ""
-    const translation = projection()(marker.coordinates)
+    const translation = projection(marker.coordinates)
+
+    const lineString = {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          projection.invert([width/2,height/2]),
+          marker.coordinates,
+        ],
+      },
+    }
+
+    const isHidden = geoLength(lineString) > 1.5708
 
     return (
       <g className={ `rsm-marker${ pressed ? " rsm-marker--pressed" : "" }${ hover ? " rsm-marker--hover" : "" }` }
@@ -105,7 +121,7 @@ class Marker extends Component {
            ${ translation[0] }
            ${ translation[1] }
          ) ${scale}`}
-         style={ style[pressed || hover ? (pressed ? "pressed" : "hover") : "default"] }
+         style={ style[isHidden ? "hidden" : (pressed || hover ? (pressed ? "pressed" : "hover") : "default")] }
          onMouseEnter={ this.handleMouseEnter }
          onMouseLeave={ this.handleMouseLeave }
          onMouseDown={ this.handleMouseDown }

@@ -1,6 +1,7 @@
 
 export { default as ComposableMap } from "./ComposableMap"
 export { default as ZoomableGroup } from "./ZoomableGroup"
+export { default as ZoomableGlobe } from "./ZoomableGlobe"
 export { default as Geographies } from "./Geographies"
 export { default as Geography } from "./Geography"
 export { default as Marker } from "./Marker"

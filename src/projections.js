@@ -8,6 +8,7 @@ import {
 } from "d3-geo-projection"
 import {
   geoMercator,
+  geoAlbersUsa,
 } from "d3-geo"
 
 import defaultProjectionConfig from "./projectionConfig"
@@ -19,6 +20,7 @@ const projectionReference = {
   robinson: geoRobinson,
   winkel3: geoWinkel3,
   eckert4: geoEckert4,
+  albersUsa: geoAlbersUsa,
 }
 
 export default function(width, height, config, projectionName) {
@@ -29,9 +31,14 @@ export default function(width, height, config, projectionName) {
   const rotation = config.rotation || defaultProjectionConfig.rotation
   const precision = config.precision || defaultProjectionConfig.precision
 
-  return projectionReference[projectionName]()
-      .scale(scale)
-      .translate([ xOffset + width / 2, yOffset + height / 2 ])
-      .rotate(rotation)
-      .precision(precision)
+  return projectionName === "albersUsa"
+    ? projectionReference[projectionName]()
+        .scale(scale)
+        .translate([ xOffset + width / 2, yOffset + height / 2 ])
+        .precision(precision)
+    : projectionReference[projectionName]()
+        .scale(scale)
+        .translate([ xOffset + width / 2, yOffset + height / 2 ])
+        .rotate(rotation)
+        .precision(precision)
 }

@@ -9,6 +9,8 @@ class Markers extends Component {
       projection,
       style,
       zoom,
+      width,
+      height,
     } = this.props
     return (
       <g className="rsm-markers" style={ style }>
@@ -19,6 +21,8 @@ class Markers extends Component {
               React.cloneElement(children, {
                 projection,
                 zoom,
+                width,
+                height,
               }) :
               children.map((child, i) =>
                 !child ?
@@ -27,6 +31,8 @@ class Markers extends Component {
                     key: child.key || `marker-${i}`,
                     projection,
                     zoom,
+                    width,
+                    height,
                   })
               )
         }

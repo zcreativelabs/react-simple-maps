@@ -7,11 +7,11 @@ export function calculateResizeFactor(actualDimension, baseDimension) {
 
 export function calculateMousePosition(direction, projection, props, zoom, resizeFactor, center = props.center, width = props.width, height = props.height) {
   const reference = { x: 0, y: 1 }
-  const canRotate = !!projection().rotate
-  const reverseRotation = !!canRotate ? projection().rotate().map(item => -item) : false
+  const canRotate = !!projection.rotate
+  const reverseRotation = !!canRotate ? projection.rotate().map(item => -item) : false
   const point = !!reverseRotation
-    ? projection().rotate(reverseRotation)([-center[0],-center[1]])
-    : projection()([center[0],center[1]])
+    ? projection.rotate(reverseRotation)([-center[0],-center[1]])
+    : projection([center[0],center[1]])
   const returner = point
     ? (point[reference[direction]] - (reference[direction] === 0 ? width : height) / 2) * zoom * (1/resizeFactor)
     : 0
@@ -31,6 +31,8 @@ export function createNewChildren(children, props) {
     React.cloneElement(children, {
       projection: props.projection,
       zoom: props.zoom,
+      width: props.width,
+      height: props.height,
     }) : children)
   }
   else {
@@ -45,6 +47,8 @@ export function createNewChildren(children, props) {
           key: `zoomable-child-${i}`,
           projection: props.projection,
           zoom: props.zoom,
+          width: props.width,
+          height: props.height,
         }) : child)
     })
   }
@@ -72,15 +76,15 @@ export function createTextAnchor(dx) {
 }
 
 export function computeBackdrop(projection, backdrop) {
-  const canRotate = projection().rotate
+  const canRotate = projection.rotate
 
   const tl = canRotate
-    ? projection().rotate([0,0,0])([backdrop.x[0],backdrop.y[0]])
-    : projection()([backdrop.x[0],backdrop.y[0]])
+    ? projection.rotate([0,0,0])([backdrop.x[0],backdrop.y[0]])
+    : projection([backdrop.x[0],backdrop.y[0]])
 
   const br = canRotate
-    ? projection().rotate([0,0,0])([backdrop.x[1],backdrop.y[1]])
-    : projection()([backdrop.x[1],backdrop.y[1]])
+    ? projection.rotate([0,0,0])([backdrop.x[1],backdrop.y[1]])
+    : projection([backdrop.x[1],backdrop.y[1]])
 
   const x = tl ? tl[0] : 0
   const x0 = br ? br[0] : 0

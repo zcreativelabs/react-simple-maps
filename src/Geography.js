@@ -13,11 +13,11 @@ const renderPath = (cacheId, geography, projection, round, precision) => {
     ? pathCache[cacheId]
       ? pathCache[cacheId]
       : round
-        ? roundPath(geoPath().projection(projection())(geography), precision)
-        : geoPath().projection(projection())(geography)
+        ? roundPath(geoPath().projection(projection)(geography), precision)
+        : geoPath().projection(projection)(geography)
     : round
-      ? roundPath(geoPath().projection(projection())(geography), precision)
-      : geoPath().projection(projection())(geography)
+      ? roundPath(geoPath().projection(projection)(geography), precision)
+      : geoPath().projection(projection)(geography)
 
   if (cacheId) pathCache[cacheId] = pathString
 

@@ -62,7 +62,7 @@ class ZoomableGroup extends Component {
     const { zoom, width, height, projection, onMoveEnd } = this.props
     const x = width / 2 - (mouseX * resizeFactorX / zoom)
     const y = height / 2 - (mouseY * resizeFactorY / zoom)
-    const newCenter = projection().invert([ x, y ])
+    const newCenter = projection.invert([ x, y ])
     onMoveEnd(newCenter)
   }
   handleMouseDown({ pageX, pageY }) {
@@ -77,7 +77,7 @@ class ZoomableGroup extends Component {
     if (!onMoveStart) return
     const x = width / 2 - (mouseX * resizeFactorX / zoom)
     const y = height / 2 - (mouseY * resizeFactorY / zoom)
-    const currentCenter = projection().invert([ x, y ])
+    const currentCenter = projection.invert([ x, y ])
     onMoveStart(currentCenter)
   }
   handleTouchStart({ touches }) {

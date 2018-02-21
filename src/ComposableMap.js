@@ -51,7 +51,7 @@ class ComposableMap extends Component {
         }
         {
           React.cloneElement(this.props.children, {
-            projection: this.projection,
+            projection: this.projection(),
             width,
             height,
           })

@@ -8,10 +8,10 @@ import {
 import { roundPath } from "./utils"
 
 const computeGraticule = (projection, step) =>
-  geoPath().projection(projection())(geoGraticule().step(step)())
+  geoPath().projection(projection)(geoGraticule().step(step)())
 
 const computeOutline = (projection) =>
-  geoPath().projection(projection())(geoGraticule().outline())
+  geoPath().projection(projection)(geoGraticule().outline())
 
 class Graticule extends Component {
   constructor() {
@@ -51,9 +51,10 @@ class Graticule extends Component {
       projection,
       round,
       precision,
+      globe,
     } = this.props
 
-    if (nextProps.round !== round || nextProps.precision !== precision) {
+    if (nextProps.round !== round || nextProps.precision !== precision || globe) {
       this.setState({
         graticulePath: nextProps.round
           ? roundPath(computeGraticule(projection, step), precision)
@@ -103,6 +104,7 @@ class Graticule extends Component {
 Graticule.defaultProps = {
   componentIdentifier: "Graticule",
   disableOptimization: true,
+  globe: false,
   round: true,
   precision: 0.1,
   step: [10,10],
