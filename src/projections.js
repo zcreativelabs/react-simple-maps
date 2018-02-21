@@ -9,6 +9,7 @@ import {
 import {
   geoMercator,
   geoAlbersUsa,
+  geoOrthographic,
 } from "d3-geo"
 
 import defaultProjectionConfig from "./projectionConfig"
@@ -21,6 +22,7 @@ const projectionReference = {
   winkel3: geoWinkel3,
   eckert4: geoEckert4,
   albersUsa: geoAlbersUsa,
+  orthographic: geoOrthographic,
 }
 
 export default function(width, height, config, projectionName) {
@@ -31,14 +33,14 @@ export default function(width, height, config, projectionName) {
   const rotation = config.rotation || defaultProjectionConfig.rotation
   const precision = config.precision || defaultProjectionConfig.precision
 
+  const baseProjection = projectionReference[projectionName]()
+    .scale(scale)
+    .translate([ xOffset + width / 2, yOffset + height / 2 ])
+    .precision(precision)
+
   return projectionName === "albersUsa"
-    ? projectionReference[projectionName]()
-        .scale(scale)
-        .translate([ xOffset + width / 2, yOffset + height / 2 ])
-        .precision(precision)
-    : projectionReference[projectionName]()
-        .scale(scale)
-        .translate([ xOffset + width / 2, yOffset + height / 2 ])
-        .rotate(rotation)
-        .precision(precision)
+    ? baseProjection
+    : projectionName === "orthographic"
+      ? baseProjection.rotate(rotation).clipAngle(90)
+      : baseProjection.rotate(rotation)
 }
