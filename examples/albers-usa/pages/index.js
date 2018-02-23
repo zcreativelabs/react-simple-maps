@@ -51,15 +51,16 @@ class AlbersUSA extends Component {
           }}
           >
           <ZoomableGroup disablePanning>
-            <Geographies geography="/static/states.json">
+            <Geographies geography="/static/states.json" disableOptimization>
               {(geographies, projection) =>
                 geographies.map((geography, i) => {
                   const statePopulation = population.find(s =>
                     s.name === geography.properties.NAME_1
-                  )
+                  ) || {}
                   return (
                     <Geography
-                      key={i}
+                      key={`state-${geography.properties.ID_1}`}
+                      cacheId={`state-${geography.properties.ID_1}`}
                       round
                       geography={geography}
                       projection={projection}
