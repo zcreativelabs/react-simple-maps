@@ -102,8 +102,8 @@ class ZoomableGroup extends Component {
 
     this.setState({
       zoom: nextProps.zoom,
-      mouseX: centerChanged ? calculateMousePosition("x", projection, nextProps, nextProps.zoom, resizeFactorX) : mouseX * zoomFactor,
-      mouseY: centerChanged ? calculateMousePosition("y", projection, nextProps, nextProps.zoom, resizeFactorY) : mouseY * zoomFactor,
+      mouseX: centerChanged ? calculateMousePosition("x", nextProps.projection, nextProps, nextProps.zoom, resizeFactorX) : mouseX * zoomFactor,
+      mouseY: centerChanged ? calculateMousePosition("y", nextProps.projection, nextProps, nextProps.zoom, resizeFactorY) : mouseY * zoomFactor,
     })
   }
   handleResize() {
