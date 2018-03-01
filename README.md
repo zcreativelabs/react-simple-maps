@@ -104,6 +104,7 @@ The above results in the following svg structure rendered by react:
 
 - [`<ComposableMap />`](#ComposableMap-component)
 - [`<ZoomableGroup />`](#ZoomableGroup-component)
+- [`<ZoomableGlobe />`](#ZoomableGlobe-component)
 - [`<Geographies />`](#Geographies-component)
 - [`<Geography />`](#Geography-component)
 - [`<Markers />`](#Markers-component)
@@ -168,8 +169,8 @@ The default configuration of the projection:
 | center           | Array           | [0,0]                          |
 | disablePanning   | Boolean         | false                          |
 | style            | Object          | {}                             |
-| onMoveStart      | Function        |                                |
-| onMoveEnd        | Function        |                                |
+| onMoveStart      | Function        | &nbsp;                         |
+| onMoveEnd        | Function        | &nbsp;                         |
 
 ##### Zooming
 
@@ -261,6 +262,21 @@ handleMoveEnd(newCenter) {
 ...
 ```
 
+#### <a name="ZoomableGlobe-component"></a> `<ZoomableGlobe />`
+
+`<ZoomableGlobe />` is a component used as a replacement for `<ZoomableGroup />` when making SVG globes. While `<ZoomableGroup />` is used for zooming and panning, `<ZoomableGlobe />` is used for zooming and rotation.
+
+##### Props
+
+| Property         | Type            | Default                        |
+| ---------------- |:--------------- | :----------------------------- |
+| zoom             | Number          | 1                              |
+| center           | Array           | [0,0]                          |
+| style            | Object          | {}                             |
+| onMoveStart      | Function        | &nbsp;                         |
+| onMoveEnd        | Function        | &nbsp;                         |
+
+Note that if you are using the `<ZoomableGlobe />` component together with the graticule, you will have to specify `<Graticule globe={true} />` for the graticule. See the [globe example](https://github.com/zcreativelabs/react-simple-maps/tree/master/examples/globe) for more information on how to use the `<ZoomableGlobe />` component.
 
 #### <a name="Geographies-component"></a> `<Geographies />`
 
@@ -635,6 +651,7 @@ The `<Graticule />` component can be used to add a graticule to the map. Note th
 | fill                | String          | "transparent"                  |
 | style               | Object          | `{ pointerEvents: "none" }`    |
 | disableOptimization | Boolean         | true                           |
+| Globe               | Boolean         | false                          |
 
 ### License
 MIT licensed. Copyright (c) Richard Zimerman 2017. See [LICENSE.md](https://github.com/zcreativelabs/react-simple-maps/blob/master/LICENSE) for more details.
