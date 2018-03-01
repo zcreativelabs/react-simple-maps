@@ -15,6 +15,7 @@ export function calculateMousePosition(direction, projection, props, zoom, resiz
   const returner = point
     ? (point[reference[direction]] - (reference[direction] === 0 ? width : height) / 2) * zoom * (1/resizeFactor)
     : 0
+  if (canRotate) projection.rotate([-reverseRotation[0],-reverseRotation[1],-reverseRotation[2]])
   return !!reverseRotation ? returner : -returner
 }
 
@@ -77,6 +78,7 @@ export function createTextAnchor(dx) {
 
 export function computeBackdrop(projection, backdrop) {
   const canRotate = projection.rotate
+  const originalRotation = canRotate ? projection.rotate() : null
 
   const tl = canRotate
     ? projection.rotate([0,0,0])([backdrop.x[0],backdrop.y[0]])
@@ -94,6 +96,8 @@ export function computeBackdrop(projection, backdrop) {
 
   const width = x0 - x
   const height = y0 - y
+
+  if (originalRotation) projection.rotate(originalRotation)
 
   return { x, y, width, height }
 }
