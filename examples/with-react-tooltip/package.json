@@ -16,7 +16,7 @@
     "next": "^4.2.3",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-simple-maps": "0.10.0",
+    "react-simple-maps": "~0.11.2",
     "react-tooltip": "^3.3.0"
   }
 }
