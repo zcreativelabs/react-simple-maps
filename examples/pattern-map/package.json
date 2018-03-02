@@ -13,6 +13,7 @@
   "author": "Richard Zimerman <richard@zcreativelabs.com> (https://github.com/zimrick)",
   "license": "ISC",
   "dependencies": {
+    "@vx/pattern": "0.0.153",
     "next": "2.4.7",
     "react": "15.6.1",
     "react-dom": "15.6.1",

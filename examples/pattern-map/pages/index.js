@@ -6,6 +6,7 @@ import {
   Geographies,
   Geography,
 } from "react-simple-maps"
+import { PatternLines } from "@vx/pattern"
 
 const wrapperStyles = {
   width: "100%",
@@ -13,7 +14,7 @@ const wrapperStyles = {
   margin: "0 auto",
 }
 
-class BasicMap extends Component {
+class PatternMap extends Component {
   render() {
     return (
       <div style={wrapperStyles}>
@@ -29,20 +30,14 @@ class BasicMap extends Component {
             height: "auto",
           }}
           defs={
-            <linearGradient id="gradient">
-              <stop offset="20%" stop-color="#39F" />
-              <stop offset="90%" stop-color="#F3F" />
-            </linearGradient>
-            <pattern
-              id="stripes"
-              width="4"
-              height="4"
-              patternUnits="userSpaceOnUse"
-            >
-              <path d="M-1,1 l2,-2
-               M0,4 l4,-4
-               M3,5 l2,-2" />
-             </pattern>
+            <PatternLines
+              id="lines"
+              height={4}
+              width={4}
+              stroke="#607D8B"
+              strokeWidth={0.75}
+              orientation={["diagonal"]}
+            />
           }
           >
           <ZoomableGroup center={[0,20]} disablePanning>
@@ -54,13 +49,13 @@ class BasicMap extends Component {
                   projection={projection}
                   style={{
                     default: {
-                      fill: "url(#gradient)",
+                      fill: "url(#lines)",
                       stroke: "#607D8B",
                       strokeWidth: 0.75,
                       outline: "none",
                     },
                     hover: {
-                      fill: "url(#stripes)",
+                      fill: "#607D8B",
                       stroke: "#607D8B",
                       strokeWidth: 0.75,
                       outline: "none",
