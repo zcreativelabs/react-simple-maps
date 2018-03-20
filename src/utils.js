@@ -28,7 +28,7 @@ export function createNewChildren(children, props) {
   if (!children.length) {
     return isChildOfType(children, "Geographies") ? React.cloneElement(children, {
       projection: props.projection,
-    }) : (isChildOfType(children, "Markers") || isChildOfType(children, "Annotations") || isChildOfType(children, "Annotation") || isChildOfType(child, "Graticule") ?
+    }) : (isChildOfType(children, "Markers") || isChildOfType(children, "Lines") || isChildOfType(children, "Annotations") || isChildOfType(children, "Annotation") || isChildOfType(child, "Graticule") ?
     React.cloneElement(children, {
       projection: props.projection,
       zoom: props.zoom,
@@ -43,7 +43,7 @@ export function createNewChildren(children, props) {
         React.cloneElement(child, {
           key: `zoomable-child-${i}`,
           projection: props.projection,
-        }) : (isChildOfType(child, "Markers") || isChildOfType(child, "Annotations") || isChildOfType(child, "Annotation") || isChildOfType(child, "Graticule") ?
+        }) : (isChildOfType(child, "Markers") || isChildOfType(child, "Lines") || isChildOfType(child, "Annotations") || isChildOfType(child, "Annotation") || isChildOfType(child, "Graticule") ?
         React.cloneElement(child, {
           key: `zoomable-child-${i}`,
           projection: props.projection,
