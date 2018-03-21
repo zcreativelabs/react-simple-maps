@@ -41,7 +41,9 @@ class Annotation extends Component {
       },
     }
 
-    const isHidden = geoLength(lineString) > 1.5708
+    const radians = Math.PI/2, degrees = 90
+    const isGlobe = projection.clipAngle() === degrees
+    const isHidden = isGlobe && geoLength(lineString) > radians
 
     return (
       <g

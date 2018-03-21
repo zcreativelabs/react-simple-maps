@@ -1,46 +1,24 @@
 
 import React, { Component } from "react"
 
-class Annotations extends Component {
-  render() {
+import MapGroup from "./MapGroup"
 
-    const {
-      children,
-      projection,
-      style,
-      width,
-      height,
-    } = this.props
-
-    return (
-      <g className="rsm-annotations" style={ style }>
-        {
-          !children ?
-            null :
-            children.length === undefined ?
-              React.cloneElement(children, {
-                projection,
-                width,
-                height,
-              }) :
-              children.map((child, i) =>
-                !child ?
-                  null :
-                  React.cloneElement(child, {
-                    key: child.key || `annotation-${i}`,
-                    projection,
-                    width,
-                    height,
-                  })
-              )
-        }
-      </g>
-    )
-  }
-}
+const Annotations = ({
+  groupName,
+  itemName,
+  componentIdentifier,
+  ...restProps,
+}) =>
+  <MapGroup
+    groupName={groupName}
+    itemName={itemName}
+    {...restProps}
+  />
 
 Annotations.defaultProps = {
   componentIdentifier: "Annotations",
+  groupName: "annotations",
+  itemName: "annotation",
 }
 
 export default Annotations

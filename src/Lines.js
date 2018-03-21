@@ -1,48 +1,24 @@
 
 import React, { Component } from "react"
 
-class Lines extends Component {
-  render() {
+import MapGroup from "./MapGroup"
 
-    const {
-      children,
-      projection,
-      style,
-      zoom,
-      width,
-      height,
-    } = this.props
-    return (
-      <g className="rsm-lines" style={ style }>
-        {
-          !children ?
-            null :
-            children.length === undefined ?
-              React.cloneElement(children, {
-                projection,
-                zoom,
-                width,
-                height,
-              }) :
-              children.map((child, i) =>
-                !child ?
-                  null :
-                  React.cloneElement(child, {
-                    key: child.key || `line-${i}`,
-                    projection,
-                    zoom,
-                    width,
-                    height,
-                  })
-              )
-        }
-      </g>
-    )
-  }
-}
+const Lines = ({
+  groupName,
+  itemName,
+  componentIdentifier,
+  ...restProps,
+}) =>
+  <MapGroup
+    groupName={groupName}
+    itemName={itemName}
+    {...restProps}
+  />
 
 Lines.defaultProps = {
   componentIdentifier: "Lines",
+  groupName: "lines",
+  itemName: "line",
 }
 
 export default Lines

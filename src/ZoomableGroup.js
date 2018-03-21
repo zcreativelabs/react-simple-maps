@@ -5,7 +5,6 @@ import { geoPath } from "d3-geo"
 import {
   calculateResizeFactor,
   calculateMousePosition,
-  isChildOfType,
   createNewChildren,
   computeBackdrop,
 } from "./utils"

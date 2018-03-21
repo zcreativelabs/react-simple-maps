@@ -134,8 +134,10 @@ class Line extends Component {
     })
     const startLineString = buildLineString(line.coordinates.start)
     const endLineString = buildLineString(line.coordinates.end)
-    const isHidden =
-      geoLength(startLineString) > 1.5708 || geoLength(endLineString) > 1.5708
+
+    const radians = Math.PI/2, degrees = 90
+    const isGlobe = projection.clipAngle() === degrees
+    const isHidden = isGlobe && (geoLength(startLineString) > radians || geoLength(endLineString) > radians)
 
     const start = projection(line.coordinates.start)
     const end = projection(line.coordinates.end)
@@ -187,7 +189,8 @@ Line.defaultProps = {
   },
   tabable: true,
   preserveMarkerAspect: true,
-  strokeWidth: 1
+  strokeWidth: 1,
+  className: "",
 }
 
 export default Line

@@ -19,37 +19,41 @@ export function calculateMousePosition(direction, projection, props, zoom, resiz
   return !!reverseRotation ? returner : -returner
 }
 
-export function isChildOfType(child, expectedType) {
-  return child.props.componentIdentifier === expectedType
+export function isChildOfType(child, expectedTypes) {
+  return expectedTypes.indexOf(child.props.componentIdentifier) !== -1
 }
 
 export function createNewChildren(children, props) {
   if (!children) return
   if (!children.length) {
-    return isChildOfType(children, "Geographies") ? React.cloneElement(children, {
+    return isChildOfType(children, ["Geographies"]) ? React.cloneElement(children, {
       projection: props.projection,
-    }) : (isChildOfType(children, "Markers") || isChildOfType(children, "Lines") || isChildOfType(children, "Annotations") || isChildOfType(children, "Annotation") || isChildOfType(child, "Graticule") ?
+    }) : (isChildOfType(children, ["Group", "Markers", "Lines", "Annotations", "Annotation", "Graticule"]) ?
     React.cloneElement(children, {
       projection: props.projection,
       zoom: props.zoom,
       width: props.width,
       height: props.height,
+      groupName: props.groupName,
+      itemName: props.itemName,
     }) : children)
   }
   else {
     return children.map((child, i) => {
       if (!child) return
-      return isChildOfType(child, "Geographies") ?
+      return isChildOfType(child, ["Geographies"]) ?
         React.cloneElement(child, {
           key: `zoomable-child-${i}`,
           projection: props.projection,
-        }) : (isChildOfType(child, "Markers") || isChildOfType(child, "Lines") || isChildOfType(child, "Annotations") || isChildOfType(child, "Annotation") || isChildOfType(child, "Graticule") ?
+        }) : (isChildOfType(child, ["Group", "Markers", "Lines", "Annotations", "Annotation", "Graticule"]) ?
         React.cloneElement(child, {
           key: `zoomable-child-${i}`,
           projection: props.projection,
           zoom: props.zoom,
           width: props.width,
           height: props.height,
+          groupName: props.groupName,
+          itemName: props.itemName,
         }) : child)
     })
   }
