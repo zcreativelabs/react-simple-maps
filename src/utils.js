@@ -2,6 +2,7 @@
 import React from "react"
 
 export function calculateResizeFactor(actualDimension, baseDimension) {
+  if (actualDimension === 0) return 1;
   return 1 / 100 * (100 / actualDimension * baseDimension)
 }
 
