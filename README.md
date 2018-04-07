@@ -774,5 +774,8 @@ handleClick(line, evt) {
 
 Currently supported events are `onMouseEnter`, `onMouseLeave`, `onMouseDown`, `onMouseUp`, `onClick`, `onMouseMove`, `onFocus`, `onBlur`.
 
+If you wish to see a real code example check it out [here](https://github.com/Vizzuality/trase/blob/develop/frontend/scripts/react-components/shared/world-map/world-map.component.jsx).
+Otherwise go check it out live at [trase.earth](https://trase.earth).
+
 ### License
 MIT licensed. Copyright (c) Richard Zimerman 2017. See [LICENSE.md](https://github.com/zcreativelabs/react-simple-maps/blob/master/LICENSE) for more details.
