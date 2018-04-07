@@ -96,7 +96,7 @@ The above results in the following svg structure rendered by react:
       <g class="rsm-marker"></g>
     </g>
     <g class="rsm-lines">
-      <g class="rsm-line"></g>
+      <path class="rsm-line"></g>
     </g>
     <g class="rsm-annotation"></g>
   </g>
@@ -668,7 +668,7 @@ In general `<Lines />` and `<Line />` components work the same way as `<Markers 
 
 #### <a name="Line-component"></a> `<Line />`
 
-The `<Line />` component represents each marker and uses coordinates to position the marker on the map. It does not make any assumptions about what your marker looks like, so you have to specify yourself what shape it should have. See the example below for how to make the recommended circular marker. The component can be used to assign events to individual lines on the map, and to specify the hover, focus and click behavior. You can also choose to preserve the lines aspect/size when in a `<ZoomableGroup />` via the `preserveMarkerAspect` prop.
+The `<Line />` component represents each line and uses two coordinates (start and end) to position the line on the map. By default a straight line is rendered, so you have to specify yourself what shape it should have. See the example below for how to make the recommended curved line. The component can be used to assign events to individual lines on the map, and to specify the hover, focus and click behavior. You can also choose to preserve the lines aspect/size when in a `<ZoomableGroup />` via the `preserveMarkerAspect` prop.
 
 ##### Props
 
@@ -681,7 +681,7 @@ The `<Line />` component represents each marker and uses coordinates to position
 | buildPath           | Function         | *see below examples            |
 ##### Line location
 
-Line data is added to the `line` prop and should contain the coordinates of the marker.
+Line data is added to the `line` prop and should contain the coordinates of the line.
 
 ```js
 <Lines>
@@ -725,7 +725,8 @@ If you wish to know more about what you can achieve with the `buildPath` prop, c
 
 ```js
 ...
-// This funtion returns a curve command that builds a quadratic curve. And depending on the line's curveStyle property it curves in one direction or the other.
+// This funtion returns a curve command that builds a quadratic curve.
+// And depending on the line's curveStyle property it curves in one direction or the other.
 buildCurves(start, end, line) {
   const x0 = start[0];
   const x1 = end[0];
@@ -763,7 +764,7 @@ handleClick(line, evt) {
   { lines.map((line, i) => (
     <Line
       key={ i }
-      marker={ line }
+      line={ line }
       onClick={ this.handleClick }
     />
   ))}
