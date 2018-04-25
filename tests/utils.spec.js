@@ -46,13 +46,17 @@ describe("roundPath", () => {
 
 describe("calculateResizeFactor", () => {
   it("should return proper dimensions for variable ratios", () => {
-    const actualDimension = 1600
-    const baseDimension = 800
+    const actualDimension = [1600, 0]
+    const baseDimension = [800, 960]
 
-    const actual = calculateResizeFactor(actualDimension, baseDimension)
-    const expected = 0.5
+    const actual = [
+        calculateResizeFactor(actualDimension[0], baseDimension[0]),
+        calculateResizeFactor(actualDimension[1], baseDimension[1]),
+    ]
+    const expected = [0.5, 1]
 
-    expect(actual).toEqual(expected)
+    expect(actual[0]).toEqual(expected[0])
+    expect(actual[1]).toEqual(expected[1])
   })
 })
 

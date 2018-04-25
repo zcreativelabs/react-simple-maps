@@ -27,7 +27,6 @@ $ npm install react react-dom react-simple-maps --save
 import React, { Component } from "react"
 import ReactDOM from "react-dom"
 import {
-
   ComposableMap,
   ZoomableGroup,
   Geographies,
@@ -74,6 +73,9 @@ Here is the complete simplified component structure of any map created with `rea
     <Markers>
       <Marker />
     </Markers>
+    <Lines>
+      <Line />
+    </Lines>
     <Annotation />
   </ZoomableGroup>
 </ComposableMap>
@@ -92,6 +94,9 @@ The above results in the following svg structure rendered by react:
     </g>
     <g class="rsm-markers">
       <g class="rsm-marker"></g>
+    </g>
+    <g class="rsm-lines">
+      <path class="rsm-line"></g>
     </g>
     <g class="rsm-annotation"></g>
   </g>
@@ -112,6 +117,8 @@ The above results in the following svg structure rendered by react:
 - [`<Annotations />`](#Annotations-component)
 - [`<Annotation />`](#Annotation-component)
 - [`<Graticule />`](#Graticule-component)
+- [`<Lines />`](#Lines-component)
+- [`<Line />`](#Line-component)
 
 
 #### <a name="ComposableMap-component"></a> `<ComposableMap />`
@@ -652,6 +659,123 @@ The `<Graticule />` component can be used to add a graticule to the map. Note th
 | style               | Object          | `{ pointerEvents: "none" }`    |
 | disableOptimization | Boolean         | true                           |
 | Globe               | Boolean         | false                          |
+
+#### <a name="Lines-component"></a> `<Lines />`
+In general `<Lines />` and `<Line />` components work the same way as `<Markers />` and `<Marker />` components, with a slight change in it's API.
+
+`<Lines />` is a simple wrapper component for the individual line.
+
+
+#### <a name="Line-component"></a> `<Line />`
+
+The `<Line />` component represents each line and uses two coordinates (start and end) to position the line on the map. By default a straight line is rendered, so you have to specify yourself what shape it should have. See the example below for how to make the recommended curved line. The component can be used to assign events to individual lines on the map, and to specify the hover, focus and click behavior. You can also choose to preserve the lines aspect/size when in a `<ZoomableGroup />` via the `preserveMarkerAspect` prop.
+
+##### Props
+
+| Property            | Type             | Default                        |
+| --------------------| :--------------- | :----------------------------- |
+| line                | Object           | *see below examples            |
+| tabable             | Boolean          | true                           |
+| style               | Object           | *see below examples            |
+| preserveMarkerAspect| Boolean          | true                           |
+| buildPath           | Function         | *see below examples            |
+##### Line location
+
+Line data is added to the `line` prop and should contain the coordinates of the line.
+
+```js
+<Lines>
+  <Line
+    line={{
+      coordinates: {
+        start: [0, 0],
+        end: [-99.1, 19.4]
+      }
+    }}
+  />
+</Lines>
+```
+
+##### Styling and shape
+
+There are no styles assigned to the style prop.
+
+```js
+...
+<Line
+  line={{
+      coordinates: {
+        start: [0, 0],
+        end: [-99.1, 19.4]
+      }
+    }}
+  style={{
+    default: { fill: "#666" },
+    hover:   { fill: "#999" },
+    pressed: { fill: "#000" },
+  }}
+/>
+...
+```
+
+##### Shaping the line
+By default the line will be drawn as a straight `<path />`, if you wish to curve the line in a custom way you need to define a build function. This build function receives the `start` and `end` coordinates with the map projection already applied. The third argument corresponds to the `line` prop provided to the `<Line />` component. The returned value will be applied to the resulting `<path />` as the `d` property.
+
+If you wish to know more about what you can achieve with the `buildPath` prop, checkout [MDN's Path documentation](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths).
+
+```js
+...
+// This funtion returns a curve command that builds a quadratic curve.
+// And depending on the line's curveStyle property it curves in one direction or the other.
+buildCurves(start, end, line) {
+  const x0 = start[0];
+  const x1 = end[0];
+  const y0 = start[1];
+  const y1 = end[1];
+  const curve = {
+    forceUp: `${x1} ${y0}`,
+    forceDown: `${x0} ${y1}`
+  }[line.curveStyle];
+
+  return `M ${start.join(' ')} Q ${curve} ${end.join(' ')}`;
+}
+...
+<Line
+  line={{
+      coordinates: {
+        start: [0, 0],
+        end: [-99.1, 19.4]
+      }
+    }}
+  buildPath={this.buildCurves}
+/>
+```
+##### Line events and passing line data to line events
+
+In order to allow easy access to line data when handling events, pass the line data to the `line` prop. Below is an example of how to iterate through lines.
+
+```js
+...
+handleClick(line, evt) {
+  console.log("Line data: ", line)
+}
+...
+<Lines>
+  { lines.map((line, i) => (
+    <Line
+      key={ i }
+      line={ line }
+      onClick={ this.handleClick }
+    />
+  ))}
+</Lines>
+...
+```
+
+Currently supported events are `onMouseEnter`, `onMouseLeave`, `onMouseDown`, `onMouseUp`, `onClick`, `onMouseMove`, `onFocus`, `onBlur`.
+
+If you wish to see a real code example check it out [here](https://github.com/Vizzuality/trase/blob/develop/frontend/scripts/react-components/shared/world-map/world-map.component.jsx).
+Otherwise go check it out live at [trase.earth](https://trase.earth).
 
 ### License
 MIT licensed. Copyright (c) Richard Zimerman 2017. See [LICENSE.md](https://github.com/zcreativelabs/react-simple-maps/blob/master/LICENSE) for more details.
