@@ -13,10 +13,10 @@
   "author": "Richard Zimerman <richard@zcreativelabs.com> (https://github.com/zimrick)",
   "license": "ISC",
   "dependencies": {
-    "next": "^4.2.3",
+    "next": "^5.1.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-motion": "^0.5.2",
-    "react-simple-maps": "~0.11.2"
+    "react-simple-maps": "~0.12.0"
   }
 }
