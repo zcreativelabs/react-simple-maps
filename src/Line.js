@@ -136,7 +136,7 @@ class Line extends Component {
     const endLineString = buildLineString(line.coordinates.end)
 
     const radians = Math.PI/2, degrees = 90
-    const isGlobe = projection.clipAngle() === degrees
+    const isGlobe = projection.clipAngle && projection.clipAngle() === degrees
     const isHidden = isGlobe && (geoLength(startLineString) > radians || geoLength(endLineString) > radians)
 
     const start = projection(line.coordinates.start)

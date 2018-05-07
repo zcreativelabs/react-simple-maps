@@ -114,7 +114,7 @@ class Marker extends Component {
     }
 
     const radians = Math.PI/2, degrees = 90
-    const isGlobe = projection.clipAngle() === degrees
+    const isGlobe = projection.clipAngle && projection.clipAngle() === degrees
     const isHidden = isGlobe && geoLength(lineString) > radians
 
     return (
