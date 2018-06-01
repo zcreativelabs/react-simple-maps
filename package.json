@@ -51,8 +51,8 @@
     "react-dom": "^0.14.9 || ^15.3.0 || ^16.0.0-rc || ^16.0"
   },
   "dependencies": {
-    "d3-geo": "1.6.3",
-    "d3-geo-projection": "1.2.2",
+    "d3-geo": "1.10.0",
+    "d3-geo-projection": "2.4.0",
     "topojson-client": "2.1.0"
   }
 }
