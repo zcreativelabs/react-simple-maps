@@ -710,9 +710,9 @@ There are no styles assigned to the style prop.
       }
     }}
   style={{
-    default: { fill: "#666" },
-    hover:   { fill: "#999" },
-    pressed: { fill: "#000" },
+    default: { stroke: "#666" },
+    hover:   { stroke: "#999" },
+    pressed: { stroke: "#000" },
   }}
 />
 ...
