@@ -36,23 +36,23 @@
   },
   "homepage": "https://github.com/zcreativelabs/react-simple-maps#readme",
   "devDependencies": {
-    "babel-cli": "6.24.0",
-    "babel-plugin-transform-object-rest-spread": "6.26.0",
-    "babel-preset-env": "1.6.1",
-    "babel-preset-react": "6.23.0",
-    "expect": "1.20.2",
-    "mocha": "3.4.1",
-    "react": "15.4.2",
-    "react-dom": "15.4.2",
-    "react-test-utils": "0.0.1"
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "expect": "^23.5.0",
+    "mocha": "^5.2.0",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "react-test-utils": "^0.0.1"
   },
   "peerDependencies": {
-    "react": "^0.14.9 || ^15.3.0 || ^16.0.0-rc || ^16.0",
-    "react-dom": "^0.14.9 || ^15.3.0 || ^16.0.0-rc || ^16.0"
+    "react": "^15.3.0 || ^16.0.0",
+    "react-dom": "^15.3.0 || ^16.0.0"
   },
   "dependencies": {
-    "d3-geo": "1.10.0",
-    "d3-geo-projection": "2.4.0",
-    "topojson-client": "2.1.0"
+    "d3-geo": "^1.10.0",
+    "d3-geo-projection": "^2.4.0",
+    "topojson-client": "^3.0.0"
   }
 }
