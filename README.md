@@ -130,7 +130,7 @@ The above results in the following svg structure rendered by react:
 | Property         | Type            | Default                        |
 | ---------------- |:--------------- | :----------------------------- |
 | width            | Number          | 800                            |
-| height           | Array           | 450                            |
+| height           | Number          | 450                            |
 | projection       | String/Function | "times"                        |
 | projectionConfig | Object          | *see examples below            |
 | defs             | SVG Def Element       | *see [defs spec](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/defs)         |
