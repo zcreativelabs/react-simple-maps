@@ -293,7 +293,7 @@ React-simple-maps offers a couple of ways to optimise the performance of the map
 
 1. By default the `<Geographies />` component uses `shouldComponentUpdate` to prevent the paths from being rerendered. This optimisation can be bypassed using the `disableOptimization` prop. This is useful when making choropleth maps that are updated on user interaction.
 
-2. A second way in which react-simple-maps can optimise maps is by setting a `cacheId` on the individual geographies. See the [`<Geography />`](#ComposableMap-component) component for more info. The unique cacheIds help to cache the paths and significantly accelerate rerenders. **This second method is the recommended way of optimising maps with react-simple-maps.**
+2. A second way in which react-simple-maps can optimise maps is by setting a `cacheId` on the individual geographies. See the [`<Geography />`](#Geography-component) component for more info. The unique cacheIds help to cache the paths and significantly accelerate rerenders. **This second method is the recommended way of optimising maps with react-simple-maps.**
 
 If you do not want `react-simple-maps` to load your topojson and pass it down automatically, you can also pass your topojson converted `features` directly into the `Geographies` component, or an object containing the topojson data.
 
