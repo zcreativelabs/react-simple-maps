@@ -123,7 +123,7 @@ The above results in the following svg structure rendered by react:
 
 #### <a name="ComposableMap-component"></a> `<ComposableMap />`
 
-`<ComponentMap />` forms the wrapper around your map. It defines the dimensions of the map and sets the projection used by Geographies, Markers, and Annotations, to position elements. By default the maps use the "times" projection, but `react-simple-maps` also supports `robinson`,  `eckert4`, `winkel3`, `mercator`, and `miller` projections out of the box. Additionally you can plug in a custom projection of your choice. All projections from `d3-geo-projections` are supported.
+`<ComposableMap />` forms the wrapper around your map. It defines the dimensions of the map and sets the projection used by Geographies, Markers, and Annotations, to position elements. By default the maps use the "times" projection, but `react-simple-maps` also supports `robinson`,  `eckert4`, `winkel3`, `mercator`, and `miller` projections out of the box. Additionally you can plug in a custom projection of your choice. All projections from `d3-geo-projections` are supported.
 
 ##### Props
 
