@@ -1,6 +1,7 @@
 
 import React, { Component } from "react"
 import { geoPath } from "d3-geo"
+import { G } from 'react-native-svg'
 
 import { createNewChildren } from "./utils"
 
@@ -58,7 +59,7 @@ class ZoomableGlobe extends Component {
       isPressed: false,
     })
     if (!this.props.onMoveEnd) return
-    const newCenter = this.props.projection.invert([this.props.width/2,this.props.height/2])
+    const newCenter = this.props.projection.invert([this.props.width / 2, this.props.height / 2])
     this.props.onMoveEnd(newCenter)
   }
   handleMouseDown({ pageX, pageY, clientX, clientY }) {
@@ -69,7 +70,7 @@ class ZoomableGlobe extends Component {
       mouseYStart: clientY,
     })
     if (!this.props.onMoveStart) return
-    const currentCenter = this.props.projection.invert([this.props.width/2,this.props.height/2])
+    const currentCenter = this.props.projection.invert([this.props.width / 2, this.props.height / 2])
     this.props.onMoveStart(currentCenter)
   }
   handleTouchStart({ touches }) {
@@ -125,38 +126,38 @@ class ZoomableGlobe extends Component {
     } = this.state
 
     return (
-      <g className="rsm-zoomable-globe"
-         ref={ zoomableGlobeNode => this.zoomableGlobeNode = zoomableGlobeNode }
-         transform={`
-           translate(${ width / 2 } ${ height / 2 })
-           scale(${ zoom })
-           translate(${ -width / 2 } ${ -height / 2 })
+      <G className="rsm-zoomable-globe"
+        ref={zoomableGlobeNode => this.zoomableGlobeNode = zoomableGlobeNode}
+        transform={`
+           translate(${ width / 2} ${height / 2})
+           scale(${ zoom})
+           translate(${ -width / 2} ${-height / 2})
          `}
-         onMouseMove={ this.handleMouseMove }
-         onMouseUp={ this.handleMouseUp }
-         onMouseDown={ this.handleMouseDown }
-         onTouchStart={ this.handleTouchStart }
-         onTouchMove={ this.handleTouchMove }
-         onTouchEnd={ this.handleMouseUp }
-         style={ style }
+        onMouseMove={this.handleMouseMove}
+        onMouseUp={this.handleMouseUp}
+        onMouseDown={this.handleMouseDown}
+        onTouchStart={this.handleTouchStart}
+        onTouchMove={this.handleTouchMove}
+        onTouchEnd={this.handleMouseUp}
+        style={style}
       >
-        { createNewChildren(children, {
-            width,
-            height,
-            center: this.center,
-            backdrop: this.backdrop,
-            zoom: this.props.zoom,
-            disablePanning: this.props.disablePanning,
-            children,
-            projection: projection.rotate(this.state.rotation),
-          }) }
-      </g>
+        {createNewChildren(children, {
+          width,
+          height,
+          center: this.center,
+          backdrop: this.backdrop,
+          zoom: this.props.zoom,
+          disablePanning: this.props.disablePanning,
+          children,
+          projection: projection.rotate(this.state.rotation),
+        })}
+      </G>
     )
   }
 }
 
 ZoomableGlobe.defaultProps = {
-  center: [ 0, 0 ],
+  center: [0, 0],
   zoom: 1,
   disablePanning: false,
   sensitivity: 0.25,

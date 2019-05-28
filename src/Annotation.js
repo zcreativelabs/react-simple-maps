@@ -2,6 +2,8 @@
 import React, { Component } from "react"
 import { geoLength } from "d3-geo"
 
+import { G, Path } from 'react-native-svg'
+
 import {
   createConnectorPath,
   createTextAnchor,
@@ -27,7 +29,7 @@ class Annotation extends Component {
       height,
     } = this.props
 
-    const connectorPath = createConnectorPath(null, [-dx/zoom,-dy/zoom], curve)
+    const connectorPath = createConnectorPath(null, [-dx / zoom, -dy / zoom], curve)
     const translation = projection(subject)
 
     const lineString = {
@@ -35,35 +37,35 @@ class Annotation extends Component {
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          projection.invert([width/2,height/2]),
+          projection.invert([width / 2, height / 2]),
           subject,
         ],
       },
     }
 
-    const radians = Math.PI/2, degrees = 90
+    const radians = Math.PI / 2, degrees = 90
     const isGlobe = projection.clipAngle && projection.clipAngle() === degrees
     const isHidden = isGlobe && geoLength(lineString) > radians
 
     return (
-      <g
+      <G
         className="rsm-annotation"
-        style={isHidden ? {...style, ...hiddenStyle} : style}
-        transform={ `translate(
-          ${ translation[0] + dx / zoom }
-          ${ translation[1] + dy / zoom }
+        style={isHidden ? { ...style, ...hiddenStyle } : style}
+        transform={`translate(
+          ${ translation[0] + dx / zoom}
+          ${ translation[1] + dy / zoom}
         )`}
-        textAnchor={ createTextAnchor(dx) }
-        >
-        { children }
-        <path
-          d={ connectorPath }
-          stroke={ stroke }
-          strokeWidth={ strokeWidth }
+        textAnchor={createTextAnchor(dx)}
+      >
+        {children}
+        <Path
+          d={connectorPath}
+          stroke={stroke}
+          strokeWidth={strokeWidth}
           fill="none"
-          markerEnd={ markerEnd }
+          markerEnd={markerEnd}
         />
-      </g>
+      </G>
     )
   }
 }

@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import { geoLength } from "d3-geo"
+import { Path } from 'react-native-svg'
 
 class Line extends Component {
   constructor(props) {
@@ -135,7 +136,7 @@ class Line extends Component {
     const startLineString = buildLineString(line.coordinates.start)
     const endLineString = buildLineString(line.coordinates.end)
 
-    const radians = Math.PI/2, degrees = 90
+    const radians = Math.PI / 2, degrees = 90
     const isGlobe = projection.clipAngle && projection.clipAngle() === degrees
     const isHidden = isGlobe && (geoLength(startLineString) > radians || geoLength(endLineString) > radians)
 
@@ -147,17 +148,17 @@ class Line extends Component {
       : `M ${start.join(" ")} L ${end.join(" ")}`
 
     return (
-      <path
+      <Path
         className={`rsm-line${pressed ? " rsm-line--pressed" : ""}${
           hover ? " rsm-line--hover" : ""
           } ${className}`}
         transform={`${scale}`}
         style={
           style[
-            isHidden
-              ? "hidden"
-              : pressed || hover ? (pressed ? "pressed" : "hover") : "default"
-            ]
+          isHidden
+            ? "hidden"
+            : pressed || hover ? (pressed ? "pressed" : "hover") : "default"
+          ]
         }
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}

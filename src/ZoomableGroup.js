@@ -1,6 +1,7 @@
 
 import React, { Component } from "react"
 import { geoPath } from "d3-geo"
+import { G, Rect } from 'react-native-svg'
 
 import {
   calculateResizeFactor,
@@ -61,7 +62,7 @@ class ZoomableGroup extends Component {
     const { zoom, width, height, projection, onMoveEnd } = this.props
     const x = width / 2 - (mouseX * resizeFactorX / zoom)
     const y = height / 2 - (mouseY * resizeFactorY / zoom)
-    const newCenter = projection.invert([ x, y ])
+    const newCenter = projection.invert([x, y])
     onMoveEnd(newCenter)
   }
   handleMouseDown({ pageX, pageY }) {
@@ -76,7 +77,7 @@ class ZoomableGroup extends Component {
     if (!onMoveStart) return
     const x = width / 2 - (mouseX * resizeFactorX / zoom)
     const y = height / 2 - (mouseY * resizeFactorY / zoom)
-    const currentCenter = projection.invert([ x, y ])
+    const currentCenter = projection.invert([x, y])
     onMoveStart(currentCenter)
   }
   handleTouchStart({ touches }) {
@@ -161,40 +162,40 @@ class ZoomableGroup extends Component {
     } = this.state
 
     return (
-      <g className="rsm-zoomable-group"
-         ref={ zoomableGroupNode => this.zoomableGroupNode = zoomableGroupNode }
-         transform={`
+      <G className="rsm-zoomable-group"
+        ref={zoomableGroupNode => this.zoomableGroupNode = zoomableGroupNode}
+        transform={`
            translate(
-             ${ Math.round((width / 2 + resizeFactorX * mouseX) * 100) / 100 }
-             ${ Math.round((height / 2 + resizeFactorY * mouseY) * 100) / 100 }
+             ${ Math.round((width / 2 + resizeFactorX * mouseX) * 100) / 100}
+             ${ Math.round((height / 2 + resizeFactorY * mouseY) * 100) / 100}
            )
-           scale(${ zoom })
-           translate(${ -width / 2 } ${ -height / 2 })
+           scale(${ zoom})
+           translate(${ -width / 2} ${-height / 2})
          `}
-         onMouseMove={ this.handleMouseMove }
-         onMouseUp={ this.handleMouseUp }
-         onMouseDown={ this.handleMouseDown }
-         onTouchStart={ this.handleTouchStart }
-         onTouchMove={ this.handleTouchMove }
-         onTouchEnd={ this.handleMouseUp }
-         style={ style }
+        onMouseMove={this.handleMouseMove}
+        onMouseUp={this.handleMouseUp}
+        onMouseDown={this.handleMouseDown}
+        onTouchStart={this.handleTouchStart}
+        onTouchMove={this.handleTouchMove}
+        onTouchEnd={this.handleMouseUp}
+        style={style}
       >
-        <rect
-          x={ this.state.backdrop.x }
-          y={ this.state.backdrop.y }
-          width={ this.state.backdrop.width }
-          height={ this.state.backdrop.height }
+        <Rect
+          x={this.state.backdrop.x}
+          y={this.state.backdrop.y}
+          width={this.state.backdrop.width}
+          height={this.state.backdrop.height}
           fill="transparent"
           style={{ strokeWidth: 0 }}
         />
-        { createNewChildren(children, this.props) }
-      </g>
+        {createNewChildren(children, this.props)}
+      </G>
     )
   }
 }
 
 ZoomableGroup.defaultProps = {
-  center: [ 0, 0 ],
+  center: [0, 0],
   backdrop: {
     x: [-179.9, 179.9],
     y: [89.9, -89.9],

@@ -1,5 +1,6 @@
 
 import React, { Component } from "react"
+import { Path } from 'react-native-svg'
 import { geoPath } from "d3-geo"
 
 import { roundPath } from "./utils"
@@ -147,20 +148,20 @@ class Geography extends Component {
       }, {})
 
     return (
-      <path
-        d={ pathString }
-        className={ `rsm-geography${ pressed ? " rsm-geography--pressed" : "" }${ hover ? " rsm-geography--hover" : "" }` }
-        style={ style[pressed || hover ? (pressed ? "pressed" : "hover") : "default"] }
-        onClick={ this.handleMouseClick }
-        onMouseEnter={ this.handleMouseEnter }
-        onMouseMove={ this.handleMouseMove }
-        onMouseLeave={ this.handleMouseLeave }
-        onMouseDown={ this.handleMouseDown }
-        onMouseUp={ this.handleMouseUp }
-        onFocus={ this.handleFocus }
-        onBlur={ this.handleBlur }
-        tabIndex={ tabable ? 0 : -1 }
-        { ...restProps }
+      <Path
+        d={pathString}
+        className={`rsm-geography${pressed ? " rsm-geography--pressed" : ""}${hover ? " rsm-geography--hover" : ""}`}
+        style={style[pressed || hover ? (pressed ? "pressed" : "hover") : "default"]}
+        onClick={this.handleMouseClick}
+        onMouseEnter={this.handleMouseEnter}
+        onMouseMove={this.handleMouseMove}
+        onMouseLeave={this.handleMouseLeave}
+        onMouseDown={this.handleMouseDown}
+        onMouseUp={this.handleMouseUp}
+        onFocus={this.handleFocus}
+        onBlur={this.handleBlur}
+        tabIndex={tabable ? 0 : -1}
+        {...restProps}
       />
     )
   }

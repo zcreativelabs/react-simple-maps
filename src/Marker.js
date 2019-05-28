@@ -1,6 +1,7 @@
 
 import React, { Component } from "react"
 import { geoLength } from "d3-geo"
+import { G } from 'react-native-svg'
 
 class Marker extends Component {
   constructor() {
@@ -99,7 +100,7 @@ class Marker extends Component {
       hover,
     } = this.state
 
-    const scale = preserveMarkerAspect ? ` scale(${1/zoom})` : ""
+    const scale = preserveMarkerAspect ? ` scale(${1 / zoom})` : ""
     const translation = projection(marker.coordinates)
 
     const lineString = {
@@ -107,35 +108,35 @@ class Marker extends Component {
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          projection.invert([width/2,height/2]),
+          projection.invert([width / 2, height / 2]),
           marker.coordinates,
         ],
       },
     }
 
-    const radians = Math.PI/2, degrees = 90
+    const radians = Math.PI / 2, degrees = 90
     const isGlobe = projection.clipAngle && projection.clipAngle() === degrees
     const isHidden = isGlobe && geoLength(lineString) > radians
 
     return (
-      <g className={ `rsm-marker${ pressed ? " rsm-marker--pressed" : "" }${ hover ? " rsm-marker--hover" : "" }` }
-         transform={ `translate(
-           ${ translation[0] }
-           ${ translation[1] }
+      <G className={`rsm-marker${pressed ? " rsm-marker--pressed" : ""}${hover ? " rsm-marker--hover" : ""}`}
+        transform={`translate(
+           ${ translation[0]}
+           ${ translation[1]}
          ) ${scale}`}
-         style={ style[isHidden ? "hidden" : (pressed || hover ? (pressed ? "pressed" : "hover") : "default")] }
-         onMouseEnter={ this.handleMouseEnter }
-         onMouseLeave={ this.handleMouseLeave }
-         onMouseDown={ this.handleMouseDown }
-         onMouseUp={ this.handleMouseUp }
-         onClick={ this.handleMouseClick }
-         onMouseMove={ this.handleMouseMove }
-         onFocus={ this.handleFocus }
-         onBlur={ this.handleBlur }
-         tabIndex={ tabable ? 0 : -1 }
-       >
-        { children }
-      </g>
+        style={style[isHidden ? "hidden" : (pressed || hover ? (pressed ? "pressed" : "hover") : "default")]}
+        onMouseEnter={this.handleMouseEnter}
+        onMouseLeave={this.handleMouseLeave}
+        onMouseDown={this.handleMouseDown}
+        onMouseUp={this.handleMouseUp}
+        onClick={this.handleMouseClick}
+        onMouseMove={this.handleMouseMove}
+        onFocus={this.handleFocus}
+        onBlur={this.handleBlur}
+        tabIndex={tabable ? 0 : -1}
+      >
+        {children}
+      </G>
     )
   }
 }
@@ -147,7 +148,7 @@ Marker.defaultProps = {
     pressed: {},
   },
   marker: {
-    coordinates: [0,0],
+    coordinates: [0, 0],
   },
   tabable: true,
   preserveMarkerAspect: true,

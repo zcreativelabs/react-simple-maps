@@ -4,6 +4,7 @@ import {
   geoPath,
   geoGraticule,
 } from "d3-geo"
+import { G, Path } from 'react-native-svg'
 
 import { roundPath } from "./utils"
 
@@ -79,7 +80,7 @@ class Graticule extends Component {
     } = this.props
 
     return this.state.renderGraticule && (
-      <g className="rsm-graticule">
+      <G className="rsm-graticule">
         <path
           fill={fill}
           stroke={stroke}
@@ -88,7 +89,7 @@ class Graticule extends Component {
         />
         {
           outline && (
-            <path
+            <Path
               fill={fill}
               stroke={stroke}
               d={this.state.outlinePath}
@@ -96,7 +97,7 @@ class Graticule extends Component {
             />
           )
         }
-      </g>
+      </G>
     )
   }
 }
@@ -107,7 +108,7 @@ Graticule.defaultProps = {
   globe: false,
   round: true,
   precision: 0.1,
-  step: [10,10],
+  step: [10, 10],
   outline: true,
   stroke: "#DDDDDD",
   fill: "transparent",

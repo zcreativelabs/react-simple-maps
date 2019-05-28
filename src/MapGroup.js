@@ -1,5 +1,6 @@
 
 import React, { Component } from "react"
+import { G } from 'react-native-svg'
 
 class MapGroup extends Component {
   render() {
@@ -15,7 +16,7 @@ class MapGroup extends Component {
       itemName,
     } = this.props
     return (
-      <g className={`rsm-${groupName}`} style={ style }>
+      <G className={`rsm-${groupName}`} style={style}>
         {
           !children ?
             null :
@@ -38,7 +39,7 @@ class MapGroup extends Component {
                   })
               )
         }
-      </g>
+      </G>
     )
   }
 }

@@ -1,6 +1,8 @@
 
 import React, { Component } from "react"
 
+import Svg, { Defs, G, Rect } from 'react-native-svg'
+
 import projections from "./projections"
 import defaultProjectionConfig from "./projectionConfig"
 
@@ -36,17 +38,17 @@ class ComposableMap extends Component {
     } = this.props
 
     return (
-      <svg width={ width }
-           height={ height }
-           viewBox={ viewBox ? viewBox : `0 0 ${width} ${height}` }
-           className={ `rsm-svg ${className || ''}` }
-           style={ style }
-           preserveAspectRatio={ aspectRatio }>
+      <Svg width={width}
+        height={height}
+        viewBox={viewBox ? viewBox : `0 0 ${width} ${height}`}
+        className={`rsm-svg ${className || ''}`}
+        style={style}
+        preserveAspectRatio={aspectRatio}>
         {
           defs && (
-            <defs>
+            <Defs>
               {defs}
-            </defs>
+            </Defs>
           )
         }
         {
@@ -58,13 +60,13 @@ class ComposableMap extends Component {
         }
         {
           showCenter && (
-            <g>
-              <rect x={width/2-0.5} y={0} width={ 1 } height={ height } fill="#e91e63" />
-              <rect x={0} y={height/2-0.5} width={ width } height={ 1 } fill="#e91e63" />
-            </g>
+            <G>
+              <Rect x={width / 2 - 0.5} y={0} width={1} height={height} fill="#e91e63" />
+              <Rect x={0} y={height / 2 - 0.5} width={width} height={1} fill="#e91e63" />
+            </G>
           )
         }
-      </svg>
+      </Svg>
     )
   }
 }

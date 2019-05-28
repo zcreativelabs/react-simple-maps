@@ -1,6 +1,7 @@
 
 import React, { Component } from "react"
 import { feature } from "topojson-client"
+import { G } from 'react-native-svg'
 
 class Geographies extends Component {
   constructor(props) {
@@ -45,13 +46,13 @@ class Geographies extends Component {
       children,
     } = this.props
     return (
-      <g className="rsm-geographies" style={ style }>
-        { children(this.state.geographyPaths || [], projection) }
-      </g>
+      <G className="rsm-geographies" style={style}>
+        {children(this.state.geographyPaths || [], projection)}
+      </G>
     )
   }
   shouldFetchGeographies(geography) {
-    return typeof(geography) === 'string'
+    return typeof (geography) === 'string'
   }
   parseGeographies(geography) {
     if (Array.isArray(geography)) {
