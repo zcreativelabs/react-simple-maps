@@ -137,14 +137,14 @@ class ZoomableGroup extends Component {
       mouseY: calculateMousePosition("y", projection, this.props, zoom, resizeFactorY),
     })
 
-    window.addEventListener("resize", this.handleResize)
-    window.addEventListener("mouseup", this.handleMouseUp)
-    this.zoomableGroupNode.addEventListener("touchmove", this.preventTouchScroll)
+    // window.addEventListener("resize", this.handleResize)
+    // window.addEventListener("mouseup", this.handleMouseUp)
+    // this.zoomableGroupNode.addEventListener("touchmove", this.preventTouchScroll)
   }
   componentWillUnmount() {
-    window.removeEventListener("resize", this.handleResize)
-    window.removeEventListener("mouseup", this.handleMouseUp)
-    this.zoomableGroupNode.removeEventListener("touchmove", this.preventTouchScroll)
+    // window.removeEventListener("resize", this.handleResize)
+    // window.removeEventListener("mouseup", this.handleMouseUp)
+    // this.zoomableGroupNode.removeEventListener("touchmove", this.preventTouchScroll)
   }
   render() {
     const {
