@@ -111,8 +111,8 @@ class ZoomableGroup extends Component {
   handleResize() {
     const { width, height, projection, zoom } = this.props
 
-    const resizeFactorX = calculateResizeFactor(this.zoomableGroupNode.parentNode.getBoundingClientRect().width, width)
-    const resizeFactorY = calculateResizeFactor(this.zoomableGroupNode.parentNode.getBoundingClientRect().height, height)
+    const resizeFactorX = 1 // calculateResizeFactor(this.zoomableGroupNode.parentNode.getBoundingClientRect().width, width)
+    const resizeFactorY = 1 // calculateResizeFactor(this.zoomableGroupNode.parentNode.getBoundingClientRect().height, height)
 
     const xPercentageChange = 1 / resizeFactorX * this.state.resizeFactorX
     const yPercentageChange = 1 / resizeFactorY * this.state.resizeFactorY
@@ -127,8 +127,8 @@ class ZoomableGroup extends Component {
   componentDidMount() {
     const { width, height, projection, zoom } = this.props
 
-    const resizeFactorX = calculateResizeFactor(this.zoomableGroupNode.parentNode.getBoundingClientRect().width, width)
-    const resizeFactorY = calculateResizeFactor(this.zoomableGroupNode.parentNode.getBoundingClientRect().height, height)
+    const resizeFactorX = 1 // calculateResizeFactor(this.zoomableGroupNode.parentNode.getBoundingClientRect().width, width)
+    const resizeFactorY = 1 // calculateResizeFactor(this.zoomableGroupNode.parentNode.getBoundingClientRect().height, height)
 
     this.setState({
       resizeFactorX: resizeFactorX,
