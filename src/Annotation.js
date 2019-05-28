@@ -2,7 +2,8 @@
 import React, { Component } from "react"
 import { geoLength } from "d3-geo"
 
-import { G, Path } from 'react-native-svg'
+import { Svg } from 'expo'
+const { G, Path } = Svg;
 
 import {
   createConnectorPath,

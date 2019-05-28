@@ -1,6 +1,8 @@
 import React, { Component } from "react"
 import { geoLength } from "d3-geo"
-import { Path } from 'react-native-svg'
+
+import { Svg } from 'expo'
+const { Path } = Svg;
 
 class Line extends Component {
   constructor(props) {

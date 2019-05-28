@@ -1,7 +1,9 @@
 
 import React, { Component } from "react"
 import { geoPath } from "d3-geo"
-import { G, Rect } from 'react-native-svg'
+
+import { Svg } from 'expo'
+const { G, Rect } = Svg;
 
 import {
   calculateResizeFactor,

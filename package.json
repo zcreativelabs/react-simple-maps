@@ -1,6 +1,6 @@
 {
   "name": "react-native-simple-maps",
-  "version": "0.12.1",
+  "version": "0.12.2",
   "description": "An svg map component built with and for React",
   "main": "lib/index.js",
   "scripts": {
@@ -53,7 +53,7 @@
   "dependencies": {
     "d3-geo": "^1.10.0",
     "d3-geo-projection": "^2.4.0",
-    "react-native-svg": "^9.4.0",
+    "expo": "^31.0.6",
     "topojson-client": "^3.0.0"
   }
 }

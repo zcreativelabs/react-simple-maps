@@ -4,7 +4,9 @@ import {
   geoPath,
   geoGraticule,
 } from "d3-geo"
-import { G, Path } from 'react-native-svg'
+
+import { Svg } from 'expo'
+const { G, Path } = Svg;
 
 import { roundPath } from "./utils"
 
