@@ -1,21 +1,21 @@
 {
   "name": "react-native-simple-maps",
-  "version": "0.12.30",
+  "version": "0.12.36",
   "description": "react-simple-maps fork for React Native and Expo",
   "main": "lib/index.js",
   "scripts": {
     "build": "babel src --out-dir lib",
     "watch": "babel --watch src --out-dir lib",
     "prepare": "npm run build",
-    "test": "mocha './tests/**/*.spec.js' --compilers js:babel-core/register"
+    "test": "mocha './tests/**/*.spec.js' --compilers js:@babel/register"
   },
   "babel": {
     "presets": [
-      "env",
-      "react"
+      "@babel/preset-env",
+      "@babel/preset-react"
     ],
     "plugins": [
-      "transform-object-rest-spread"
+      "@babel/plugin-proposal-object-rest-spread"
     ]
   },
   "repository": {
@@ -36,22 +36,23 @@
   },
   "homepage": "https://github.com/ahushh/react-native-simple-maps/issues#readme",
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
     "expect": "^23.5.0",
     "mocha": "^5.2.0",
     "react": "^16.4.2",
     "react-test-utils": "^0.0.1"
   },
   "peerDependencies": {
-    "react": "^15.3.0 || ^16.0.0"
+    "react": "^16.0.0"
   },
   "dependencies": {
+    "expo": "^31.0.6",
     "d3-geo": "^1.10.0",
     "d3-geo-projection": "^2.4.0",
-    "expo": "^31.0.6",
     "topojson-client": "^3.0.0"
   }
 }
