@@ -1,4 +1,9 @@
+# react-native-simple-maps
+
+This is fork of react-simple-maps for React Native and Expo@31.
+
 # react-simple-maps
+
 An svg map component built with and for React. It allows the creation of pure react svg maps.
 
 ### Why
@@ -26,28 +31,21 @@ $ npm install react react-dom react-simple-maps --save
 ```js
 import React, { Component } from "react"
 import ReactDOM from "react-dom"
-import {
-  ComposableMap,
-  ZoomableGroup,
-  Geographies,
-  Geography,
-} from "react-simple-maps"
+import { ComposableMap, ZoomableGroup, Geographies, Geography } from "react-simple-maps"
 
 class App extends Component {
   render() {
-    return(
+    return (
       <div>
         <ComposableMap>
           <ZoomableGroup>
-          <Geographies geography={ "/path/to/your/topojson-map-file.json or geography object" }>
-            {(geographies, projection) => geographies.map(geography => (
-              <Geography
-                key={ geography.id }
-                geography={ geography }
-                projection={ projection }
-                />
-            ))}
-          </Geographies>
+            <Geographies geography={"/path/to/your/topojson-map-file.json or geography object"}>
+              {(geographies, projection) =>
+                geographies.map(geography => (
+                  <Geography key={geography.id} geography={geography} projection={projection} />
+                ))
+              }
+            </Geographies>
           </ZoomableGroup>
         </ComposableMap>
       </div>
@@ -65,10 +63,10 @@ Here is the complete simplified component structure of any map created with `rea
 ```js
 <ComposableMap>
   <ZoomableGroup>
-    <Geographies geography={ "/path/to/your/topojson-map-file.json or geography object" }>
-      {(geographies, projection) => geographies.map(geography => (
-        <Geography key={ geography.id } geography={ geography } projection={ projection } />
-      ))}
+    <Geographies geography={"/path/to/your/topojson-map-file.json or geography object"}>
+      {(geographies, projection) =>
+        geographies.map(geography => <Geography key={geography.id} geography={geography} projection={projection} />)
+      }
     </Geographies>
     <Markers>
       <Marker />
@@ -120,20 +118,19 @@ The above results in the following svg structure rendered by react:
 - [`<Lines />`](#Lines-component)
 - [`<Line />`](#Line-component)
 
-
 #### <a name="ComposableMap-component"></a> `<ComposableMap />`
 
-`<ComposableMap />` forms the wrapper around your map. It defines the dimensions of the map and sets the projection used by Geographies, Markers, and Annotations, to position elements. By default the maps use the "times" projection, but `react-simple-maps` also supports `robinson`,  `eckert4`, `winkel3`, `mercator`, and `miller` projections out of the box. Additionally you can plug in a custom projection of your choice. All projections from `d3-geo-projections` are supported.
+`<ComposableMap />` forms the wrapper around your map. It defines the dimensions of the map and sets the projection used by Geographies, Markers, and Annotations, to position elements. By default the maps use the "times" projection, but `react-simple-maps` also supports `robinson`, `eckert4`, `winkel3`, `mercator`, and `miller` projections out of the box. Additionally you can plug in a custom projection of your choice. All projections from `d3-geo-projections` are supported.
 
 ##### Props
 
-| Property         | Type            | Default                        |
-| ---------------- |:--------------- | :----------------------------- |
-| width            | Number          | 800                            |
-| height           | Number          | 450                            |
-| projection       | String/Function | "times"                        |
-| projectionConfig | Object          | *see examples below            |
-| defs             | SVG Def Element       | *see [defs spec](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/defs)         |
+| Property         | Type            | Default                                                                          |
+| ---------------- | :-------------- | :------------------------------------------------------------------------------- |
+| width            | Number          | 800                                                                              |
+| height           | Number          | 450                                                                              |
+| projection       | String/Function | "times"                                                                          |
+| projectionConfig | Object          | \*see examples below                                                             |
+| defs             | SVG Def Element | \*see [defs spec](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/defs) |
 
 ##### Configuring projections
 
@@ -170,14 +167,14 @@ The default configuration of the projection:
 
 ##### Props
 
-| Property         | Type            | Default                        |
-| ---------------- |:--------------- | :----------------------------- |
-| zoom             | Number          | 1                              |
-| center           | Array           | [0,0]                          |
-| disablePanning   | Boolean         | false                          |
-| style            | Object          | {}                             |
-| onMoveStart      | Function        | &nbsp;                         |
-| onMoveEnd        | Function        | &nbsp;                         |
+| Property       | Type     | Default |
+| -------------- | :------- | :------ |
+| zoom           | Number   | 1       |
+| center         | Array    | [0,0]   |
+| disablePanning | Boolean  | false   |
+| style          | Object   | {}      |
+| onMoveStart    | Function | &nbsp;  |
+| onMoveEnd      | Function | &nbsp;  |
 
 ##### Zooming
 
@@ -186,12 +183,7 @@ The `ZoomableGroup` component exposes a zoom property, which can be updated from
 ```js
 import React, { Component } from "react"
 import ReactDOM from "react-dom"
-import {
-  ComposableMap,
-  ZoomableGroup,
-  Geographies,
-  Geography,
-} from "react-simple-maps"
+import { ComposableMap, ZoomableGroup, Geographies, Geography } from "react-simple-maps"
 
 class App extends Component {
   constructor() {
@@ -215,22 +207,20 @@ class App extends Component {
     })
   }
   render() {
-    return(
+    return (
       <div>
-        <button onClick={ this.handleZoomIn }>{ "Zoom in" }</button>
-        <button onClick={ this.handleZoomOut }>{ "Zoom out" }</button>
+        <button onClick={this.handleZoomIn}>{"Zoom in"}</button>
+        <button onClick={this.handleZoomOut}>{"Zoom out"}</button>
         <hr />
         <ComposableMap>
-          <ZoomableGroup zoom={ this.state.zoom }>
-          <Geographies geography={ "/path/to/your/topojson-map-file.json or geography object" }>
-            {(geographies, projection) => geographies.map(geography => (
-              <Geography
-                key={ geography.id }
-                geography={ geography }
-                projection={ projection }
-                />
-            ))}
-          </Geographies>
+          <ZoomableGroup zoom={this.state.zoom}>
+            <Geographies geography={"/path/to/your/topojson-map-file.json or geography object"}>
+              {(geographies, projection) =>
+                geographies.map(geography => (
+                  <Geography key={geography.id} geography={geography} projection={projection} />
+                ))
+              }
+            </Geographies>
           </ZoomableGroup>
         </ComposableMap>
       </div>
@@ -275,13 +265,13 @@ handleMoveEnd(newCenter) {
 
 ##### Props
 
-| Property         | Type            | Default                        |
-| ---------------- |:--------------- | :----------------------------- |
-| zoom             | Number          | 1                              |
-| center           | Array           | [0,0]                          |
-| style            | Object          | {}                             |
-| onMoveStart      | Function        | &nbsp;                         |
-| onMoveEnd        | Function        | &nbsp;                         |
+| Property    | Type     | Default |
+| ----------- | :------- | :------ |
+| zoom        | Number   | 1       |
+| center      | Array    | [0,0]   |
+| style       | Object   | {}      |
+| onMoveStart | Function | &nbsp;  |
+| onMoveEnd   | Function | &nbsp;  |
 
 Note that if you are using the `<ZoomableGlobe />` component together with the graticule, you will have to specify `<Graticule globe={true} />` for the graticule. See the [globe example](https://github.com/zcreativelabs/react-simple-maps/tree/master/examples/globe) for more information on how to use the `<ZoomableGlobe />` component.
 
@@ -299,10 +289,10 @@ If you do not want `react-simple-maps` to load your topojson and pass it down au
 
 ##### Props
 
-| Property            | Type                       | Default                        |
-| ------------------- |:---------------------------| :----------------------------- |
-| disableOptimization | Boolean                    | false                          |
-| geography           | String or Object, or Array | ""                             |
+| Property            | Type                       | Default |
+| ------------------- | :------------------------- | :------ |
+| disableOptimization | Boolean                    | false   |
+| geography           | String or Object, or Array | ""      |
 
 ##### Choropleth map
 
@@ -324,23 +314,27 @@ class ChoroplethMap extends Component {
       <div>
         <ComposableMap style={{ width: "100%" }}>
           <ZoomableGroup>
-            <Geographies geography={ "/path/to/world-50m.json or geography object" } disableOptimization> // if you are using the object, then geography={geographyObject}
-              {(geographies, projection) => geographies.map((geography, i) => (
-                <Geography
-                  key={ `geography-${i}` }
-                  cacheId={ `geography-${i}` }
-                  geography={ geography }
-                  projection={ projection }
-                  style={{
-                    default: {
-                      fill: colorScale(geography.properties.pop_est),
-                      stroke: "#FFF",
-                      strokeWidth: 0.5,
-                      outline: "none",
-                    },
-                  }}
-                />
-              ))}
+            <Geographies geography={"/path/to/world-50m.json or geography object"} disableOptimization>
+              {" "}
+              // if you are using the object, then geography={geographyObject}
+              {(geographies, projection) =>
+                geographies.map((geography, i) => (
+                  <Geography
+                    key={`geography-${i}`}
+                    cacheId={`geography-${i}`}
+                    geography={geography}
+                    projection={projection}
+                    style={{
+                      default: {
+                        fill: colorScale(geography.properties.pop_est),
+                        stroke: "#FFF",
+                        strokeWidth: 0.5,
+                        outline: "none",
+                      },
+                    }}
+                  />
+                ))
+              }
             </Geographies>
           </ZoomableGroup>
         </ComposableMap>
@@ -403,14 +397,14 @@ The `<Geography />` component represents each shape converted with topojson. The
 
 ##### Props
 
-| Property            | Type            | Default                        |
-| ------------------- |:--------------- | :----------------------------- |
-| cacheId             | Number/String   | null                           |
-| precision           | Number          | 0.1                            |
-| round               | Boolean         | false                          |
-| geography           | Object          | *see examples below            |
-| tabable             | Boolean         | true                           |
-| style               | Object          | *see examples below            |
+| Property  | Type          | Default              |
+| --------- | :------------ | :------------------- |
+| cacheId   | Number/String | null                 |
+| precision | Number        | 0.1                  |
+| round     | Boolean       | false                |
+| geography | Object        | \*see examples below |
+| tabable   | Boolean       | true                 |
+| style     | Object        | \*see examples below |
 
 ##### Styling
 
@@ -453,19 +447,18 @@ Currently supported events are `onMouseEnter`, `onMouseLeave`, `onMouseDown`, `o
 
 `<Markers />` is a simple wrapper component for the individual markers.
 
-
 #### <a name="Marker-component"></a> `<Marker />`
 
 The `<Marker />` component represents each marker and uses coordinates to position the marker on the map. It does not make any assumptions about what your marker looks like, so you have to specify yourself what shape it should have. See the example below for how to make the recommended circular marker. The component can be used to assign events to individual markers on the map, and to specify the hover, focus and click behavior. You can also choose to preserve the markers aspect/size when in a `<ZoomableGroup />` via the `preserveMarkerAspect` prop.
 
 ##### Props
 
-| Property             | Type            | Default                        |
-| -------------------- |:--------------- | :----------------------------- |
-| marker               | Object          | *see below examples            |
-| tabable              | Boolean         | true                           |
-| style                | Object          | *see below examples            |
-| preserveMarkerAspect | Boolean         | true                           |
+| Property             | Type    | Default              |
+| -------------------- | :------ | :------------------- |
+| marker               | Object  | \*see below examples |
+| tabable              | Boolean | true                 |
+| style                | Object  | \*see below examples |
+| preserveMarkerAspect | Boolean | true                 |
 
 ##### Marker location
 
@@ -473,8 +466,8 @@ Marker data is added to the `marker` prop and should contain the coordinates of 
 
 ```js
 <Markers>
-  <Marker marker={{ coordinates: [ 8.5, 47.3 ] }}>
-    <circle cx={ 0 } cy={ 0 } r={ 10 } />
+  <Marker marker={{ coordinates: [8.5, 47.3] }}>
+    <circle cx={0} cy={0} r={10} />
   </Marker>
 </Markers>
 ```
@@ -532,17 +525,17 @@ Currently supported events are `onMouseEnter`, `onMouseLeave`, `onMouseDown`, `o
 
 ##### Props
 
-| Property            | Type            | Default                        |
-| ------------------- |:--------------- | :----------------------------- |
-| subject             | Array           | [0,0]                          |
-| dx                  | Number          | 30                             |
-| dy                  | Number          | 30                             |
-| zoom                | Number          | 1                              |
-| stroke              | String          | "#000000"                      |
-| strokeWidth         | Number          | 1                              |
-| style               | Object          | {}                             |
-| markerEnd           | String          | "none"                         |
-| curve               | Number          | 0                              |
+| Property    | Type   | Default   |
+| ----------- | :----- | :-------- |
+| subject     | Array  | [0,0]     |
+| dx          | Number | 30        |
+| dy          | Number | 30        |
+| zoom        | Number | 1         |
+| stroke      | String | "#000000" |
+| strokeWidth | Number | 1         |
+| style       | Object | {}        |
+| markerEnd   | String | "none"    |
+| curve       | Number | 0         |
 
 ##### Example annotation
 
@@ -648,23 +641,23 @@ The `<Graticule />` component can be used to add a graticule to the map. Note th
 
 ##### Props
 
-| Property            | Type            | Default                        |
-| ------------------- |:--------------- | :----------------------------- |
-| step                | Array           | [10,10]                        |
-| round               | Boolean         | true                           |
-| precision           | Nmber           | 0.1                            |
-| outline             | Boolean         | true                           |
-| stroke              | String          | "#DDDDDD"                      |
-| fill                | String          | "transparent"                  |
-| style               | Object          | `{ pointerEvents: "none" }`    |
-| disableOptimization | Boolean         | true                           |
-| Globe               | Boolean         | false                          |
+| Property            | Type    | Default                     |
+| ------------------- | :------ | :-------------------------- |
+| step                | Array   | [10,10]                     |
+| round               | Boolean | true                        |
+| precision           | Nmber   | 0.1                         |
+| outline             | Boolean | true                        |
+| stroke              | String  | "#DDDDDD"                   |
+| fill                | String  | "transparent"               |
+| style               | Object  | `{ pointerEvents: "none" }` |
+| disableOptimization | Boolean | true                        |
+| Globe               | Boolean | false                       |
 
 #### <a name="Lines-component"></a> `<Lines />`
+
 In general `<Lines />` and `<Line />` components work the same way as `<Markers />` and `<Marker />` components, with a slight change in it's API.
 
 `<Lines />` is a simple wrapper component for the individual line.
-
 
 #### <a name="Line-component"></a> `<Line />`
 
@@ -672,13 +665,14 @@ The `<Line />` component represents each line and uses two coordinates (start an
 
 ##### Props
 
-| Property            | Type             | Default                        |
-| --------------------| :--------------- | :----------------------------- |
-| line                | Object           | *see below examples            |
-| tabable             | Boolean          | true                           |
-| style               | Object           | *see below examples            |
-| preserveMarkerAspect| Boolean          | true                           |
-| buildPath           | Function         | *see below examples            |
+| Property             | Type     | Default              |
+| -------------------- | :------- | :------------------- |
+| line                 | Object   | \*see below examples |
+| tabable              | Boolean  | true                 |
+| style                | Object   | \*see below examples |
+| preserveMarkerAspect | Boolean  | true                 |
+| buildPath            | Function | \*see below examples |
+
 ##### Line location
 
 Line data is added to the `line` prop and should contain the coordinates of the line.
@@ -689,8 +683,8 @@ Line data is added to the `line` prop and should contain the coordinates of the 
     line={{
       coordinates: {
         start: [0, 0],
-        end: [-99.1, 19.4]
-      }
+        end: [-99.1, 19.4],
+      },
     }}
   />
 </Lines>
@@ -719,6 +713,7 @@ There are no styles assigned to the style prop.
 ```
 
 ##### Shaping the line
+
 By default the line will be drawn as a straight `<path />`, if you wish to curve the line in a custom way you need to define a build function. This build function receives the `start` and `end` coordinates with the map projection already applied. The third argument corresponds to the `line` prop provided to the `<Line />` component. The returned value will be applied to the resulting `<path />` as the `d` property.
 
 If you wish to know more about what you can achieve with the `buildPath` prop, checkout [MDN's Path documentation](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths).
@@ -750,6 +745,7 @@ buildCurves(start, end, line) {
   buildPath={this.buildCurves}
 />
 ```
+
 ##### Line events and passing line data to line events
 
 In order to allow easy access to line data when handling events, pass the line data to the `line` prop. Below is an example of how to iterate through lines.
@@ -778,4 +774,5 @@ If you wish to see a real code example check it out [here](https://github.com/Vi
 Otherwise go check it out live at [trase.earth](https://trase.earth).
 
 ### License
+
 MIT licensed. Copyright (c) Richard Zimerman 2017. See [LICENSE.md](https://github.com/zcreativelabs/react-simple-maps/blob/master/LICENSE) for more details.

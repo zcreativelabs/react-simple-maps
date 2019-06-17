@@ -1,7 +1,7 @@
 {
   "name": "react-native-simple-maps",
   "version": "0.12.30",
-  "description": "An svg map component built with and for React",
+  "description": "react-simple-maps fork for React Native and Expo",
   "main": "lib/index.js",
   "scripts": {
     "build": "babel src --out-dir lib",
@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zcreativelabs/react-simple-maps.git"
+    "url": "git+https://github.com/ahushh/react-native-simple-maps.git"
   },
   "keywords": [
     "react",
@@ -29,12 +29,12 @@
     "geo",
     "d3"
   ],
-  "author": "Richard Zimerman <richard@zcreativelabs.com> (https://github.com/zimrick)",
+  "author": "Ahushh <ahushh@gmail.com> (https://github.com/ahushh)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/zcreativelabs/react-simple-maps/issues"
+    "url": "https://github.com/ahushh/react-native-simple-maps/issues"
   },
-  "homepage": "https://github.com/zcreativelabs/react-simple-maps#readme",
+  "homepage": "https://github.com/ahushh/react-native-simple-maps/issues#readme",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
@@ -43,12 +43,10 @@
     "expect": "^23.5.0",
     "mocha": "^5.2.0",
     "react": "^16.4.2",
-    "react-dom": "^16.4.2",
     "react-test-utils": "^0.0.1"
   },
   "peerDependencies": {
-    "react": "^15.3.0 || ^16.0.0",
-    "react-dom": "^15.3.0 || ^16.0.0"
+    "react": "^15.3.0 || ^16.0.0"
   },
   "dependencies": {
     "d3-geo": "^1.10.0",
