@@ -11,6 +11,11 @@ class ComposableMap extends Component {
   constructor() {
     super()
     this.projection = this.projection.bind(this)
+    this.onLayoutChange = this.onLayoutChange.bind(this)
+    this.state = {
+      parentWidth: 0,
+      parentHeight: 0,
+    }
   }
   projection() {
     const {
@@ -23,6 +28,13 @@ class ComposableMap extends Component {
     return typeof projection !== "function" ?
       projections(width, height, projectionConfig, projection) :
       projection(width, height, projectionConfig)
+  }
+
+  onLayoutChange(event) {
+    this.setState({
+      parentWidth: event.nativeEvent.layout.width,
+      parentHeight: event.nativeEvent.layout.height,
+    })
   }
   render() {
 
@@ -57,6 +69,8 @@ class ComposableMap extends Component {
             projection: this.projection(),
             width,
             height,
+            parentHeight: this.state.parentHeight,
+            parentWidth: this.state.parentWidth,
           })
         }
         {

@@ -1,6 +1,6 @@
 {
   "name": "react-native-simple-maps",
-  "version": "0.12.4",
+  "version": "0.12.18",
   "description": "An svg map component built with and for React",
   "main": "lib/index.js",
   "scripts": {

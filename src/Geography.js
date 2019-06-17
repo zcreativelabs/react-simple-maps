@@ -47,11 +47,13 @@ class Geography extends Component {
     this.handleBlur = this.handleBlur.bind(this)
   }
   handleMouseClick(evt) {
+    console.log('onLongPress')
     evt.persist()
     const { onClick, geography } = this.props
     return onClick && onClick(geography, evt)
   }
   handleMouseEnter(evt) {
+    console.log('onPressIn')
     evt.persist()
     const { onMouseEnter, geography } = this.props
     this.setState({
@@ -71,6 +73,7 @@ class Geography extends Component {
     else return
   }
   handleMouseLeave(evt) {
+    console.log('onPressOut')
     evt.persist()
     const { onMouseLeave, geography } = this.props
     this.setState({
@@ -86,6 +89,7 @@ class Geography extends Component {
     }, () => onMouseDown && onMouseDown(geography, evt))
   }
   handleMouseUp(evt) {
+    console.log('onPress')
     evt.persist()
     const { onMouseUp, geography } = this.props
     this.setState({
@@ -155,14 +159,14 @@ class Geography extends Component {
         d={pathString}
         className={`rsm-geography${pressed ? " rsm-geography--pressed" : ""}${hover ? " rsm-geography--hover" : ""}`}
         style={style[pressed || hover ? (pressed ? "pressed" : "hover") : "default"]}
-        onClick={this.handleMouseClick}
-        onMouseEnter={this.handleMouseEnter}
-        onMouseMove={this.handleMouseMove}
-        onMouseLeave={this.handleMouseLeave}
-        onMouseDown={this.handleMouseDown}
-        onMouseUp={this.handleMouseUp}
-        onFocus={this.handleFocus}
-        onBlur={this.handleBlur}
+        onLongPress={this.handleMouseClick}
+        onPressIn={this.handleMouseEnter}
+        // onMouseMove={this.handleMouseMove}
+        onPressOut={this.handleMouseLeave}
+        // onMouseDown={this.handleMouseDown}
+        onPress={this.handleMouseUp}
+        // onFocus={this.handleFocus}
+        // onBlur={this.handleBlur}
         tabIndex={tabable ? 0 : -1}
         {...restProps}
       />
