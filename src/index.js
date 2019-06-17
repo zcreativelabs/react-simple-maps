@@ -1,4 +1,3 @@
-
 export { default as ComposableMap } from "./ComposableMap"
 export { default as ZoomableGroup } from "./ZoomableGroup"
 export { default as ZoomableGlobe } from "./ZoomableGlobe"
@@ -12,3 +11,4 @@ export { default as MapGroup } from "./MapGroup"
 export { default as Annotation } from "./Annotation"
 export { default as Annotations } from "./Annotations"
 export { default as Graticule } from "./Graticule"
+export { default as ZoomableMap } from "./ZoomableMap"
