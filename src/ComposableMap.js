@@ -1,33 +1,133 @@
-
 import React, { Component } from "react"
+import { View, PanResponder } from "react-native"
 
-import { Svg } from 'expo'
-const { Defs, G, Rect } = Svg;
+import { Svg } from "expo"
+const { Defs, G, Rect } = Svg
 
 import projections from "./projections"
 import defaultProjectionConfig from "./projectionConfig"
 
+function calcDistance(x1, y1, x2, y2) {
+  const dx = x1 - x2
+  const dy = y1 - y2
+  return Math.sqrt(dx * dx + dy * dy)
+}
+
+function middle(p1, p2) {
+  return (p1 + p2) / 2
+}
+
+function calcCenter(x1, y1, x2, y2) {
+  return {
+    x: middle(x1, x2),
+    y: middle(y1, y2),
+  }
+}
+
 class ComposableMap extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.projection = this.projection.bind(this)
     this.onLayoutChange = this.onLayoutChange.bind(this)
     this.state = {
       parentWidth: 0,
       parentHeight: 0,
+      zoom: 1,
+      left: 0,
+      top: 0,
     }
   }
-  projection() {
-    const {
-      projection,
-      projectionConfig,
-      width,
-      height
-    } = this.props
+  processPinch(x1, y1, x2, y2) {
+    const distance = calcDistance(x1, y1, x2, y2)
+    const { x, y } = calcCenter(x1, y1, x2, y2)
 
-    return typeof projection !== "function" ?
-      projections(width, height, projectionConfig, projection) :
-      projection(width, height, projectionConfig)
+    if (!this.state.isZooming) {
+      const { top, left, zoom } = this.state
+      this.setState({
+        isZooming: true,
+        initialX: x,
+        initialY: y,
+        initialTop: top,
+        initialLeft: left,
+        initialZoom: zoom,
+        initialDistance: distance,
+      })
+    } else {
+      const { initialX, initialY, initialTop, initialLeft, initialZoom, initialDistance } = this.state
+
+      const touchZoom = distance / initialDistance
+      const dx = x - initialX
+      const dy = y - initialY
+
+      const left = (initialLeft + dx - x) * touchZoom + x
+      const top = (initialTop + dy - y) * touchZoom + y
+      const zoom = initialZoom * touchZoom
+
+      this.setState({
+        zoom,
+        left,
+        top,
+      })
+    }
+  }
+  componentWillMount() {
+    this._panResponder = PanResponder.create({
+      onPanResponderGrant: () => {},
+      onPanResponderTerminate: () => {},
+      onMoveShouldSetPanResponder: () => true,
+      onStartShouldSetPanResponder: () => true,
+      onShouldBlockNativeResponder: () => true,
+      onPanResponderTerminationRequest: () => true,
+      onMoveShouldSetPanResponderCapture: () => true,
+      onStartShouldSetPanResponderCapture: () => true,
+      onPanResponderMove: evt => {
+        const touches = evt.nativeEvent.touches
+        const length = touches.length
+        if (length === 1) {
+          const [{ locationX, locationY }] = touches
+          this.processTouch(locationX, locationY)
+        } else if (length === 2) {
+          const [touch1, touch2] = touches
+          this.processPinch(touch1.locationX, touch1.locationY, touch2.locationX, touch2.locationY)
+        }
+      },
+      onPanResponderRelease: () => {
+        this.setState({
+          isZooming: false,
+          isMoving: false,
+        })
+      },
+    })
+  }
+
+  processTouch(x, y) {
+    if (!this.state.isMoving || this.state.isZooming) {
+      const { top, left } = this.state
+      this.setState({
+        isMoving: true,
+        isZooming: false,
+        initialLeft: left,
+        initialTop: top,
+        initialX: x,
+        initialY: y,
+      })
+    } else {
+      const { initialX, initialY, initialLeft, initialTop } = this.state
+      const dx = x - initialX
+      const dy = y - initialY
+      this.setState({
+        left: initialLeft + dx,
+        top: initialTop + dy,
+      })
+    }
+  }
+
+  projection() {
+    const { projection, projectionConfig, width, height } = this.props
+
+    return typeof projection !== "function"
+      ? projections(width, height, projectionConfig, projection)
+      : projection(width, height, projectionConfig)
   }
 
   onLayoutChange(event) {
@@ -37,51 +137,45 @@ class ComposableMap extends Component {
     })
   }
   render() {
-
-    const {
-      width,
-      height,
-      style,
-      className,
-      showCenter,
-      children,
-      aspectRatio,
-      viewBox,
-      defs
-    } = this.props
+    const { width, height, style, className, showCenter, children, aspectRatio, viewBox, defs } = this.props
+    const { left, top, zoom } = this.state
+    const viewBoxSize = 65
+    const resolution = viewBoxSize / Math.min(height, width)
 
     return (
-      <Svg width={width}
-        height={height}
-        viewBox={viewBox ? viewBox : `0 0 ${width} ${height}`}
-        className={`rsm-svg ${className || ''}`}
-        style={style}
-        preserveAspectRatio={aspectRatio}>
-        {
-          defs && (
-            <Defs>
-              {defs}
-            </Defs>
-          )
-        }
-        {
-          React.cloneElement(this.props.children, {
-            projection: this.projection(),
-            width,
-            height,
-            parentHeight: this.state.parentHeight,
-            parentWidth: this.state.parentWidth,
-          })
-        }
-        {
-          showCenter && (
+      <View {...this._panResponder.panHandlers}>
+        <Svg
+          width={width}
+          height={height}
+          viewBox={viewBox ? viewBox : `0 0 ${width} ${height}`}
+          className={`rsm-svg ${className || ""}`}
+          style={style}
+          preserveAspectRatio={aspectRatio}
+        >
+          {defs && <Defs>{defs}</Defs>}
+          <G
+            transform={{
+              translateX: left * resolution,
+              translateY: top * resolution,
+              scale: zoom,
+            }}
+          >
+            {React.cloneElement(this.props.children, {
+              projection: this.projection(),
+              width,
+              height,
+              parentHeight: this.state.parentHeight,
+              parentWidth: this.state.parentWidth,
+            })}
+          </G>
+          {showCenter && (
             <G>
               <Rect x={width / 2 - 0.5} y={0} width={1} height={height} fill="#e91e63" />
               <Rect x={0} y={height / 2 - 0.5} width={width} height={1} fill="#e91e63" />
             </G>
-          )
-        }
-      </Svg>
+          )}
+        </Svg>
+      </View>
     )
   }
 }
@@ -92,7 +186,7 @@ ComposableMap.defaultProps = {
   projection: "times",
   projectionConfig: defaultProjectionConfig,
   aspectRatio: "xMidYMid",
-  viewBox: null
+  viewBox: null,
 }
 
 export default ComposableMap
