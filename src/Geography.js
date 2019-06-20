@@ -159,12 +159,12 @@ class Geography extends Component {
         d={pathString}
         className={`rsm-geography${pressed ? " rsm-geography--pressed" : ""}${hover ? " rsm-geography--hover" : ""}`}
         style={style[pressed || hover ? (pressed ? "pressed" : "hover") : "default"]}
-        onLongPress={this.handleMouseClick}
-        onPressIn={this.handleMouseEnter}
+        // onLongPress={this.handleMouseClick}
+        // onPressIn={this.handleMouseEnter}
         // onMouseMove={this.handleMouseMove}
-        onPressOut={this.handleMouseLeave}
+        // onPressOut={this.handleMouseLeave}
         // onMouseDown={this.handleMouseDown}
-        onPress={this.handleMouseUp}
+        // onPress={this.handleMouseUp}
         // onFocus={this.handleFocus}
         // onBlur={this.handleBlur}
         tabIndex={tabable ? 0 : -1}

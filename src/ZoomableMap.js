@@ -6,6 +6,7 @@ import { View, PanResponder } from "react-native"
 
 import { Svg } from "expo"
 const { Defs, G, Rect } = Svg
+import SvgPanZoom, { SvgPanZoomElement } from "react-native-svg-pan-zoom"
 
 import projections from "./projections"
 import defaultProjectionConfig from "./projectionConfig"
@@ -118,6 +119,8 @@ class ZoomableMap extends Component {
       const { initialX, initialY, initialLeft, initialTop } = this.state
       const dx = x - initialX
       const dy = y - initialY
+      console.log("left", initialLeft + dx, x, initialX)
+      console.log("top", initialTop + dy, y, initialY)
       this.setState({
         left: initialLeft + dx,
         top: initialTop + dy,
@@ -140,45 +143,59 @@ class ZoomableMap extends Component {
     })
   }
   render() {
-    const { width, height, style, className, showCenter, children, aspectRatio, viewBox, defs } = this.props
+    const {
+      width,
+      height,
+      resolution,
+      style,
+      showCenter,
+      children,
+      aspectRatio,
+      viewBox,
+      defs,
+      ...restProps
+    } = this.props
     const { left, top, zoom } = this.state
-    const viewBoxSize = 65
-    const resolution = viewBoxSize / Math.min(height, width)
 
     return (
-      <View {...this._panResponder.panHandlers}>
-        <Svg
-          width={width}
-          height={height}
-          viewBox={viewBox ? viewBox : `0 0 ${width} ${height}`}
-          className={`rsm-svg ${className || ""}`}
-          style={style}
-          preserveAspectRatio={aspectRatio}
-        >
-          {defs && <Defs>{defs}</Defs>}
-          <G
-            transform={{
-              translateX: left * resolution,
-              translateY: top * resolution,
-              scale: zoom,
-            }}
-          >
-            {React.cloneElement(this.props.children, {
-              projection: this.projection(),
-              width,
-              height,
-              parentHeight: this.state.parentHeight,
-              parentWidth: this.state.parentWidth,
-            })}
+      // <View {...this._panResponder.panHandlers}>
+      <SvgPanZoom
+        canvasHeight={height}
+        canvasWidth={width}
+        minScale={0.5}
+        maxScale={10}
+        initialZoom={0.7}
+        onZoom={zoom => {
+          console.log("onZoom:" + zoom)
+        }}
+        canvasStyle={{ backgroundColor: "yellow" }}
+        viewStyle={{ backgroundColor: "green" }}
+        {...restProps}
+      >
+        {defs && <Defs>{defs}</Defs>}
+        {/* <G
+          transform={{
+            translateX: left * resolution,
+            translateY: top * resolution,
+            scale: zoom,
+          }}
+        > */}
+        {React.cloneElement(children, {
+          projection: this.projection(),
+          width,
+          height,
+          parentHeight: this.state.parentHeight,
+          parentWidth: this.state.parentWidth,
+        })}
+        {/* </G> */}
+        {showCenter && (
+          <G>
+            <Rect x={width / 2 - 0.5} y={0} width={1} height={height} fill="#e91e63" />
+            <Rect x={0} y={height / 2 - 0.5} width={width} height={1} fill="#e91e63" />
           </G>
-          {showCenter && (
-            <G>
-              <Rect x={width / 2 - 0.5} y={0} width={1} height={height} fill="#e91e63" />
-              <Rect x={0} y={height / 2 - 0.5} width={width} height={1} fill="#e91e63" />
-            </G>
-          )}
-        </Svg>
-      </View>
+        )}
+      </SvgPanZoom>
+      // </View>
     )
   }
 }
