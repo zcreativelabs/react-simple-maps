@@ -1,10 +1,8 @@
-
 import React, { Component } from "react"
-
-import { Svg } from 'expo'
-const { Path } = Svg;
-
 import { geoPath } from "d3-geo"
+
+import { Svg } from "expo"
+const { Path, G } = Svg
 
 import { roundPath } from "./utils"
 
@@ -17,11 +15,11 @@ const renderPath = (cacheId, geography, projection, round, precision) => {
     ? pathCache[cacheId]
       ? pathCache[cacheId]
       : round
-        ? roundPath(geoPath().projection(projection)(geography), precision)
-        : geoPath().projection(projection)(geography)
-    : round
       ? roundPath(geoPath().projection(projection)(geography), precision)
       : geoPath().projection(projection)(geography)
+    : round
+    ? roundPath(geoPath().projection(projection)(geography), precision)
+    : geoPath().projection(projection)(geography)
 
   if (cacheId) pathCache[cacheId] = pathString
 
@@ -33,99 +31,39 @@ class Geography extends Component {
     super()
 
     this.state = {
-      hover: false,
       pressed: false,
     }
+    this.onPress = this.onPress.bind(this)
+    this.onPressIn = this.onPressIn.bind(this)
+    this.onPressOut = this.onPressOut.bind(this)
+    this.onLongPress = this.onLongPress.bind(this)
+  }
 
-    this.handleMouseEnter = this.handleMouseEnter.bind(this)
-    this.handleMouseMove = this.handleMouseMove.bind(this)
-    this.handleMouseLeave = this.handleMouseLeave.bind(this)
-    this.handleMouseDown = this.handleMouseDown.bind(this)
-    this.handleMouseUp = this.handleMouseUp.bind(this)
-    this.handleMouseClick = this.handleMouseClick.bind(this)
-    this.handleFocus = this.handleFocus.bind(this)
-    this.handleBlur = this.handleBlur.bind(this)
+  onPress(event) {
+    const { onPress, geography } = this.props
+    onPress && onPress(geography, event)
   }
-  handleMouseClick(evt) {
-    console.log('onLongPress')
-    evt.persist()
-    const { onClick, geography } = this.props
-    return onClick && onClick(geography, evt)
+  onPressIn(event) {
+    const { onPressIn, geography } = this.props
+    this.setState({ pressed: true }, () => {
+      onPressIn && onPressIn(geography, event)
+    })
   }
-  handleMouseEnter(evt) {
-    console.log('onPressIn')
-    evt.persist()
-    const { onMouseEnter, geography } = this.props
-    this.setState({
-      hover: true,
-    }, () => onMouseEnter && onMouseEnter(geography, evt))
+  onPressOut(event) {
+    const { onPressOut, geography } = this.props
+    this.setState({ pressed: false }, () => {
+      onPressOut && onPressOut(geography, event)
+    })
   }
-  handleMouseMove(evt) {
-    evt.persist()
-    if (this.state.pressed) return
-    const { onMouseMove, geography } = this.props
-    if (!this.state.hover) {
-      this.setState({
-        hover: true,
-      }, () => onMouseMove && onMouseMove(geography, evt))
-    }
-    else if (onMouseMove) onMouseMove(geography, evt)
-    else return
+  onLongPress(event) {
+    const { onLongPress, geography } = this.props
+    onLongPress && onLongPress(geography, event)
   }
-  handleMouseLeave(evt) {
-    console.log('onPressOut')
-    evt.persist()
-    const { onMouseLeave, geography } = this.props
-    this.setState({
-      hover: false,
-      pressed: false,
-    }, () => onMouseLeave && onMouseLeave(geography, evt))
-  }
-  handleMouseDown(evt) {
-    evt.persist()
-    const { onMouseDown, geography } = this.props
-    this.setState({
-      pressed: true,
-    }, () => onMouseDown && onMouseDown(geography, evt))
-  }
-  handleMouseUp(evt) {
-    console.log('onPress')
-    evt.persist()
-    const { onMouseUp, geography } = this.props
-    this.setState({
-      pressed: false,
-    }, () => onMouseUp && onMouseUp(geography, evt))
-  }
-  handleFocus(evt) {
-    evt.persist()
-    const { onFocus, geography } = this.props
-    this.setState({
-      hover: true,
-    }, () => onFocus && onFocus(geography, evt))
-  }
-  handleBlur(evt) {
-    evt.persist()
-    const { onBlur, geography } = this.props
-    this.setState({
-      hover: false,
-    }, () => onBlur && onBlur(geography, evt))
-  }
+
   render() {
+    const { geography, projection, round, cacheId, precision, style } = this.props
 
-    const {
-      geography,
-      projection,
-      round,
-      cacheId,
-      precision,
-      tabable,
-      style,
-    } = this.props
-
-    const {
-      hover,
-      pressed,
-    } = this.state
+    const { pressed } = this.state
 
     const pathString = renderPath(cacheId, geography, projection, round, precision)
 
@@ -135,16 +73,14 @@ class Geography extends Component {
       "round",
       "cacheId",
       "precision",
-      "tabable",
       "style",
-      "onClick",
-      "onMouseEnter",
-      "onMouseMove",
-      "onMouseLeave",
-      "onMouseDown",
-      "onMouseUp",
-      "onFocus",
-      "onBlur",
+      "delayPressIn",
+      "delayPressOut",
+      "delayLongPress",
+      "onPress",
+      "onPressIn",
+      "onPressOut",
+      "onLongPress",
     ]
 
     const restProps = Object.keys(this.props)
@@ -154,22 +90,20 @@ class Geography extends Component {
         return obj
       }, {})
 
+    const { delayPressIn = 0, delayPressOut = 0, delayLongPress = 0 } = this.props
+
     return (
-      <Path
-        d={pathString}
-        className={`rsm-geography${pressed ? " rsm-geography--pressed" : ""}${hover ? " rsm-geography--hover" : ""}`}
-        style={style[pressed || hover ? (pressed ? "pressed" : "hover") : "default"]}
-        // onLongPress={this.handleMouseClick}
-        // onPressIn={this.handleMouseEnter}
-        // onMouseMove={this.handleMouseMove}
-        // onPressOut={this.handleMouseLeave}
-        // onMouseDown={this.handleMouseDown}
-        // onPress={this.handleMouseUp}
-        // onFocus={this.handleFocus}
-        // onBlur={this.handleBlur}
-        tabIndex={tabable ? 0 : -1}
-        {...restProps}
-      />
+      <G
+        onPress={this.onPress}
+        onPressIn={this.onPressIn}
+        onPressOut={this.onPressOut}
+        onLongPress={this.onLongPress}
+        delayPressIn={delayPressIn}
+        delayPressOut={delayPressOut}
+        delayLongPress={delayLongPress}
+      >
+        <Path d={pathString} style={style[pressed ? "pressed" : "default"]} {...restProps} />
+      </G>
     )
   }
 }
@@ -181,9 +115,8 @@ Geography.defaultProps = {
   tabable: true,
   style: {
     default: {},
-    hover: {},
     pressed: {},
-  }
+  },
 }
 
 export default Geography
