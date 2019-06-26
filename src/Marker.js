@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { Component } from "react"
 import { geoLength } from "d3-geo"
 
@@ -11,6 +12,30 @@ class Marker extends Component {
     this.state = {
       pressed: false,
     }
+    this.onPress = this.onPress.bind(this)
+    this.onPressIn = this.onPressIn.bind(this)
+    this.onPressOut = this.onPressOut.bind(this)
+    this.onLongPress = this.onLongPress.bind(this)
+  }
+  onPress(event) {
+    const { onPress, geography } = this.props
+    onPress && onPress(geography, event)
+  }
+  onPressIn(event) {
+    const { onPressIn, geography } = this.props
+    this.setState({ pressed: true }, () => {
+      onPressIn && onPressIn(geography, event)
+    })
+  }
+  onPressOut(event) {
+    const { onPressOut, geography } = this.props
+    this.setState({ pressed: false }, () => {
+      onPressOut && onPressOut(geography, event)
+    })
+  }
+  onLongPress(event) {
+    const { onLongPress, geography } = this.props
+    onLongPress && onLongPress(geography, event)
   }
 
   render() {
@@ -34,13 +59,23 @@ class Marker extends Component {
     const isGlobe = projection.clipAngle && projection.clipAngle() === degrees
     const isHidden = isGlobe && geoLength(lineString) > radians
 
-    return (
-      <G
-        transform={`translate(
+    const { delayPressIn = 0, delayPressOut = 0, delayLongPress = 0 } = this.props
+    const translate = `translate(
            ${translation[0]}
            ${translation[1]}
-         ) ${scale}`}
-        style={style[isHidden ? "hidden" : pressed ? "pressed" : "default"]}
+         ) ${scale}`
+    const selectedStyle = isHidden ? "hidden" : pressed ? "pressed" : "default"
+    return (
+      <G
+        onPress={this.onPress}
+        onPressIn={this.onPressIn}
+        onPressOut={this.onPressOut}
+        onLongPress={this.onLongPress}
+        delayPressIn={delayPressIn}
+        delayPressOut={delayPressOut}
+        delayLongPress={delayLongPress}
+        transform={translate}
+        style={style[selectedStyle]}
       >
         {children}
       </G>
