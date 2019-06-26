@@ -180,13 +180,15 @@ class ZoomableMap extends Component {
             scale: zoom,
           }}
         > */}
-        {React.cloneElement(children, {
-          projection: this.projection(),
-          width,
-          height,
-          parentHeight: this.state.parentHeight,
-          parentWidth: this.state.parentWidth,
-        })}
+        {React.Children.map(Array.isArray(children) ? children : [children], child =>
+          React.cloneElement(child, {
+            projection: this.projection(),
+            width,
+            height,
+            parentHeight: this.state.parentHeight,
+            parentWidth: this.state.parentWidth,
+          })
+        )}
         {/* </G> */}
         {showCenter && (
           <G>
