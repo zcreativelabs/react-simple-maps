@@ -185,6 +185,7 @@ class ZoomableMap extends Component {
             projection: this.projection(),
             width,
             height,
+            zoom,
             parentHeight: this.state.parentHeight,
             parentWidth: this.state.parentWidth,
           })
