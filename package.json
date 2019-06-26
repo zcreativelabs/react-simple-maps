@@ -1,6 +1,6 @@
 {
   "name": "react-native-simple-maps",
-  "version": "0.12.77",
+  "version": "0.12.78",
   "description": "react-simple-maps fork for React Native and Expo",
   "main": "lib/index.js",
   "scripts": {
@@ -52,8 +52,7 @@
   "dependencies": {
     "d3-geo": "^1.10.0",
     "d3-geo-projection": "^2.4.0",
-    "expo": "^31.0.6",
-    "react-native-svg-pan-zoom": "git://github.com/ahushh/react-native-svg-pan-zoom.git#9e63eb0",
+    "react-native-svg-pan-zoom": "git://github.com/ahushh/react-native-svg-pan-zoom.git#master",
     "topojson-client": "^3.0.0"
   }
 }
