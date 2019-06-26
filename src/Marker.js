@@ -40,7 +40,7 @@ class Marker extends Component {
            ${translation[0]}
            ${translation[1]}
          ) ${scale}`}
-        style={style[isHidden ? "hidden" : pressed || hover ? (pressed ? "pressed" : "hover") : "default"]}
+        style={style[isHidden ? "hidden" : pressed ? "pressed" : "default"]}
       >
         {children}
       </G>
@@ -52,6 +52,7 @@ Marker.defaultProps = {
   style: {
     default: {},
     pressed: {},
+    hidden: {},
   },
   marker: {
     coordinates: [0, 0],
