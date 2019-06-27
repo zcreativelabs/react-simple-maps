@@ -12,13 +12,13 @@ class Geographies extends Component {
           this.parseGeographies(props.geography)
     }
   }
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.geography !== this.props.geography) {
-      if (this.shouldFetchGeographies(nextProps.geography)) {
-        this.fetchGeographies(nextProps.geography)
+  componentDidUpdate(prevProps) {
+    if (prevProps.geography !== this.props.geography) {
+      if (this.shouldFetchGeographies(prevProps.geography)) {
+        this.fetchGeographies(prevProps.geography)
       } else {
         this.setState({
-          geographyPaths: this.parseGeographies(nextProps.geography)
+          geographyPaths: this.parseGeographies(prevProps.geography)
         })
       }
     }

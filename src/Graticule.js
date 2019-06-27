@@ -45,7 +45,7 @@ class Graticule extends Component {
         : computeOutline(projection),
     })
   }
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     const {
       step,
       projection,
@@ -54,12 +54,12 @@ class Graticule extends Component {
       globe,
     } = this.props
 
-    if (nextProps.round !== round || nextProps.precision !== precision || globe) {
+    if (prevProps.round !== round || prevProps.precision !== precision || globe) {
       this.setState({
-        graticulePath: nextProps.round
+        graticulePath: prevProps.round
           ? roundPath(computeGraticule(projection, step), precision)
           : computeGraticule(projection, step),
-        outlinePath: nextProps.round
+        outlinePath: prevProps.round
           ? roundPath(computeOutline(projection), precision)
           : computeOutline(projection),
       })

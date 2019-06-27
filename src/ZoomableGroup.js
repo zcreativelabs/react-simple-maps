@@ -92,17 +92,17 @@ class ZoomableGroup extends Component {
       evt.preventDefault()
     }
   }
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     const { mouseX, mouseY, resizeFactorX, resizeFactorY } = this.state
     const { projection, center, zoom } = this.props
 
-    const zoomFactor = nextProps.zoom / zoom
-    const centerChanged = JSON.stringify(nextProps.center) !== JSON.stringify(center)
+    const zoomFactor = prevProps.zoom / zoom
+    const centerChanged = JSON.stringify(prevProps.center) !== JSON.stringify(center)
 
     this.setState({
-      zoom: nextProps.zoom,
-      mouseX: centerChanged ? calculateMousePosition("x", nextProps.projection, nextProps, nextProps.zoom, resizeFactorX) : mouseX * zoomFactor,
-      mouseY: centerChanged ? calculateMousePosition("y", nextProps.projection, nextProps, nextProps.zoom, resizeFactorY) : mouseY * zoomFactor,
+      zoom: prevProps.zoom,
+      mouseX: centerChanged ? calculateMousePosition("x", prevProps.projection, prevProps, prevProps.zoom, resizeFactorX) : mouseX * zoomFactor,
+      mouseY: centerChanged ? calculateMousePosition("y", prevProps.projection, prevProps, prevProps.zoom, resizeFactorY) : mouseY * zoomFactor,
     })
   }
   handleResize() {
