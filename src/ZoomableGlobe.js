@@ -85,16 +85,16 @@ class ZoomableGlobe extends Component {
       evt.preventDefault()
     }
   }
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     const { mouseX, mouseY } = this.state
     const { projection, center, zoom } = this.props
 
-    const zoomFactor = nextProps.zoom / zoom
-    const centerChanged = JSON.stringify(nextProps.center) !== JSON.stringify(center)
+    const zoomFactor = prevProps.zoom / zoom
+    const centerChanged = JSON.stringify(prevProps.center) !== JSON.stringify(center)
 
     this.setState({
-      zoom: nextProps.zoom,
-      rotation: centerChanged ? [-nextProps.center[0], -nextProps.center[1], this.state.rotation[2]] : this.state.rotation,
+      zoom: prevProps.zoom,
+      rotation: centerChanged ? [-prevProps.center[0], -prevProps.center[1], this.state.rotation[2]] : this.state.rotation,
     })
   }
   componentDidMount() {
