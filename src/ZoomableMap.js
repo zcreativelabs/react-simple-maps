@@ -90,7 +90,8 @@ class ZoomableMap extends Component {
         if (length === 2) {
           const [{ locationX, locationY }] = touches
           this.processTouch(locationX, locationY)
-        // } else if (length === 2) {
+        }
+        // else if (length === 2) {
         //   const [touch1, touch2] = touches
         //   this.processPinch(touch1.locationX, touch1.locationY, touch2.locationX, touch2.locationY)
         // }
