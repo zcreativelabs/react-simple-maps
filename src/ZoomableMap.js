@@ -87,13 +87,13 @@ class ZoomableMap extends Component {
       onPanResponderMove: evt => {
         const touches = evt.nativeEvent.touches
         const length = touches.length
-        if (length === 1) {
+        if (length === 2) {
           const [{ locationX, locationY }] = touches
           this.processTouch(locationX, locationY)
-        } else if (length === 2) {
-          const [touch1, touch2] = touches
-          this.processPinch(touch1.locationX, touch1.locationY, touch2.locationX, touch2.locationY)
-        }
+        // } else if (length === 2) {
+        //   const [touch1, touch2] = touches
+        //   this.processPinch(touch1.locationX, touch1.locationY, touch2.locationX, touch2.locationY)
+        // }
       },
       onPanResponderRelease: () => {
         this.setState({
