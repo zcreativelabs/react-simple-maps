@@ -22,7 +22,7 @@ export default [{
     globals: {
       react: "React",
       "react-dom": "ReactDOM",
-      "d3-geo": "d3-geo",
+      "d3-geo": "d3Geo",
       "topojson-client": "topojson",
       "prop-types": "PropTypes",
     },
