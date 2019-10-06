@@ -113,7 +113,7 @@ export default function useZoomPan({
       window.clearTimeout(wheelTimer.current)
       wheelTimer.current = setTimeout(() => {
         setPosition(position => {
-          if (onZoomEnd) onZoomEnd(position)
+          if (onZoomEnd) onZoomEnd(event, position)
           return { ...position, zooming: false }
         })
       }, 66)
