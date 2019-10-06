@@ -9,7 +9,7 @@ const ComposableMap = ({
   height = 600,
   projection = "geoEqualEarth",
   projectionConfig = {},
-  className = "rsm-map",
+  className = "",
   ...restProps
 }) => {
   return (
@@ -21,7 +21,7 @@ const ComposableMap = ({
     >
       <svg
         viewBox={`0 0 ${width} ${height}`}
-        className={className}
+        className={`rsm-svg ${className}`}
         {...restProps}
       />
     </MapProvider>

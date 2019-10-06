@@ -11,6 +11,7 @@ const Geography = ({
   onFocus,
   onBlur,
   style = {},
+  className = "",
   ...restProps
 }) => {
   const [isPressed, setPressed] = useState(false)
@@ -52,7 +53,7 @@ const Geography = ({
     <path
       role="geography"
       tabIndex="0"
-      className="rsm-geography"
+      className={`rsm-geography ${className}`}
       d={geography.svgPath}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -75,6 +76,7 @@ Geography.propTypes = {
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
   style: PropTypes.object,
+  className: PropTypes.string,
 }
 
 export default memo(Geography)

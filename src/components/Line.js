@@ -11,6 +11,7 @@ const Line = ({
   stroke = "currentcolor",
   strokeWidth = 3,
   fill = "transparent",
+  className = "",
   ...restProps
 }) => {
   const { path } = useContext(MapContext)
@@ -23,7 +24,7 @@ const Line = ({
   return (
     <path
       d={path(lineData)}
-      className="rsm-line"
+      className={`rsm-line ${className}`}
       stroke={stroke}
       strokeWidth={strokeWidth}
       fill={fill}
@@ -39,6 +40,7 @@ Line.propTypes = {
   stroke: PropTypes.string,
   strokeWidth: PropTypes.number,
   fill: PropTypes.string,
+  className: PropTypes.string,
 }
 
 export default Line

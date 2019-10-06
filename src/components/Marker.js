@@ -14,6 +14,7 @@ const Marker = ({
   onFocus,
   onBlur,
   style = {},
+  className = "",
   ...restProps
 }) => {
   const { projection } = useContext(MapContext)
@@ -57,7 +58,7 @@ const Marker = ({
   return (
     <g
       transform={`translate(${x}, ${y})`}
-      className="rsm-marker"
+      className={`rsm-marker ${className}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onFocus={handleFocus}
@@ -85,6 +86,7 @@ Marker.propTypes = {
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
   style: PropTypes.object,
+  className: PropTypes.string,
 }
 
 export default Marker

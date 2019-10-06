@@ -12,6 +12,7 @@ const Annotation = ({
   dx = 30,
   dy = 30,
   curve = 0,
+  className = "",
   ...restProps
 }) => {
   const { projection } = useContext(MapContext)
@@ -21,7 +22,7 @@ const Annotation = ({
   return (
     <g
       transform={`translate(${x + dx}, ${y + dy})`}
-      className="rsm-annotation"
+      className={`rsm-annotation ${className}`}
       {...restProps}
     >
       <path d={connectorPath} fill="transparent" stroke="#000" {...connectorProps} />
@@ -40,6 +41,7 @@ Annotation.propTypes = {
   dy: PropTypes.number,
   curve: PropTypes.number,
   connectorProps: PropTypes.object,
+  className: PropTypes.string,
 }
 
 export default Annotation

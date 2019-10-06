@@ -9,6 +9,7 @@ const Graticule = ({
   fill = "transparent",
   stroke = "currentcolor",
   step = [10, 10],
+  className = "",
   ...restProps
 }) => {
   const { path } = useContext(MapContext)
@@ -17,6 +18,7 @@ const Graticule = ({
       d={path(geoGraticule().step(step)())}
       fill={fill}
       stroke={stroke}
+      className={`rsm-graticule ${className}`}
       {...restProps}
     />
   )
@@ -26,6 +28,7 @@ Graticule.propTypes = {
   fill: PropTypes.string,
   stroke: PropTypes.string,
   step: PropTypes.array,
+  className: PropTypes.string,
 }
 
 export default memo(Graticule)

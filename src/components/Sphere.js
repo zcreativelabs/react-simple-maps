@@ -9,6 +9,7 @@ const Sphere = ({
   fill = "transparent",
   stroke = "currentcolor",
   strokeWidth = 0.5,
+  className = "",
   ...restProps
 }) => {
   const { path } = useContext(MapContext)
@@ -26,6 +27,7 @@ const Sphere = ({
         stroke={stroke}
         strokeWidth={strokeWidth}
         style={{ pointerEvents: "none" }}
+        className={`rsm-sphere ${className}`}
         {...restProps}
       />
     </Fragment>
@@ -37,6 +39,7 @@ Sphere.propTypes = {
   fill: PropTypes.string,
   stroke: PropTypes.string,
   strokeWidth: PropTypes.number,
+  className: PropTypes.string,
 }
 
 export default memo(Sphere)

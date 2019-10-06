@@ -18,7 +18,7 @@ const ZoomableGroup = ({
   onMoveEnd,
   disablePanning = false,
   disableZooming = false,
-  className = "rsm-zoomable-group",
+  className = "",
   ...restProps
 }) => {
   const {elRef, position, transformString} = useZoomPan({
@@ -36,7 +36,11 @@ const ZoomableGroup = ({
   })
 
   return (
-    <g ref={elRef} className={className} {...restProps}>
+    <g
+      ref={elRef}
+      className={`rsm-zoomable-group ${className}`}
+      {...restProps}
+    >
       {
         render
           ? render(position)
