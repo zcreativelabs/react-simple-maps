@@ -8,7 +8,7 @@ const ZoomableGroup = ({
   render,
   children,
   center = [0, 0],
-  zoom = 2,
+  zoom = 1,
   minZoom = 1,
   maxZoom = 5,
   zoomSensitivity = 0.025,
