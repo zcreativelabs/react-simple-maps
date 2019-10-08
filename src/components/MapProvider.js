@@ -17,6 +17,7 @@ import {
   geoConicConformal,
   geoConicEqualArea,
   geoConicEquidistant,
+  geoEquirectangular,
 } from "d3-geo"
 
 const MapContext = createContext()
@@ -33,6 +34,7 @@ const projections = {
   geoConicConformal,
   geoConicEqualArea,
   geoConicEquidistant,
+  geoEquirectangular,
 }
 
 const makeProjection = ({
