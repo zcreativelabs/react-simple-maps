@@ -47,7 +47,8 @@
     "react-test-utils": "^0.0.1"
   },
   "peerDependencies": {
-    "react": "^16.0.0"
+    "react": "^16.0.0",
+    "react-native-svg": "9.13.3"
   },
   "dependencies": {
     "d3-geo": "^1.10.0",
