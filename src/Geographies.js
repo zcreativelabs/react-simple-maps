@@ -2,8 +2,7 @@
 import React, { Component } from "react"
 import { feature } from "topojson-client"
 
-import { Svg } from 'react-native-svg'
-const { G } = Svg;
+import Svg, { G } from 'react-native-svg'
 
 class Geographies extends Component {
   constructor(props) {

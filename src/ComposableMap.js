@@ -1,8 +1,7 @@
 
 import React, { Component } from "react"
 
-import { Svg } from 'react-native-svg'
-const { Defs, G, Rect } = Svg;
+import Svg, { Defs, G, Rect } from 'react-native-svg'
 
 import projections from "./projections"
 import defaultProjectionConfig from "./projectionConfig"
