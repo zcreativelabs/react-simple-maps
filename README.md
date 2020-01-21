@@ -1,6 +1,8 @@
 # react-native-simple-maps
 
-This is fork of react-simple-maps for React Native and Expo@31.
+This is fork of react-simple-maps for React Native.
+
+To use this library you need to install react-native-svg as described [here](https://docs.expo.io/versions/latest/sdk/svg/). It should work both for bare React Native and Expo.
 
 # react-simple-maps
 

@@ -5,7 +5,7 @@ import { ZoomableMap, Geographies, Geography, Marker, Markers } from "react-nati
 
 import Svg from "react-native-svg"
 
-const geoFile = require("./topo-with-crimea.json")
+const geoFile = require("./russia-with-crimea.json")
 
 const FILL_COLOR = "#6A717C"
 const STROKE_COLOR = "#363E43"
