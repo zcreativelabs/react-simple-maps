@@ -53,7 +53,7 @@
   "dependencies": {
     "d3-geo": "^1.10.0",
     "d3-geo-projection": "^2.4.0",
-    "react-native-svg-pan-zoom": "git://github.com/ahushh/react-native-svg-pan-zoom.git#master",
+    "react-native-svg-pan-zoom": "git://github.com/ahushh/react-native-svg-pan-zoom.git#develop",
     "topojson-client": "^3.0.0"
   }
 }
