@@ -2,7 +2,7 @@
 import React, { Component } from "react"
 import { geoPath } from "d3-geo"
 
-import { Svg } from 'expo'
+import { Svg } from 'react-native-svg'
 const { G } = Svg;
 
 import { createNewChildren } from "./utils"

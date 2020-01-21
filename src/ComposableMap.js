@@ -1,7 +1,7 @@
 
 import React, { Component } from "react"
 
-import { Svg } from 'expo'
+import { Svg } from 'react-native-svg'
 const { Defs, G, Rect } = Svg;
 
 import projections from "./projections"
