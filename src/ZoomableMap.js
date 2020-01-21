@@ -4,8 +4,8 @@
 import React, { Component } from "react"
 import { View, PanResponder } from "react-native"
 
-import { Svg } from "expo"
-const { Defs, G, Rect } = Svg
+import Svg, { Defs, G, Rect } from "react-native-svg"
+
 import SvgPanZoom, { SvgPanZoomElement } from "react-native-svg-pan-zoom"
 
 import projections from "./projections"

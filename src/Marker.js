@@ -2,8 +2,7 @@
 import React, { Component } from "react"
 import { geoLength } from "d3-geo"
 
-import { Svg } from "expo"
-const { G } = Svg
+import Svg, { G } from "react-native-svg"
 
 class Marker extends Component {
   constructor() {

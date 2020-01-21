@@ -1,7 +1,6 @@
 import React, { Component } from "react"
 
-import { Svg } from "expo"
-const { G } = Svg
+import Svg, { G } from "react-native-svg"
 
 class MapGroup extends Component {
   render() {

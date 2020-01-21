@@ -1,8 +1,7 @@
 import React, { Component } from "react"
 import { geoPath } from "d3-geo"
 
-import { Svg } from "expo"
-const { Path, G } = Svg
+import Svg, { Path, G } from "react-native-svg"
 
 import { roundPath } from "./utils"
 
