@@ -1,27 +1,26 @@
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, useContext } from "react"
 import { zoom as d3Zoom, zoomIdentity } from "d3-zoom"
 import { select, event as d3Event } from "d3-selection"
 
+import { MapContext } from "./MapProvider"
 import { getCoords } from "../utils"
 
 export default function useZoomPan({
-  width,
-  height,
   center,
   onMoveStart,
   onMoveEnd,
   onMove,
   translateExtent = [[-Infinity, -Infinity], [Infinity, Infinity]],
   scaleExtent = [1, 8],
-  projection,
-  zoom,
+  zoom = 1,
 }) {
+  const { width, height, projection } = useContext(MapContext)
+
   const [lon, lat] = center
   const [position, setPosition] = useState({ x: 0, y: 0, k: 1 })
   const lastPosition = useRef({ x: 0, y: 0, k: 1 })
   const mapRef = useRef()
-  const itemRef = useRef()
   const zoomRef = useRef()
   const bypassEvents = useRef(false)
 
@@ -86,7 +85,6 @@ export default function useZoomPan({
 
   return {
     mapRef,
-    itemRef,
     position,
     transformString: `translate(${position.x} ${position.y}) scale(${position.k})`,
   }

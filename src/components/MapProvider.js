@@ -15,7 +15,7 @@ const makeProjection = ({
   projectionConfig = {},
   projection = "geoEqualEarth",
   width = 800,
-  height = 500,
+  height = 600,
 }) => {
   const isFunc = typeof projection === "function"
 
