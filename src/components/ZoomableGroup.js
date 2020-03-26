@@ -1,50 +1,53 @@
 
-import React from "react"
+import React, { useContext } from "react"
 import PropTypes from "prop-types"
 
+import { MapContext } from "./MapProvider"
 import useZoomPan from "./useZoomPan"
 
 const ZoomableGroup = ({
-  render,
   children,
-  center = [0, 0],
-  zoom = 1,
   minZoom = 1,
-  maxZoom = 5,
-  zoomSensitivity = 0.025,
-  onZoomStart,
-  onZoomEnd,
+  maxZoom = 8,
+  translateExtent,
   onMoveStart,
   onMoveEnd,
-  disablePanning = false,
-  disableZooming = false,
-  className = "",
+  center = [0, 0],
+  zoom = 1,
+  render,
+  className,
   ...restProps
 }) => {
-  const {elRef, position, transformString} = useZoomPan({
+  const { width, height, projection } = useContext(MapContext)
+
+  const {
+    mapRef,
+    itemRef,
+    position,
+    transformString,
+  } = useZoomPan({
+    width,
+    height,
     center,
-    zoom,
-    minZoom,
-    maxZoom,
-    zoomSensitivity,
-    onZoomStart,
-    onZoomEnd,
     onMoveStart,
     onMoveEnd,
-    disablePanning,
-    disableZooming,
+    scaleExtent: [minZoom, maxZoom],
+    translateExtent,
+    projection,
+    zoom,
   })
 
   return (
-    <g
-      ref={elRef}
-      className={`rsm-zoomable-group ${className}`}
-      {...restProps}
-    >
+    <g ref={mapRef} className={`rsm-zoomable-group ${className}`} {...restProps}>
+      <rect width={width} height={height} fill="transparent" />
       {
         render
           ? render(position)
-          : <g transform={transformString}>{children}</g>
+          : (
+            <g ref={itemRef} transform={transformString}>
+              {children}
+            </g>
+          )
       }
     </g>
   )
@@ -60,13 +63,9 @@ ZoomableGroup.propTypes = {
   zoom: PropTypes.number,
   minZoom: PropTypes.number,
   maxZoom: PropTypes.number,
-  zoomSensitivity: PropTypes.number,
-  onZoomStart: PropTypes.func,
-  onZoomEnd: PropTypes.func,
   onMoveStart: PropTypes.func,
+  onMove: PropTypes.func,
   onMoveEnd: PropTypes.func,
-  disablePanning: PropTypes.bool,
-  disableZooming: PropTypes.bool,
   className: PropTypes.string,
 }
 

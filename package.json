@@ -57,7 +57,9 @@
     "prop-types": "^15.7.2"
   },
   "dependencies": {
-    "d3-geo": "^1.11.6",
+    "d3-geo": "^1.11.9",
+    "d3-selection": "^1.4.1",
+    "d3-zoom": "^1.8.3",
     "topojson-client": "^3.0.0"
   }
 }

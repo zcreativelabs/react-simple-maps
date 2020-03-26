@@ -51,7 +51,6 @@ const Geography = ({
 
   return (
     <path
-      role="geography"
       tabIndex="0"
       className={`rsm-geography ${className}`}
       d={geography.svgPath}

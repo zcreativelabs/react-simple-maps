@@ -18,7 +18,7 @@ export default function useGeographies({ geography, parseGeographies }) {
     } else {
       setGeographies(getFeatures(geography, parseGeographies))
     }
-  }, [geography])
+  }, [geography, parseGeographies])
 
   const output = useMemo(() => {
     return prepareFeatures(geographies, path)
