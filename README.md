@@ -17,13 +17,13 @@ Since `react-simple-maps` leaves DOM work to react, it can also easily be used w
 To install `react-simple-maps`
 
 ```bash
-$ npm install --save react-simple-maps@beta
+$ npm install --save react-simple-maps
 ```
 
 ...or if you use yarn:
 
 ```bash
-$ yarn add react-simple-maps@beta
+$ yarn add react-simple-maps
 ```
 
 ### Usage
