@@ -2,44 +2,20 @@
 import React, {
   createContext,
   useMemo,
+  useCallback,
 } from "react"
 import PropTypes from "prop-types"
-import {
-  geoPath,
-  geoEqualEarth,
-  geoMercator,
-  geoTransverseMercator,
-  geoAlbers,
-  geoAlbersUsa,
-  geoAzimuthalEqualArea,
-  geoAzimuthalEquidistant,
-  geoOrthographic,
-  geoConicConformal,
-  geoConicEqualArea,
-  geoConicEquidistant,
-} from "d3-geo"
+import * as d3Geo from "d3-geo"
+
+const { geoPath, ...projections } = d3Geo
 
 const MapContext = createContext()
-
-const projections = {
-  geoEqualEarth,
-  geoMercator,
-  geoTransverseMercator,
-  geoAlbers,
-  geoAlbersUsa,
-  geoAzimuthalEqualArea,
-  geoAzimuthalEquidistant,
-  geoOrthographic,
-  geoConicConformal,
-  geoConicEqualArea,
-  geoConicEquidistant,
-}
 
 const makeProjection = ({
   projectionConfig = {},
   projection = "geoEqualEarth",
   width = 800,
-  height = 500,
+  height = 600,
 }) => {
   const isFunc = typeof projection === "function"
 
@@ -70,37 +46,35 @@ const MapProvider = ({
   projectionConfig,
   ...restProps
 }) => {
-  const c = projectionConfig.center || []
-  const r = projectionConfig.rotate || []
-  const p = projectionConfig.parallels || []
+  const [cx, cy] = projectionConfig.center || []
+  const [rx, ry, rz] = projectionConfig.rotate || []
+  const [p1, p2] = projectionConfig.parallels || []
   const s = projectionConfig.scale || null
 
-  const value = useMemo(() => {
-    const proj = makeProjection({
-      projectionConfig,
+  const projMemo = useMemo(() => {
+    return makeProjection({
+      projectionConfig: {
+        center: (cx || cx === 0) || (cy || cy === 0) ? [cx, cy] : null,
+        rotate: (rx || rx === 0) || (ry || ry === 0) ? [rx, ry, rz] : null,
+        parallels: (p1 || p1 === 0) || (p2 || p2 === 0) ? [p1, p2] : null,
+        scale: s,
+      },
       projection,
       width,
       height,
     })
+  }, [ width, height, projection, cx, cy, rx, ry, rz, p1, p2, s ])
+
+  const proj = useCallback(projMemo, [projMemo])
+
+  const value = useMemo(() => {
     return {
       width,
       height,
       projection: proj,
       path: geoPath().projection(proj),
     }
-  }, [
-    width,
-    height,
-    projection,
-    c[0],
-    c[1],
-    r[0],
-    r[1],
-    r[2],
-    p[0],
-    p[1],
-    s,
-  ])
+  }, [ width, height, proj ])
 
   return (<MapContext.Provider value={value} {...restProps} />)
 }

@@ -1,72 +1,54 @@
 
-import React from "react"
+import React, { useContext } from "react"
 import PropTypes from "prop-types"
 
+import { MapContext } from "./MapProvider"
 import useZoomPan from "./useZoomPan"
 
 const ZoomableGroup = ({
-  render,
-  children,
   center = [0, 0],
   zoom = 1,
   minZoom = 1,
-  maxZoom = 5,
-  zoomSensitivity = 0.025,
-  onZoomStart,
-  onZoomEnd,
+  maxZoom = 8,
+  translateExtent,
   onMoveStart,
+  onMove,
   onMoveEnd,
-  disablePanning = false,
-  disableZooming = false,
-  className = "",
+  className,
   ...restProps
 }) => {
-  const {elRef, position, transformString} = useZoomPan({
+  const { width, height } = useContext(MapContext)
+
+  const {
+    mapRef,
+    transformString,
+  } = useZoomPan({
     center,
-    zoom,
-    minZoom,
-    maxZoom,
-    zoomSensitivity,
-    onZoomStart,
-    onZoomEnd,
     onMoveStart,
+    onMove,
     onMoveEnd,
-    disablePanning,
-    disableZooming,
+    scaleExtent: [minZoom, maxZoom],
+    translateExtent,
+    zoom,
   })
 
   return (
-    <g
-      ref={elRef}
-      className={`rsm-zoomable-group ${className}`}
-      {...restProps}
-    >
-      {
-        render
-          ? render(position)
-          : <g transform={transformString}>{children}</g>
-      }
+    <g ref={mapRef}>
+      <rect width={width} height={height} fill="transparent" />
+      <g transform={transformString} className={`rsm-zoomable-group ${className}`} {...restProps} />
     </g>
   )
 }
 
 ZoomableGroup.propTypes = {
-  render: PropTypes.func,
-  children: PropTypes.oneOfType([
-    PropTypes.node,
-    PropTypes.arrayOf(PropTypes.node),
-  ]),
   center: PropTypes.array,
   zoom: PropTypes.number,
   minZoom: PropTypes.number,
   maxZoom: PropTypes.number,
-  zoomSensitivity: PropTypes.number,
-  onZoomStart: PropTypes.func,
-  onZoomEnd: PropTypes.func,
+  translateExtent: PropTypes.arrayOf(PropTypes.array),
   onMoveStart: PropTypes.func,
+  onMove: PropTypes.func,
   onMoveEnd: PropTypes.func,
-  disablePanning: PropTypes.bool,
-  disableZooming: PropTypes.bool,
   className: PropTypes.string,
 }
 

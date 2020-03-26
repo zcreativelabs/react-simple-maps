@@ -1,6 +1,12 @@
 
 import { feature } from "topojson-client"
 
+export function getCoords(w, h, t) {
+  const xOffset = (w * t.k - w) / 2
+  const yOffset = (h * t.k - h) / 2
+  return [w / 2 - (xOffset + t.x) / t.k, h / 2 - (yOffset + t.y) / t.k]
+}
+
 export function fetchGeographies(url) {
   return fetch(url)
     .then(res => {
