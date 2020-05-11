@@ -8,8 +8,8 @@ Read the [docs](https://www.react-simple-maps.io/docs/getting-started/), or chec
 
 This fork contains an additional component.
 
-##### <ZoomableGeo>
-ZoomableGeo is the result of porting this  [example](https://observablehq.com/@d3/zoom-to-bounding-box) to `react-simple-maps`.  Given a GeoJSON feature, it will zoom to fill the screen with the bounding box of that feature.
+##### `<ZoomableGeo>`
+`ZoomableGeo` is the result of porting this  [example](https://observablehq.com/@d3/zoom-to-bounding-box) to `react-simple-maps`.  Given a GeoJSON feature, it will zoom to fill the screen with the bounding box of that feature.
 
 ##### Props
 * `bounds` GeoJSON feature object or null, for entire geography
