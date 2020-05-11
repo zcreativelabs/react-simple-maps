@@ -6,6 +6,34 @@ Create beautiful SVG maps in react with d3-geo and topojson using a declarative 
 
 Read the [docs](https://www.react-simple-maps.io/docs/getting-started/), or check out the [examples](https://www.react-simple-maps.io/examples/).
 
+This fork contains an additional component.
+
+##### <ZoomableGeo>
+ZoomableGeo is the result of porting this  [example](https://observablehq.com/@d3/zoom-to-bounding-box) to `react-simple-maps`.  Given a GeoJSON feature, it will zoom to fill the screen with the bounding box of that feature.
+
+##### Props
+  `bounds` GeoJSON feature object or null, for entire geography
+  `boundsMargin` How much margin around feature bounds (0.05 is 5%)
+  `duration` How long to animate between features
+  `minZoom` Minimum zoom level
+  `maxZoom` Maximum zoom level
+  `onZoomStart`
+  `onZoom`
+  `onZoomEnd`
+
+#### Example
+```jsx
+<ZoomableGeo 
+  bounds={geo}
+  boundsMargin={0.01} 
+  duration={500} 
+  maxZoom={20}>
+  <Geographies>
+  ...
+  </Geographies>
+</ZoomableGeo>  
+```
+
 ### Why
 
 `React-simple-maps` aims to make working with svg maps in react easier. It handles tasks such as panning, zooming and simple rendering optimization, and takes advantage of parts of [d3-geo](https://github.com/d3/d3-geo) and topojson-client instead of relying on the entire d3 library.
