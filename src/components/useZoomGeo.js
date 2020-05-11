@@ -1,4 +1,5 @@
-
+// Converted from this D3 demo:
+//   https://observablehq.com/@d3/zoom-to-bounding-box
 import { useEffect, useRef, useState, useContext } from "react"
 import { zoom as d3Zoom, zoomIdentity } from "d3-zoom"
 import { select, event as d3Event } from "d3-selection"
@@ -7,8 +8,8 @@ import { MapContext } from "./MapProvider"
 import { getCoords } from "../utils"
 
 export default function useZoomGeo({
-  center,
-  fitMargin,
+  bounds,
+  boundsMargin,
   duration,
   onMoveStart,
   onMove,
@@ -71,13 +72,13 @@ export default function useZoomGeo({
     const svg = select(mapRef.current)
     const transform = zoomRef.current.transform
 
-    if (center) {
-      const [[x0, y0], [x1, y1]] = path.bounds(center);    
+    if (bounds) {
+      const [[x0, y0], [x1, y1]] = path.bounds(bounds);    
       svg.transition().duration(duration).call(
         transform,
         zoomIdentity
           .translate(width / 2, height / 2)
-          .scale(Math.min(maxZoom, (1 - fitMargin) / Math.max((x1 - x0) / width, (y1 - y0) / height)))
+          .scale(Math.min(maxZoom, (1 - boundsMargin) / Math.max((x1 - x0) / width, (y1 - y0) / height)))
           .translate(-(x0 + x1) / 2, -(y0 + y1) / 2),
       );
     } else {
@@ -87,7 +88,7 @@ export default function useZoomGeo({
         transformRef.current ? transformRef.current.invert([width / 2, height / 2]) : null
       );
     }
-  }, [center])
+  }, [bounds])
 
   return {
     mapRef,

@@ -6,8 +6,8 @@ import { MapContext } from "./MapProvider"
 import useZoomGeo from "./useZoomGeo"
 
 const ZoomableGeo = ({
-  center = null,
-  fitMargin = 0.1,
+  bounds = null,
+  boundsMargin = 0.1,
   duration = 750,
   minZoom = 1,
   maxZoom = 8,
@@ -24,8 +24,8 @@ const ZoomableGeo = ({
     transformString, 
     style 
   } = useZoomGeo({
-    center,
-    fitMargin,
+    bounds,
+    boundsMargin,
     duration,
     onMoveStart,
     onMove,
@@ -42,8 +42,8 @@ const ZoomableGeo = ({
 }
 
 ZoomableGeo.propTypes = {
-  center: PropTypes.object,
-  fitMargin: PropTypes.number,
+  bounds: PropTypes.object,
+  boundsMargin: PropTypes.number,
   duration: PropTypes.number,
   minZoom: PropTypes.number,
   maxZoom: PropTypes.number,
