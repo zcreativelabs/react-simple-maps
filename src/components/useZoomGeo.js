@@ -88,7 +88,7 @@ export default function useZoomGeo({
         transformRef.current ? transformRef.current.invert([width / 2, height / 2]) : null
       );
     }
-  }, [bounds])
+  }, [bounds, boundsMargin, duration, height, maxZoom, path, width]);
 
   return {
     mapRef,
