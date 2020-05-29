@@ -58,7 +58,7 @@ export default function useZoomPan({
     }
 
     function filterFunc() {
-      if (filter) {
+      if (filterZoomEvent) {
         return filterZoomEvent(d3Event)
       }
       
