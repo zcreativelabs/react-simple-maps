@@ -63,7 +63,7 @@ export default function useZoomPan({
       }
       
       // DEFAULT => Ignore right-click, since that should open the context menu.
-      return !event.ctrlKey && !event.button;
+      return !d3Event.ctrlKey && !d3Event.button;
     }
 
     const zoom = d3Zoom()
