@@ -8,6 +8,7 @@ import { getCoords } from "../utils"
 
 export default function useZoomPan({
   center,
+  filterZoomEvent,
   onMoveStart,
   onMoveEnd,
   onMove,
@@ -56,7 +57,17 @@ export default function useZoomPan({
       onMoveEnd({ coordinates: [x, y], zoom: d3Event.transform.k }, d3Event)
     }
 
+    function filterFunc() {
+      if (filterZoomEvent) {
+        return filterZoomEvent(d3Event)
+      }
+      
+      // DEFAULT => Ignore right-click, since that should open the context menu.
+      return !d3Event.ctrlKey && !d3Event.button;
+    }
+
     const zoom = d3Zoom()
+      .filter(filterFunc)
       .scaleExtent([minZoom, maxZoom])
       .translateExtent([[a1, a1], [b1, b2]])
       .on("start", handleZoomStart)
