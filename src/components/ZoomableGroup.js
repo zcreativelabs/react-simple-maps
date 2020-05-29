@@ -11,6 +11,7 @@ const ZoomableGroup = ({
   minZoom = 1,
   maxZoom = 8,
   translateExtent,
+  filterZoomEvent,
   onMoveStart,
   onMove,
   onMoveEnd,
@@ -24,6 +25,7 @@ const ZoomableGroup = ({
     transformString,
   } = useZoomPan({
     center,
+    filterZoomEvent,
     onMoveStart,
     onMove,
     onMoveEnd,
