@@ -1,5 +1,5 @@
 
-<img src="https://img.shields.io/bundlephobia/minzip/react-simple-maps@beta?color=%2328cb95&label=gzip" />
+<img src="https://img.shields.io/bundlephobia/minzip/react-simple-maps?color=%2328cb95&label=gzip" />
 
 # react-simple-maps
 Create beautiful SVG maps in react with d3-geo and topojson using a declarative api.
