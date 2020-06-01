@@ -67,7 +67,7 @@ export default function useZoomPan({
       if (filterZoomEvent) {
         return filterZoomEvent(d3Event)
       }
-      return d3Event ? !d3Event.ctrlKey && !d3Event.button : true
+      return d3Event ? !d3Event.ctrlKey && !d3Event.button : false
     }
 
     const zoom = d3Zoom()
