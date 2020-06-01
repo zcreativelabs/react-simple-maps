@@ -1,7 +1,13 @@
 
 import { useEffect, useRef, useState, useContext } from "react"
-import { zoom as d3Zoom, zoomIdentity } from "d3-zoom"
-import { select, event as d3Event } from "d3-selection"
+import {
+  zoom as d3Zoom,
+  zoomIdentity as d3ZoomIdentity,
+} from "d3-zoom"
+import {
+  select as d3Select,
+  event as d3Event,
+} from "d3-selection"
 
 import { MapContext } from "./MapProvider"
 import { getCoords } from "../utils"
@@ -31,7 +37,7 @@ export default function useZoomPan({
   const [minZoom, maxZoom] = scaleExtent
 
   useEffect(() => {
-    const svg = select(mapRef.current)
+    const svg = d3Select(mapRef.current)
 
     function handleZoomStart() {
       if (!onMoveStart || bypassEvents.current) return
@@ -61,9 +67,7 @@ export default function useZoomPan({
       if (filterZoomEvent) {
         return filterZoomEvent(d3Event)
       }
-      
-      // DEFAULT => Ignore right-click, since that should open the context menu.
-      return !d3Event.ctrlKey && !d3Event.button;
+      return d3Event ? !d3Event.ctrlKey && !d3Event.button : true
     }
 
     const zoom = d3Zoom()
@@ -84,11 +88,11 @@ export default function useZoomPan({
     const coords = projection([lon, lat])
     const x = coords[0] * zoom
     const y = coords[1] * zoom
-    const svg = select(mapRef.current)
+    const svg = d3Select(mapRef.current)
 
     bypassEvents.current = true
 
-    svg.call(zoomRef.current.transform, zoomIdentity.translate(width / 2 - x, height / 2 - y).scale(zoom))
+    svg.call(zoomRef.current.transform, d3ZoomIdentity.translate(width / 2 - x, height / 2 - y).scale(zoom))
     setPosition({ x: width / 2 - x, y: height / 2 - y, k: zoom })
 
     lastPosition.current = { x: lon, y: lat, k: zoom }
