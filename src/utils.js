@@ -1,5 +1,5 @@
 
-import { feature } from "topojson-client"
+import { feature, mesh } from "topojson-client"
 
 export function getCoords(w, h, t) {
   const xOffset = (w * t.k - w) / 2
@@ -20,12 +20,32 @@ export function fetchGeographies(url) {
 }
 
 export function getFeatures(geographies, parseGeographies) {
-  if (Array.isArray(geographies)) return parseGeographies ? parseGeographies(geographies) : geographies
+  const isTopojson = geographies.type === "Topology"
+  if (!isTopojson) {
+    return parseGeographies
+      ? parseGeographies(geographies.features || geographies)
+      : (geographies.features || geographies)
+  } 
   const feats = feature(
     geographies,
     geographies.objects[Object.keys(geographies.objects)[0]]
   ).features
   return parseGeographies ? parseGeographies(feats) : feats
+}
+
+export function getMesh(geographies) {
+  const isTopojson = geographies.type === "Topology"
+  if (!isTopojson) return null
+  const outline = mesh(geographies, geographies.objects[Object.keys(geographies.objects)[0]], (a, b) => a === b)
+  const borders = mesh(geographies, geographies.objects[Object.keys(geographies.objects)[0]], (a, b) => a !== b)
+  return { outline, borders }
+}
+
+export function prepareMesh(outline, borders, path) {
+  return outline && borders ? {
+    outline: { ...outline, rsmKey: "outline", svgPath: path(outline) },
+    borders: { ...borders, rsmKey: "borders", svgPath: path(borders) },
+  } : {}
 }
 
 export function prepareFeatures(geographies, path) {

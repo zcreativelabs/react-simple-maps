@@ -6,7 +6,6 @@ import {
 } from "d3-zoom"
 import {
   select as d3Select,
-  event as d3Event,
 } from "d3-selection"
 
 import { MapContext } from "./MapProvider"
@@ -39,12 +38,12 @@ export default function useZoomPan({
   useEffect(() => {
     const svg = d3Select(mapRef.current)
 
-    function handleZoomStart() {
+    function handleZoomStart(d3Event) {
       if (!onMoveStart || bypassEvents.current) return
       onMoveStart({ coordinates: projection.invert(getCoords(width, height, d3Event.transform)), zoom: d3Event.transform.k }, d3Event)
     }
   
-    function handleZoom() {
+    function handleZoom(d3Event) {
       if (bypassEvents.current) return
       const {transform, sourceEvent} = d3Event
       setPosition({ x: transform.x, y: transform.y, k: transform.k, dragging: sourceEvent })
@@ -52,7 +51,7 @@ export default function useZoomPan({
       onMove({ x: transform.x, y: transform.y, k: transform.k, dragging: sourceEvent }, d3Event)
     }
   
-    function handleZoomEnd() {
+    function handleZoomEnd(d3Event) {
       if (bypassEvents.current) {
         bypassEvents.current = false
         return
@@ -63,7 +62,7 @@ export default function useZoomPan({
       onMoveEnd({ coordinates: [x, y], zoom: d3Event.transform.k }, d3Event)
     }
 
-    function filterFunc() {
+    function filterFunc(d3Event) {
       if (filterZoomEvent) {
         return filterZoomEvent(d3Event)
       }

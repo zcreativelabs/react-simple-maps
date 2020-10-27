@@ -46,20 +46,20 @@
     "rollup-plugin-terser": "^5.1.1",
     "expect": "^23.5.0",
     "mocha": "^5.2.0",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "prop-types": "^15.7.2",
     "react-test-utils": "^0.0.1"
   },
   "peerDependencies": {
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0",
+    "react": "^16.8.0 || 17.x",
+    "react-dom": "^16.8.0 || 17.x",
     "prop-types": "^15.7.2"
   },
   "dependencies": {
-    "d3-geo": "^1.11.9",
-    "d3-selection": "^1.4.1",
-    "d3-zoom": "^1.8.3",
-    "topojson-client": "^3.0.0"
+    "d3-geo": "^2.0.1",
+    "d3-selection": "^2.0.0",
+    "d3-zoom": "^2.0.0",
+    "topojson-client": "^3.1.0"
   }
 }
