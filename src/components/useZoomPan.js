@@ -1,5 +1,4 @@
-
-import { useEffect, useRef, useState, useContext } from "react"
+import { useEffect, useRef, useState, useContext, useCallback, useMemo } from "react"
 import {
   zoom as d3Zoom,
   zoomIdentity as d3ZoomIdentity,
@@ -25,25 +24,32 @@ export default function useZoomPan({
   const { width, height, projection } = useContext(MapContext)
 
   const [lon, lat] = center
-  const [position, setPosition] = useState({ x: 0, y: 0, k: 1 })
-  const lastPosition = useRef({ x: 0, y: 0, k: 1 })
-  const mapRef = useRef()
-  const zoomRef = useRef()
-  const bypassEvents = useRef(false)
-
   const [a, b] = translateExtent
   const [a1, a2] = a
   const [b1, b2] = b
   const [minZoom, maxZoom] = scaleExtent
 
-  useEffect(() => {
-    const svg = d3Select(mapRef.current)
+  const bypassEvents = useRef(false)
+  const lastPosition = useRef()
+  const [mapRef, setMapRef] = useState()
+  const svg = useMemo(() => mapRef && d3Select(mapRef), [mapRef])
 
+  const [x, y] = useMemo(
+    () => projection([lon, lat]).map((coord) => coord * zoom),
+    [projection, lon, lat, zoom]
+  )
+  const calculatePosition = useCallback(
+    () => ({ x: width / 2 - x, y: height / 2 - y, k: zoom }),
+    [width, height, x, y, zoom]
+  )
+  const [position, setPosition] = useState(calculatePosition)
+
+  const d3zoom = useMemo(() => {
     function handleZoomStart() {
       if (!onMoveStart || bypassEvents.current) return
       onMoveStart({ coordinates: projection.invert(getCoords(width, height, d3Event.transform)), zoom: d3Event.transform.k }, d3Event)
     }
-  
+
     function handleZoom() {
       if (bypassEvents.current) return
       const {transform, sourceEvent} = d3Event
@@ -51,7 +57,7 @@ export default function useZoomPan({
       if (!onMove) return
       onMove({ x: transform.x, y: transform.y, k: transform.k, dragging: sourceEvent }, d3Event)
     }
-  
+
     function handleZoomEnd() {
       if (bypassEvents.current) {
         bypassEvents.current = false
@@ -70,36 +76,34 @@ export default function useZoomPan({
       return d3Event ? !d3Event.ctrlKey && !d3Event.button : false
     }
 
-    const zoom = d3Zoom()
+    return d3Zoom()
       .filter(filterFunc)
       .scaleExtent([minZoom, maxZoom])
       .translateExtent([[a1, a2], [b1, b2]])
       .on("start", handleZoomStart)
       .on("zoom", handleZoom)
       .on("end", handleZoomEnd)
-
-    zoomRef.current = zoom
-    svg.call(zoom)
   }, [width, height, a1, a2, b1, b2, minZoom, maxZoom, projection, onMoveStart, onMove, onMoveEnd, filterZoomEvent])
 
   useEffect(() => {
-    if (lon === lastPosition.current.x && lat === lastPosition.current.y && zoom === lastPosition.current.k) return
-
-    const coords = projection([lon, lat])
-    const x = coords[0] * zoom
-    const y = coords[1] * zoom
-    const svg = d3Select(mapRef.current)
+    const newPosition = calculatePosition()
+    const samePosition = lastPosition.current &&
+      newPosition.x === lastPosition.current.x &&
+      newPosition.y === lastPosition.current.y &&
+      newPosition.k === lastPosition.current.k
+    if (!svg || samePosition) return
 
     bypassEvents.current = true
+    svg.call(d3zoom.transform, d3ZoomIdentity.translate(width / 2 - x, height / 2 - y).scale(zoom))
+    setPosition(newPosition)
+  }, [svg, calculatePosition, d3zoom, width, height, x, y, zoom])
 
-    svg.call(zoomRef.current.transform, d3ZoomIdentity.translate(width / 2 - x, height / 2 - y).scale(zoom))
-    setPosition({ x: width / 2 - x, y: height / 2 - y, k: zoom })
-
-    lastPosition.current = { x: lon, y: lat, k: zoom }
-  }, [lon, lat, zoom, width, height, projection])
+  useEffect(() => {
+    lastPosition.current = position
+  }, [position])
 
   return {
-    mapRef,
+    mapRef: setMapRef,
     position,
     transformString: `translate(${position.x} ${position.y}) scale(${position.k})`,
   }
