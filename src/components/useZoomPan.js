@@ -73,7 +73,7 @@ export default function useZoomPan({
     const zoom = d3Zoom()
       .filter(filterFunc)
       .scaleExtent([minZoom, maxZoom])
-      .translateExtent([[a1, a1], [b1, b2]])
+      .translateExtent([[a1, a2], [b1, b2]])
       .on("start", handleZoomStart)
       .on("zoom", handleZoom)
       .on("end", handleZoomEnd)
