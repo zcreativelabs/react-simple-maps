@@ -48,7 +48,7 @@ export default function useZoomPan({
       const {transform, sourceEvent} = d3Event
       setPosition({ x: transform.x, y: transform.y, k: transform.k, dragging: sourceEvent })
       if (!onMove) return
-      onMove({ x: transform.x, y: transform.y, k: transform.k, dragging: sourceEvent }, d3Event)
+      onMove({ x: transform.x, y: transform.y, zoom: transform.k, dragging: sourceEvent }, d3Event)
     }
   
     function handleZoomEnd(d3Event) {
