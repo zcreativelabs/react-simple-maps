@@ -51,7 +51,7 @@ const Geography = ({
 
   return (
     <path
-      tabIndex="0"
+      tabIndex="-1"
       className={`rsm-geography ${className}`}
       d={geography.svgPath}
       onMouseEnter={handleMouseEnter}
