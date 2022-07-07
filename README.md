@@ -66,6 +66,16 @@ The above will render a world map using the [equal earth projection](https://obs
 
 For other examples and components, check out the [documentation](https://www.react-simple-maps.io/docs/getting-started).
 
+### Map files
+
+React-simple-maps does not restrict you to one specific map and relies on custom map files that you can modify in any way necessary for the project. This means that you can visualise countries, regions, and continents in various resolutions, as long as they can be represented using geojson/topojson.
+
+In order for this to work properly, you will however need to provide these valid map files to react-simple-maps yourself. Luckily, there are decent sources for map files on github and elsewhere. Here are some you can check out:
+
+* [Natural Earth](https://github.com/nvkelso/natural-earth-vector)
+* [Topojson maps by @deldersveld](https://github.com/deldersveld/topojson)
+* [Topojson world atlas](https://github.com/topojson/world-atlas)
+
 ### License
 
 MIT licensed. Copyright (c) Richard Zimerman 2017. See [LICENSE.md](https://github.com/zcreativelabs/react-simple-maps/blob/master/LICENSE) for more details.
