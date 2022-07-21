@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 
 import { MapContext } from "./MapProvider"
 
-const Marker = ({
+const Marker = forwardRef(({
   coordinates,
   children,
   onMouseEnter,
@@ -72,7 +72,9 @@ const Marker = ({
       {children}
     </g>
   )
-}
+})
+
+Marker.displayName = "Marker"
 
 Marker.propTypes = {
   coordinates: PropTypes.array,
@@ -90,4 +92,4 @@ Marker.propTypes = {
   className: PropTypes.string,
 }
 
-export default forwardRef(Marker)
+export default Marker

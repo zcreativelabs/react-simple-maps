@@ -1,10 +1,10 @@
-import React, { useContext, forwardRef } from "react";
-import PropTypes from "prop-types";
+import React, { useContext, forwardRef } from "react"
+import PropTypes from "prop-types"
 
-import { MapContext } from "./MapProvider";
-import useZoomPan from "./useZoomPan";
+import { MapContext } from "./MapProvider"
+import useZoomPan from "./useZoomPan"
 
-const ZoomableGroup = (
+const ZoomableGroup = forwardRef((
   {
     center = [0, 0],
     zoom = 1,
@@ -43,8 +43,10 @@ const ZoomableGroup = (
         {...restProps}
       />
     </g>
-  );
-};
+  )
+})
+
+ZoomableGroup.displayName = "ZoomableGroup"
 
 ZoomableGroup.propTypes = {
   center: PropTypes.array,
@@ -56,6 +58,6 @@ ZoomableGroup.propTypes = {
   onMove: PropTypes.func,
   onMoveEnd: PropTypes.func,
   className: PropTypes.string,
-};
+}
 
-export default forwardRef(ZoomableGroup);
+export default ZoomableGroup

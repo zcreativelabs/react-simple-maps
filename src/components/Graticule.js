@@ -5,7 +5,7 @@ import { geoGraticule } from "d3-geo"
 
 import { MapContext } from "./MapProvider"
 
-const Graticule = ({
+const Graticule = forwardRef(({
   fill = "transparent",
   stroke = "currentcolor",
   step = [10, 10],
@@ -23,7 +23,9 @@ const Graticule = ({
       {...restProps}
     />
   )
-}
+})
+
+Graticule.displayName = "Graticule"
 
 Graticule.propTypes = {
   fill: PropTypes.string,
@@ -32,4 +34,4 @@ Graticule.propTypes = {
   className: PropTypes.string,
 }
 
-export default memo(forwardRef(Graticule))
+export default memo(Graticule)

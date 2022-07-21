@@ -5,7 +5,7 @@ import PropTypes from "prop-types"
 import { MapContext } from "./MapProvider"
 import useGeographies from "./useGeographies"
 
-const Geographies = ({
+const Geographies = forwardRef(({
   geography,
   children,
   parseGeographies,
@@ -23,7 +23,9 @@ const Geographies = ({
       }
     </g>
   )
-}
+})
+
+Geographies.displayName = "Geographies"
 
 Geographies.propTypes = {
   geography: PropTypes.oneOfType([
@@ -36,4 +38,4 @@ Geographies.propTypes = {
   className: PropTypes.string,
 }
 
-export default forwardRef(Geographies)
+export default Geographies

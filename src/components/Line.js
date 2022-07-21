@@ -1,10 +1,9 @@
-
 import React, { useContext, forwardRef } from "react"
 import PropTypes from "prop-types"
 
 import { MapContext } from "./MapProvider"
 
-const Line = ({
+const Line = forwardRef(({
   from = [0, 0],
   to = [0, 0],
   coordinates,
@@ -32,7 +31,9 @@ const Line = ({
       {...restProps}
     />
   )
-}
+})
+
+Line.displayName = "Line"
 
 Line.propTypes = {
   from: PropTypes.array,
@@ -44,4 +45,4 @@ Line.propTypes = {
   className: PropTypes.string,
 }
 
-export default forwardRef(Line)
+export default Line

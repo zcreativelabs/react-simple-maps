@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 
 import { MapContext } from "./MapProvider"
 
-const Sphere = ({
+const Sphere = forwardRef(({
   id = "rsm-sphere",
   fill = "transparent",
   stroke = "currentcolor",
@@ -33,7 +33,9 @@ const Sphere = ({
       />
     </Fragment>
   )
-}
+})
+
+Sphere.displayName = "Sphere"
 
 Sphere.propTypes = {
   id: PropTypes.string,
@@ -43,4 +45,4 @@ Sphere.propTypes = {
   className: PropTypes.string,
 }
 
-export default memo(forwardRef(Sphere))
+export default memo(Sphere)

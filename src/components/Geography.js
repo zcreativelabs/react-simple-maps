@@ -2,7 +2,7 @@
 import React, { useState, memo, forwardRef } from "react"
 import PropTypes from "prop-types"
 
-const Geography = ({
+const Geography = forwardRef(({
   geography,
   onMouseEnter,
   onMouseLeave,
@@ -65,7 +65,9 @@ const Geography = ({
       {...restProps}
     />
   )
-}
+})
+
+Geography.displayName = "Geography"
 
 Geography.propTypes = {
   geography: PropTypes.object,
@@ -79,4 +81,4 @@ Geography.propTypes = {
   className: PropTypes.string,
 }
 
-export default memo(forwardRef(Geography))
+export default memo(Geography)

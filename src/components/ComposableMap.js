@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 
 import { MapProvider } from "./MapProvider"
 
-const ComposableMap = ({
+const ComposableMap = forwardRef(({
   width = 800,
   height = 600,
   projection = "geoEqualEarth",
@@ -27,7 +27,9 @@ const ComposableMap = ({
       />
     </MapProvider>
   )
-}
+})
+
+ComposableMap.displayName = "ComposableMap"
 
 ComposableMap.propTypes = {
   width: PropTypes.number,
@@ -40,4 +42,4 @@ ComposableMap.propTypes = {
   className: PropTypes.string,
 }
 
-export default forwardRef(ComposableMap)
+export default ComposableMap

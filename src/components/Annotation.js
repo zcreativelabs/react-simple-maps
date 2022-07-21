@@ -5,7 +5,7 @@ import PropTypes from "prop-types"
 import { MapContext } from "./MapProvider"
 import { createConnectorPath } from "../utils"
 
-const Annotation = ({
+const Annotation = forwardRef(({
   subject,
   children,
   connectorProps,
@@ -30,7 +30,9 @@ const Annotation = ({
       {children}
     </g>
   )
-}
+})
+
+Annotation.displayName = "Annotation"
 
 Annotation.propTypes = {
   subject: PropTypes.array,
@@ -45,4 +47,4 @@ Annotation.propTypes = {
   className: PropTypes.string,
 }
 
-export default forwardRef(Annotation)
+export default Annotation
