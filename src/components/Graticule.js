@@ -1,5 +1,5 @@
 
-import React, { memo, useContext } from "react"
+import React, { memo, useContext, forwardRef } from "react"
 import PropTypes from "prop-types"
 import { geoGraticule } from "d3-geo"
 
@@ -11,10 +11,11 @@ const Graticule = ({
   step = [10, 10],
   className = "",
   ...restProps
-}) => {
+}, ref) => {
   const { path } = useContext(MapContext)
   return (
     <path
+      ref={ref}
       d={path(geoGraticule().step(step)())}
       fill={fill}
       stroke={stroke}
@@ -31,4 +32,4 @@ Graticule.propTypes = {
   className: PropTypes.string,
 }
 
-export default memo(Graticule)
+export default memo(forwardRef(Graticule))

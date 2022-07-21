@@ -1,5 +1,5 @@
 
-import React, { useContext, useState } from "react"
+import React, { useContext, useState, forwardRef } from "react"
 import PropTypes from "prop-types"
 
 import { MapContext } from "./MapProvider"
@@ -16,7 +16,7 @@ const Marker = ({
   style = {},
   className = "",
   ...restProps
-}) => {
+}, ref) => {
   const { projection } = useContext(MapContext)
   const [isPressed, setPressed] = useState(false)
   const [isFocused, setFocus] = useState(false)
@@ -57,6 +57,7 @@ const Marker = ({
 
   return (
     <g
+      ref={ref}
       transform={`translate(${x}, ${y})`}
       className={`rsm-marker ${className}`}
       onMouseEnter={handleMouseEnter}
@@ -89,4 +90,4 @@ Marker.propTypes = {
   className: PropTypes.string,
 }
 
-export default Marker
+export default forwardRef(Marker)

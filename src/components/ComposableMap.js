@@ -1,5 +1,5 @@
 
-import React from "react"
+import React, { forwardRef } from "react"
 import PropTypes from "prop-types"
 
 import { MapProvider } from "./MapProvider"
@@ -11,7 +11,7 @@ const ComposableMap = ({
   projectionConfig = {},
   className = "",
   ...restProps
-}) => {
+}, ref) => {
   return (
     <MapProvider
       width={width}
@@ -20,6 +20,7 @@ const ComposableMap = ({
       projectionConfig={projectionConfig}
     >
       <svg
+        ref={ref}
         viewBox={`0 0 ${width} ${height}`}
         className={`rsm-svg ${className}`}
         {...restProps}
@@ -39,4 +40,4 @@ ComposableMap.propTypes = {
   className: PropTypes.string,
 }
 
-export default ComposableMap
+export default forwardRef(ComposableMap)

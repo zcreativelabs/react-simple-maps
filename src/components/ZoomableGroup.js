@@ -1,29 +1,28 @@
+import React, { useContext, forwardRef } from "react";
+import PropTypes from "prop-types";
 
-import React, { useContext } from "react"
-import PropTypes from "prop-types"
+import { MapContext } from "./MapProvider";
+import useZoomPan from "./useZoomPan";
 
-import { MapContext } from "./MapProvider"
-import useZoomPan from "./useZoomPan"
+const ZoomableGroup = (
+  {
+    center = [0, 0],
+    zoom = 1,
+    minZoom = 1,
+    maxZoom = 8,
+    translateExtent,
+    filterZoomEvent,
+    onMoveStart,
+    onMove,
+    onMoveEnd,
+    className,
+    ...restProps
+  },
+  ref
+) => {
+  const { width, height } = useContext(MapContext);
 
-const ZoomableGroup = ({
-  center = [0, 0],
-  zoom = 1,
-  minZoom = 1,
-  maxZoom = 8,
-  translateExtent,
-  filterZoomEvent,
-  onMoveStart,
-  onMove,
-  onMoveEnd,
-  className,
-  ...restProps
-}) => {
-  const { width, height } = useContext(MapContext)
-
-  const {
-    mapRef,
-    transformString,
-  } = useZoomPan({
+  const { mapRef, transformString } = useZoomPan({
     center,
     filterZoomEvent,
     onMoveStart,
@@ -32,15 +31,20 @@ const ZoomableGroup = ({
     scaleExtent: [minZoom, maxZoom],
     translateExtent,
     zoom,
-  })
+  });
 
   return (
     <g ref={mapRef}>
       <rect width={width} height={height} fill="transparent" />
-      <g transform={transformString} className={`rsm-zoomable-group ${className}`} {...restProps} />
+      <g
+        ref={ref}
+        transform={transformString}
+        className={`rsm-zoomable-group ${className}`}
+        {...restProps}
+      />
     </g>
-  )
-}
+  );
+};
 
 ZoomableGroup.propTypes = {
   center: PropTypes.array,
@@ -52,6 +56,6 @@ ZoomableGroup.propTypes = {
   onMove: PropTypes.func,
   onMoveEnd: PropTypes.func,
   className: PropTypes.string,
-}
+};
 
-export default ZoomableGroup
+export default forwardRef(ZoomableGroup);

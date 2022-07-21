@@ -1,5 +1,5 @@
 
-import React, { Fragment, memo, useMemo, useContext } from "react"
+import React, { Fragment, memo, useMemo, useContext, forwardRef } from "react"
 import PropTypes from "prop-types"
 
 import { MapContext } from "./MapProvider"
@@ -11,7 +11,7 @@ const Sphere = ({
   strokeWidth = 0.5,
   className = "",
   ...restProps
-}) => {
+}, ref) => {
   const { path } = useContext(MapContext)
   const spherePath = useMemo(() => path({ type: "Sphere" }), [path])
   return (
@@ -22,6 +22,7 @@ const Sphere = ({
         </clipPath>
       </defs>
       <path
+        ref={ref}
         d={spherePath}
         fill={fill}
         stroke={stroke}
@@ -42,4 +43,4 @@ Sphere.propTypes = {
   className: PropTypes.string,
 }
 
-export default memo(Sphere)
+export default memo(forwardRef(Sphere))

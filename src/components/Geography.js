@@ -1,5 +1,5 @@
 
-import React, { useState, memo } from "react"
+import React, { useState, memo, forwardRef } from "react"
 import PropTypes from "prop-types"
 
 const Geography = ({
@@ -13,7 +13,7 @@ const Geography = ({
   style = {},
   className = "",
   ...restProps
-}) => {
+}, ref) => {
   const [isPressed, setPressed] = useState(false)
   const [isFocused, setFocus] = useState(false)
 
@@ -51,6 +51,7 @@ const Geography = ({
 
   return (
     <path
+      ref={ref}
       tabIndex="0"
       className={`rsm-geography ${className}`}
       d={geography.svgPath}
@@ -78,4 +79,4 @@ Geography.propTypes = {
   className: PropTypes.string,
 }
 
-export default memo(Geography)
+export default memo(forwardRef(Geography))

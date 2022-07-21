@@ -1,5 +1,5 @@
 
-import React, { useContext } from "react"
+import React, { useContext, forwardRef } from "react"
 import PropTypes from "prop-types"
 
 import { MapContext } from "./MapProvider"
@@ -13,7 +13,7 @@ const Line = ({
   fill = "transparent",
   className = "",
   ...restProps
-}) => {
+}, ref) => {
   const { path } = useContext(MapContext)
 
   const lineData = {
@@ -23,6 +23,7 @@ const Line = ({
 
   return (
     <path
+      ref={ref}
       d={path(lineData)}
       className={`rsm-line ${className}`}
       stroke={stroke}
@@ -43,4 +44,4 @@ Line.propTypes = {
   className: PropTypes.string,
 }
 
-export default Line
+export default forwardRef(Line)

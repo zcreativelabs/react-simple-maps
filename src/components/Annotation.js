@@ -1,5 +1,5 @@
 
-import React, { useContext } from "react"
+import React, { useContext, forwardRef } from "react"
 import PropTypes from "prop-types"
 
 import { MapContext } from "./MapProvider"
@@ -14,13 +14,14 @@ const Annotation = ({
   curve = 0,
   className = "",
   ...restProps
-}) => {
+}, ref) => {
   const { projection } = useContext(MapContext)
   const [x, y] = projection(subject)
   const connectorPath = createConnectorPath(dx, dy, curve)
 
   return (
     <g
+      ref={ref}
       transform={`translate(${x + dx}, ${y + dy})`}
       className={`rsm-annotation ${className}`}
       {...restProps}
@@ -44,4 +45,4 @@ Annotation.propTypes = {
   className: PropTypes.string,
 }
 
-export default Annotation
+export default forwardRef(Annotation)

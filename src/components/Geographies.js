@@ -1,5 +1,5 @@
 
-import React, { useContext } from "react"
+import React, { useContext, forwardRef } from "react"
 import PropTypes from "prop-types"
 
 import { MapContext } from "./MapProvider"
@@ -11,12 +11,12 @@ const Geographies = ({
   parseGeographies,
   className = "",
   ...restProps
-}) => {
+}, ref) => {
   const { path, projection } = useContext(MapContext)
   const { geographies, outline, borders } = useGeographies({ geography, parseGeographies })
 
   return (
-    <g className={`rsm-geographies ${className}`} {...restProps}>
+    <g ref={ref} className={`rsm-geographies ${className}`} {...restProps}>
       {
         geographies && geographies.length > 0 &&
         children({ geographies, outline, borders, path, projection })
@@ -36,4 +36,4 @@ Geographies.propTypes = {
   className: PropTypes.string,
 }
 
-export default Geographies
+export default forwardRef(Geographies)
