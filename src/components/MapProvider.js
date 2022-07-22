@@ -1,9 +1,4 @@
-
-import React, {
-  createContext,
-  useMemo,
-  useCallback,
-} from "react"
+import React, { createContext, useMemo, useCallback } from "react"
 import PropTypes from "prop-types"
 import * as d3Geo from "d3-geo"
 
@@ -21,8 +16,7 @@ const makeProjection = ({
 
   if (isFunc) return projection
 
-  let proj = projections[projection]()
-    .translate([width / 2, height / 2])
+  let proj = projections[projection]().translate([width / 2, height / 2])
 
   const supported = [
     proj.center ? "center" : null,
@@ -31,7 +25,7 @@ const makeProjection = ({
     proj.parallels ? "parallels" : null,
   ]
 
-  supported.forEach(d => {
+  supported.forEach((d) => {
     if (!d) return
     proj = proj[d](projectionConfig[d] || proj[d]())
   })
@@ -54,16 +48,16 @@ const MapProvider = ({
   const projMemo = useMemo(() => {
     return makeProjection({
       projectionConfig: {
-        center: (cx || cx === 0) || (cy || cy === 0) ? [cx, cy] : null,
-        rotate: (rx || rx === 0) || (ry || ry === 0) ? [rx, ry, rz] : null,
-        parallels: (p1 || p1 === 0) || (p2 || p2 === 0) ? [p1, p2] : null,
+        center: cx || cx === 0 || cy || cy === 0 ? [cx, cy] : null,
+        rotate: rx || rx === 0 || ry || ry === 0 ? [rx, ry, rz] : null,
+        parallels: p1 || p1 === 0 || p2 || p2 === 0 ? [p1, p2] : null,
         scale: s,
       },
       projection,
       width,
       height,
     })
-  }, [ width, height, projection, cx, cy, rx, ry, rz, p1, p2, s ])
+  }, [width, height, projection, cx, cy, rx, ry, rz, p1, p2, s])
 
   const proj = useCallback(projMemo, [projMemo])
 
@@ -74,18 +68,15 @@ const MapProvider = ({
       projection: proj,
       path: geoPath().projection(proj),
     }
-  }, [ width, height, proj ])
+  }, [width, height, proj])
 
-  return (<MapContext.Provider value={value} {...restProps} />)
+  return <MapContext.Provider value={value} {...restProps} />
 }
 
 MapProvider.propTypes = {
   width: PropTypes.number,
   height: PropTypes.number,
-  projection: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.func,
-  ]),
+  projection: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   projectionConfig: PropTypes.object,
 }
 

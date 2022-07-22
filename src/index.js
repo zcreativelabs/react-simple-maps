@@ -1,4 +1,3 @@
-
 export { default as ComposableMap } from "./components/ComposableMap"
 export { default as Geographies } from "./components/Geographies"
 export { default as Geography } from "./components/Geography"
