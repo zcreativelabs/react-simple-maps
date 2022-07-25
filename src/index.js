@@ -7,6 +7,15 @@ export { default as Sphere } from "./components/Sphere"
 export { default as Marker } from "./components/Marker"
 export { default as Line } from "./components/Line"
 export { default as Annotation } from "./components/Annotation"
-export { MapProvider, MapContext } from "./components/MapProvider"
+export {
+  MapProvider,
+  MapContext,
+  useMapContext,
+} from "./components/MapProvider"
+export {
+  ZoomProvider,
+  ZoomContext,
+  useZoomPanContext,
+} from "./components/ZoomProvider"
 export { default as useGeographies } from "./components/useGeographies"
 export { default as useZoomPan } from "./components/useZoomPan"

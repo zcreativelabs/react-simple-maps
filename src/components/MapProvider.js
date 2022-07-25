@@ -1,4 +1,4 @@
-import React, { createContext, useMemo, useCallback } from "react"
+import React, { createContext, useMemo, useCallback, useContext } from "react"
 import PropTypes from "prop-types"
 import * as d3Geo from "d3-geo"
 
@@ -80,4 +80,8 @@ MapProvider.propTypes = {
   projectionConfig: PropTypes.object,
 }
 
-export { MapProvider, MapContext }
+const useMapContext = () => {
+  return useContext(MapContext)
+}
+
+export { MapProvider, MapContext, useMapContext }

@@ -2,6 +2,7 @@ import React, { useContext, forwardRef } from "react"
 import PropTypes from "prop-types"
 
 import { MapContext } from "./MapProvider"
+import { ZoomProvider } from "./ZoomProvider"
 import useZoomPan from "./useZoomPan"
 
 const ZoomableGroup = forwardRef(
@@ -23,7 +24,7 @@ const ZoomableGroup = forwardRef(
   ) => {
     const { width, height } = useContext(MapContext)
 
-    const { mapRef, transformString } = useZoomPan({
+    const { mapRef, transformString, position } = useZoomPan({
       center,
       filterZoomEvent,
       onMoveStart,
@@ -35,15 +36,19 @@ const ZoomableGroup = forwardRef(
     })
 
     return (
-      <g ref={mapRef}>
-        <rect width={width} height={height} fill="transparent" />
-        <g
-          ref={ref}
-          transform={transformString}
-          className={`rsm-zoomable-group ${className}`}
-          {...restProps}
-        />
-      </g>
+      <ZoomProvider
+        value={{ x: position.x, y: position.y, k: position.k, transformString }}
+      >
+        <g ref={mapRef}>
+          <rect width={width} height={height} fill="transparent" />
+          <g
+            ref={ref}
+            transform={transformString}
+            className={`rsm-zoomable-group ${className}`}
+            {...restProps}
+          />
+        </g>
+      </ZoomProvider>
     )
   }
 )
