@@ -13,9 +13,9 @@ export {
   useMapContext,
 } from "./components/MapProvider"
 export {
-  ZoomProvider,
-  ZoomContext,
+  ZoomPanProvider,
+  ZoomPanContext,
   useZoomPanContext,
-} from "./components/ZoomProvider"
+} from "./components/ZoomPanProvider"
 export { default as useGeographies } from "./components/useGeographies"
 export { default as useZoomPan } from "./components/useZoomPan"

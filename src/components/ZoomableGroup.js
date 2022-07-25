@@ -2,7 +2,7 @@ import React, { useContext, forwardRef } from "react"
 import PropTypes from "prop-types"
 
 import { MapContext } from "./MapProvider"
-import { ZoomProvider } from "./ZoomProvider"
+import { ZoomPanProvider } from "./ZoomPanProvider"
 import useZoomPan from "./useZoomPan"
 
 const ZoomableGroup = forwardRef(
@@ -36,7 +36,7 @@ const ZoomableGroup = forwardRef(
     })
 
     return (
-      <ZoomProvider
+      <ZoomPanProvider
         value={{ x: position.x, y: position.y, k: position.k, transformString }}
       >
         <g ref={mapRef}>
@@ -48,7 +48,7 @@ const ZoomableGroup = forwardRef(
             {...restProps}
           />
         </g>
-      </ZoomProvider>
+      </ZoomPanProvider>
     )
   }
 )

@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from "react"
 import PropTypes from "prop-types"
 
-const ZoomContext = createContext()
+const ZoomPanContext = createContext()
 
 const defaultValue = {
   x: 0,
@@ -10,11 +10,11 @@ const defaultValue = {
   transformString: "translate(0 0) scale(1)",
 }
 
-const ZoomProvider = ({ value = defaultValue, ...restProps }) => {
-  return <ZoomContext.Provider value={value} {...restProps} />
+const ZoomPanProvider = ({ value = defaultValue, ...restProps }) => {
+  return <ZoomPanContext.Provider value={value} {...restProps} />
 }
 
-ZoomProvider.propTypes = {
+ZoomPanProvider.propTypes = {
   x: PropTypes.number,
   y: PropTypes.number,
   k: PropTypes.number,
@@ -22,7 +22,7 @@ ZoomProvider.propTypes = {
 }
 
 const useZoomPanContext = () => {
-  return useContext(ZoomContext)
+  return useContext(ZoomPanContext)
 }
 
-export { ZoomContext, ZoomProvider, useZoomPanContext }
+export { ZoomPanContext, ZoomPanProvider, useZoomPanContext }
