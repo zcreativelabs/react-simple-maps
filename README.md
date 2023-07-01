@@ -17,7 +17,7 @@ Since `react-simple-maps` leaves DOM work to react, it can also easily be used w
 To install `react-simple-maps`
 
 ```bash
-$ npm install --save react-simple-maps
+$ npm install react-simple-maps
 ```
 
 ...or if you use yarn:
