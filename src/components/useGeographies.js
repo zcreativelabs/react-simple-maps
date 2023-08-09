@@ -15,11 +15,9 @@ export default function useGeographies({ geography, parseGeographies }) {
   const [output, setOutput] = useState({})
 
   useEffect(() => {
-    if (typeof window === `undefined`) return
-
     if (!geography) return
 
-    if (isString(geography)) {
+    if (isString(geography) && typeof window !== `undefined`) {
       fetchGeographies(geography).then((geos) => {
         if (geos) {
           setOutput({
