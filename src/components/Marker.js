@@ -24,7 +24,7 @@ const Marker = forwardRef(
     const [isPressed, setPressed] = useState(false)
     const [isFocused, setFocus] = useState(false)
 
-    const [x, y] = projection(coordinates)
+    const [x, y] = projection(coordinates) ?? [null, null]
 
     function handleMouseEnter(evt) {
       setFocus(true)
@@ -59,29 +59,33 @@ const Marker = forwardRef(
     }
 
     return (
-      <g
-        ref={ref}
-        transform={`translate(${x}, ${y})`}
-        className={`rsm-marker ${className}`}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
-        style={
-          style[
-            isPressed || isFocused
-              ? isPressed
-                ? "pressed"
-                : "hover"
-              : "default"
-          ]
+      <>
+        {x && y &&
+          <g
+            ref={ref}
+            transform={`translate(${x}, ${y})`}
+            className={`rsm-marker ${className}`}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            onMouseDown={handleMouseDown}
+            onMouseUp={handleMouseUp}
+            style={
+              style[
+                isPressed || isFocused
+                  ? isPressed
+                    ? "pressed"
+                    : "hover"
+                  : "default"
+              ]
+            }
+            {...restProps}
+          >
+            {children}
+          </g>
         }
-        {...restProps}
-      >
-        {children}
-      </g>
+      </>
     )
   }
 )
