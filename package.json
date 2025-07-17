@@ -52,8 +52,8 @@
   },
   "peerDependencies": {
     "prop-types": "^15.7.2",
-    "react": "^16.8.0 || 17.x || 18.x",
-    "react-dom": "^16.8.0 || 17.x || 18.x"
+    "react": "^16.8.0 || 17.x || 18.x || 19.x",
+    "react-dom": "^16.8.0 || 17.x || 18.x || 19.x"
   },
   "dependencies": {
     "d3-color": "^3.1.0",
