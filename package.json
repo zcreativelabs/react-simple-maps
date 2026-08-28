@@ -1,18 +1,37 @@
 {
   "name": "react-simple-maps",
-  "version": "3.0.0",
-  "description": "An svg map chart component built with and for React",
-  "main": "dist/index.js",
+  "version": "5.0.0",
+  "description": "React components to build maps with d3-geo, with optional zoom/pan support",
+  "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
   "browser": "dist/index.umd.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.cjs.js"
+    },
+    "./core": {
+      "types": "./dist/core/index.d.ts",
+      "import": "./dist/core/index.es.js",
+      "require": "./dist/core/index.cjs.js"
+    },
+    "./zoom": {
+      "types": "./dist/zoom/index.d.ts",
+      "import": "./dist/zoom/index.es.js",
+      "require": "./dist/zoom/index.cjs.js"
+    }
+  },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "rollup -c",
+    "build": "rollup -c && npm run build:types",
+    "build:types": "tsc -p tsconfig.build.json",
     "watch": "rollup -cw",
-    "prepare": "rollup -c",
-    "test": "mocha './tests/**/*.spec.js' --compilers js:@babel/register"
+    "test": "vitest",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -32,28 +51,9 @@
     "url": "https://github.com/zcreativelabs/react-simple-maps/issues"
   },
   "homepage": "https://github.com/zcreativelabs/react-simple-maps#readme",
-  "devDependencies": {
-    "@babel/core": "^7.18.6",
-    "@babel/plugin-external-helpers": "^7.18.6",
-    "@babel/plugin-proposal-object-rest-spread": "^7.18.6",
-    "@babel/plugin-transform-react-jsx": "^7.18.6",
-    "@babel/preset-env": "^7.18.6",
-    "@babel/register": "^7.18.6",
-    "@rollup/plugin-babel": "^5.3.1",
-    "@rollup/plugin-commonjs": "^22.0.1",
-    "@rollup/plugin-node-resolve": "^13.3.0",
-    "expect": "^23.5.0",
-    "mocha": "^5.2.0",
-    "prop-types": "^15.7.2",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "rollup": "^2.75.7",
-    "rollup-plugin-terser": "^7.0.2"
-  },
   "peerDependencies": {
-    "prop-types": "^15.7.2",
-    "react": "^16.8.0 || 17.x || 18.x",
-    "react-dom": "^16.8.0 || 17.x || 18.x"
+    "react": "^16.8.0 || 17.x || 18.x || 19.x",
+    "react-dom": "^16.8.0 || 17.x || 18.x || 19.x"
   },
   "dependencies": {
     "d3-color": "^3.1.0",
@@ -62,5 +62,33 @@
     "d3-selection": "^3.0.0",
     "d3-zoom": "^3.0.0",
     "topojson-client": "^3.1.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.0",
+    "@rollup/plugin-terser": "^0.4.0",
+    "@rollup/plugin-typescript": "^12.0.0",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/react": "^16.3.2",
+    "@types/d3-color": "^3.1.3",
+    "@types/d3-geo": "^3.1.1",
+    "@types/d3-interpolate": "^3.0.4",
+    "@types/d3-selection": "^3.0.11",
+    "@types/d3-zoom": "^3.0.8",
+    "@types/geojson": "^7946.0.13",
+    "@types/node": "^20.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@types/topojson-client": "^3.1.5",
+    "@types/topojson-specification": "^1.0.5",
+    "@vitejs/plugin-react": "^4.0.0",
+    "@vitest/coverage-v8": "^2.1.9",
+    "jsdom": "^29.1.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "rollup": "^4.0.0",
+    "tslib": "^2.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^2.0.0"
   }
 }
