@@ -25,8 +25,6 @@ const ComposableMap = forwardRef<SVGSVGElement, ComposableMapProps>(
       },
       React.createElement("svg", {
         ref,
-        width,
-        height,
         viewBox: `0 0 ${width} ${height}`,
         className: `rsm-svg ${className}`,
         ...restProps,

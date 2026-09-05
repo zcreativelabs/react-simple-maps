@@ -51,7 +51,15 @@ export interface Mesh extends MultiLineString {
 }
 
 // Component prop types
-export interface ComposableMapProps extends SVGProps<SVGSVGElement> {
+export interface ComposableMapProps extends Omit<
+  SVGProps<SVGSVGElement>,
+  "width" | "height"
+> {
+  /**
+   * Coordinate space of the map, used for the `viewBox` and to translate the
+   * projection. Not emitted as an SVG `width`/`height` attribute — the map is
+   * responsive by default, so size it with CSS (e.g. `.rsm-svg { width: 100% }`).
+   */
   width?: number
   height?: number
   projection?: ProjectionName | GeoProjection

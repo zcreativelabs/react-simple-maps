@@ -10,20 +10,49 @@ describe("ComposableMap", () => {
     expect(container.querySelector("svg")).toBeTruthy()
   })
 
-  it("applies default width/height as attributes and viewBox", () => {
+  it("applies default width/height to viewBox only", () => {
     const { container } = render(<ComposableMap />)
     const svg = container.querySelector("svg")
-    expect(svg?.getAttribute("width")).toBe("800")
-    expect(svg?.getAttribute("height")).toBe("600")
     expect(svg?.getAttribute("viewBox")).toBe("0 0 800 600")
   })
 
-  it("applies custom width/height", () => {
+  it("applies custom width/height to viewBox only", () => {
     const { container } = render(<ComposableMap width={400} height={300} />)
     const svg = container.querySelector("svg")
-    expect(svg?.getAttribute("width")).toBe("400")
-    expect(svg?.getAttribute("height")).toBe("300")
     expect(svg?.getAttribute("viewBox")).toBe("0 0 400 300")
+  })
+
+  it("does not emit width/height as svg attributes, so the map is responsive", () => {
+    const { container } = render(<ComposableMap width={400} height={300} />)
+    const svg = container.querySelector("svg")
+    expect(svg?.hasAttribute("width")).toBe(false)
+    expect(svg?.hasAttribute("height")).toBe(false)
+  })
+
+  it("lets a caller-supplied viewBox override the generated one", () => {
+    const { container } = render(
+      <ComposableMap width={400} height={300} viewBox="0 0 10 10" />
+    )
+    const svg = container.querySelector("svg")
+    expect(svg?.getAttribute("viewBox")).toBe("0 0 10 10")
+  })
+
+  it("still provides width/height to the projection context", () => {
+    let capturedContext: ReturnType<typeof useMapContext> | undefined
+
+    const Probe = () => {
+      capturedContext = useMapContext()
+      return null
+    }
+
+    render(
+      <ComposableMap width={400} height={300}>
+        <Probe />
+      </ComposableMap>
+    )
+
+    expect(capturedContext?.width).toBe(400)
+    expect(capturedContext?.height).toBe(300)
   })
 
   it("applies rsm-svg className", () => {
