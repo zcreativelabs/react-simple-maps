@@ -11,6 +11,8 @@ import type { Topology } from "topojson-specification"
 
 // Projection types
 export type ProjectionName =
+  | "geoAlbers"
+  | "geoAlbersUsa"
   | "geoAzimuthalEqualArea"
   | "geoAzimuthalEquidistant"
   | "geoConicConformal"
@@ -19,7 +21,9 @@ export type ProjectionName =
   | "geoEqualEarth"
   | "geoEquirectangular"
   | "geoGnomonic"
+  | "geoIdentity"
   | "geoMercator"
+  | "geoNaturalEarth1"
   | "geoOrthographic"
   | "geoStereographic"
   | "geoTransverseMercator"
