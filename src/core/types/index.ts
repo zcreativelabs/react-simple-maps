@@ -21,7 +21,6 @@ export type ProjectionName =
   | "geoEqualEarth"
   | "geoEquirectangular"
   | "geoGnomonic"
-  | "geoIdentity"
   | "geoMercator"
   | "geoNaturalEarth1"
   | "geoOrthographic"
