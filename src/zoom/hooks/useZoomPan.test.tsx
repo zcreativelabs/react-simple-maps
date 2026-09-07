@@ -211,6 +211,41 @@ describe("useZoomPan", () => {
     expect(getResult().transformString).toContain("scale(2)")
   })
 
+  it("centers on center={[0, 0]} even when the projection is rotated", () => {
+    // Regression test: the sync effect used to compare center/zoom against a
+    // lastPosition ref that defaulted to {x: 0, y: 0, k: 1}. On mount, a
+    // caller passing center={[0, 0]} and zoom={1} (both the hook's own
+    // defaults) matched that sentinel, so the effect returned early and the
+    // transform needed to place geographic [0, 0] at the screen center -
+    // which differs from the identity transform once the projection is
+    // rotated - was never computed. The map then rendered wherever the
+    // rotation happened to place [0, 0], ignoring the requested center.
+    const rotatedProjection = geoMercator()
+      .scale(100)
+      .translate([480, 300])
+      .rotate([-40, 0, 0])
+
+    let latestResult: ReturnType<typeof useZoomPan>
+    render(
+      <MapProvider projection={rotatedProjection} width={960} height={600}>
+        <ZoomPanHarness
+          zoomPanProps={{ center: [0, 0], zoom: 1 }}
+          onResult={(result) => {
+            latestResult = result
+          }}
+        />
+      </MapProvider>
+    )
+
+    const expectedCoords = rotatedProjection([0, 0]) as [number, number]
+    expect(latestResult!.position).toEqual({
+      x: 480 - expectedCoords[0],
+      y: 300 - expectedCoords[1],
+      k: 1,
+    })
+    expect(latestResult!.position).not.toEqual({ x: 0, y: 0, k: 1 })
+  })
+
   it("does not resync when center/zoom props are unchanged", () => {
     const { rerenderWithProps, getResult } = renderZoomPan({
       center: [10, 10],

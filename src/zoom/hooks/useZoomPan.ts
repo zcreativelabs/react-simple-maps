@@ -19,6 +19,21 @@ function getCoords(
   return [w / 2 - (xOffset + t.x) / t.k, h / 2 - (yOffset + t.y) / t.k]
 }
 
+function getPositionForCenter(
+  projection: (coords: [number, number]) => [number, number] | null,
+  width: number,
+  height: number,
+  lon: number,
+  lat: number,
+  zoom: number
+): ZoomPanPosition | null {
+  const coords = projection([lon, lat])
+  if (!coords) return null
+  const x = coords[0] * zoom
+  const y = coords[1] * zoom
+  return { x: width / 2 - x, y: height / 2 - y, k: zoom }
+}
+
 export default function useZoomPan({
   center = [0, 0],
   filterZoomEvent,
@@ -35,12 +50,15 @@ export default function useZoomPan({
   const { width, height, projection } = useMapContext()
 
   const [lon, lat] = center
-  const [position, setPosition] = useState<ZoomPanPosition>({
-    x: 0,
-    y: 0,
-    k: 1,
-  })
-  const lastPosition = useRef({ x: 0, y: 0, k: 1 })
+  const [position, setPosition] = useState<ZoomPanPosition>(
+    () =>
+      getPositionForCenter(projection, width, height, lon, lat, zoom) ?? {
+        x: 0,
+        y: 0,
+        k: 1,
+      }
+  )
+  const lastPosition = useRef<{ x: number; y: number; k: number } | null>(null)
   const mapRef = useRef<SVGGElement>(null)
   const zoomRef = useRef<ZoomBehavior<SVGGElement, unknown> | null>(null)
   const bypassEvents = useRef(false)
@@ -159,16 +177,22 @@ export default function useZoomPan({
 
   useEffect(() => {
     if (
+      lastPosition.current &&
       lon === lastPosition.current.x &&
       lat === lastPosition.current.y &&
       zoom === lastPosition.current.k
     )
       return
 
-    const coords = projection([lon, lat])
-    if (!coords) return
-    const x = coords[0] * zoom
-    const y = coords[1] * zoom
+    const nextPosition = getPositionForCenter(
+      projection,
+      width,
+      height,
+      lon,
+      lat,
+      zoom
+    )
+    if (!nextPosition) return
 
     if (!mapRef.current || !zoomRef.current) return
     const svg = d3Select(mapRef.current)
@@ -177,9 +201,17 @@ export default function useZoomPan({
 
     svg.call(
       zoomRef.current.transform,
-      d3ZoomIdentity.translate(width / 2 - x, height / 2 - y).scale(zoom)
+      d3ZoomIdentity
+        .translate(nextPosition.x, nextPosition.y)
+        .scale(nextPosition.k)
     )
-    setPosition({ x: width / 2 - x, y: height / 2 - y, k: zoom })
+    setPosition((current) =>
+      current.x === nextPosition.x &&
+      current.y === nextPosition.y &&
+      current.k === nextPosition.k
+        ? current
+        : nextPosition
+    )
 
     lastPosition.current = { x: lon, y: lat, k: zoom }
   }, [lon, lat, zoom, width, height, projection])
