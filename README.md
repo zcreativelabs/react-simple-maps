@@ -4,7 +4,7 @@
 
 Create beautiful SVG maps in react with d3-geo and TopoJSON using a declarative api.
 
-Read the [docs](https://www.react-simple-maps.io/docs/) to get started with React Simple Maps.
+Read the [docs](https://www.react-simple-maps.io/docs/getting-started/) to get started with React Simple Maps.
 
 ### Why
 
