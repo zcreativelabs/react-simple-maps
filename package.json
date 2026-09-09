@@ -51,7 +51,7 @@
   "bugs": {
     "url": "https://github.com/zcreativelabs/react-simple-maps/issues"
   },
-  "homepage": "https://github.com/zcreativelabs/react-simple-maps#readme",
+  "homepage": "https://www.react-simple-maps.io/",
   "peerDependencies": {
     "react": "^16.8.0 || 17.x || 18.x || 19.x",
     "react-dom": "^16.8.0 || 17.x || 18.x || 19.x"
