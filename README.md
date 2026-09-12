@@ -53,7 +53,7 @@ React-simple-maps does not restrict you to one specific map and relies on custom
 
 In order for this to work properly, you will need to provide these valid map files to React Simple Maps yourself. Read our guide on [map files](https://www.react-simple-maps.io/docs/map-files). We also offer some testing files in the downloads section so you can get started quickly.
 
-### V3 Docs
+### Documentation for previous versions (pre-v5)
 
 If you are using React Simple Maps v3, you can find the old documentation at [v3-react-simple-maps.io](https://v3.react-simple-maps.io/).
 
