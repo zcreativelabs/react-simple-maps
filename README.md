@@ -22,7 +22,7 @@ $ npm install react-simple-maps
 
 ### Usage
 
-`React-simple-maps` exposes a set of components that can be combined to create svg maps with markers and annotations. In order to render a map you have to provide a reference to a valid TopoJSON file. You can find example TopoJSON files on [here](https://github.com/topojson/world-atlas) or [here](https://github.com/deldersveld/topojson). To learn how to make your own topojson maps from shapefiles, please read ["How to convert and prepare TopoJSON files for interactive mapping with d3"](https://hackernoon.com/how-to-convert-and-prepare-topojson-files-for-interactive-mapping-with-d3-499cf0ced5f) on medium.
+`React-simple-maps` exposes a set of components that can be combined to create svg maps with markers and annotations. In order to render a map you have to provide a reference to a valid TopoJSON file. You can find examples of TopoJSON files on the [react-simple-maps website](https://www.react-simple-maps.io/docs/map-files). To learn how to make your own topojson maps from shapefiles, please read ["How to convert and prepare TopoJSON files for interactive mapping with d3"](https://hackernoon.com/how-to-convert-and-prepare-topojson-files-for-interactive-mapping-with-d3-499cf0ced5f).
 
 ```jsx
 import { ComposableMap, Geographies, Geography } from "react-simple-maps"
