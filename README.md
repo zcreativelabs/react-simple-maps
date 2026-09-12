@@ -1,6 +1,6 @@
 # React Simple Maps
 
-![Version](https://img.shields.io/badge/version-5.0.3-%230066FF) ![License](https://img.shields.io/npm/l/react-simple-maps?color=%2328cb95) ![Coverage](https://img.shields.io/badge/coverage-99.8%25-brightgreen) ![Downloas](https://img.shields.io/npm/dw/react-simple-maps?color=%230066FF&label=downloads)
+![Version](https://img.shields.io/badge/version-5.0.4-%230066FF) ![License](https://img.shields.io/npm/l/react-simple-maps?color=%2328cb95) ![Coverage](https://img.shields.io/badge/coverage-99.8%25-brightgreen) ![Downloas](https://img.shields.io/npm/dw/react-simple-maps?color=%230066FF&label=downloads)
 
 [![React simple maps cover image](./.github/react-simple-maps-cover.jpg)](https://www.react-simple-maps.io)
 
