@@ -1,8 +1,10 @@
-<img src="https://img.shields.io/bundlephobia/minzip/react-simple-maps?color=%2328cb95&label=gzip" />
+# React Simple Maps
 
-# react-simple-maps
+![Version](https://img.shields.io/badge/version-5.0.3-%230066FF) ![License](https://img.shields.io/npm/l/react-simple-maps?color=%2328cb95) ![Coverage](https://img.shields.io/badge/coverage-99.8%25-brightgreen) ![Downloas](https://img.shields.io/npm/dw/react-simple-maps?color=%230066FF&label=downloads)
 
-Create beautiful SVG maps in react with d3-geo and TopoJSON using a declarative api.
+[![React simple maps cover image](./.github/react-simple-maps-cover.jpg)](https://www.react-simple-maps.io)
+
+Compose map charts the same way you would write any other layout. Fully typed mature api with high test coverage, built on d3-geo and topojson.
 
 Read the [docs](https://www.react-simple-maps.io/docs/getting-started/) to get started with React Simple Maps.
 
@@ -14,16 +16,8 @@ Since `React Simple Maps` leaves DOM work to react, it also plays nicely with ot
 
 ### Install
 
-To install:
-
 ```bash
 $ npm install react-simple-maps
-```
-
-...or if you use yarn:
-
-```bash
-$ yarn add react-simple-maps
 ```
 
 ### Usage
