@@ -1,6 +1,6 @@
 {
   "name": "react-simple-maps",
-  "version": "5.0.4",
+  "version": "5.0.5",
   "description": "React components to build maps with d3-geo, with optional zoom/pan support",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
