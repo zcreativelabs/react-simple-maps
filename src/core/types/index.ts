@@ -115,7 +115,6 @@ export interface SphereProps extends Omit<
   id?: string
   fill?: string
   stroke?: string
-  strokeWidth?: number
   className?: string
 }
 

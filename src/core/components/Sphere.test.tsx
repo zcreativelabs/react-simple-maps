@@ -45,12 +45,12 @@ describe("Sphere", () => {
     expect(path?.getAttribute("class")).toContain("highlight")
   })
 
-  it("applies default fill/stroke/strokeWidth", () => {
+  it("applies default fill/stroke and no strokeWidth", () => {
     const { container } = render(<SphereWithContext />)
     const path = container.querySelector("path.rsm-sphere")
     expect(path?.getAttribute("fill")).toBe("transparent")
     expect(path?.getAttribute("stroke")).toBe("currentcolor")
-    expect(path?.getAttribute("stroke-width")).toBe("0.5")
+    expect(path?.getAttribute("stroke-width")).toBeNull()
   })
 
   it("applies custom fill/stroke/strokeWidth", () => {

@@ -8,7 +8,6 @@ const Sphere = forwardRef<SVGPathElement, SphereProps>(
       id = "rsm-sphere",
       fill = "transparent",
       stroke = "currentcolor",
-      strokeWidth = 0.5,
       className = "",
       ...restProps
     },
@@ -34,7 +33,6 @@ const Sphere = forwardRef<SVGPathElement, SphereProps>(
         d: spherePath,
         fill,
         stroke,
-        strokeWidth,
         style: { pointerEvents: "none" },
         className: `rsm-sphere ${className}`,
         ...restProps,
