@@ -33,14 +33,22 @@ export default function useGeographies({
     if (!geography) return
 
     if (isString(geography)) {
-      fetchGeographies(geography).then((geos) => {
-        if (geos) {
+      // Abort the request when the URL changes or the component unmounts,
+      // so a slow, stale response can't overwrite a newer one.
+      const controller = new AbortController()
+      fetchGeographies(geography, { signal: controller.signal })
+        .then((geos) => {
+          if (controller.signal.aborted) return
           setOutput({
             geographies: getFeatures(geos, parseGeographies),
             mesh: getMesh(geos),
           })
-        }
-      })
+        })
+        .catch((error) => {
+          if (controller.signal.aborted) return
+          console.error("There was a problem when fetching the data: ", error)
+        })
+      return () => controller.abort()
     } else {
       setOutput({
         geographies: getFeatures(geography, parseGeographies),
