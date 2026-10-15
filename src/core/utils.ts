@@ -15,18 +15,15 @@ export function getCoords(
 }
 
 export function fetchGeographies(
-  url: string
-): Promise<FetchResult | undefined> {
-  return fetch(url)
-    .then((res) => {
-      if (!res.ok) {
-        throw Error(res.statusText)
-      }
-      return res.json()
-    })
-    .catch((error) => {
-      console.log("There was a problem when fetching the data: ", error)
-    })
+  url: string,
+  { signal }: { signal?: AbortSignal } = {}
+): Promise<FetchResult> {
+  return fetch(url, { signal }).then((res) => {
+    if (!res.ok) {
+      throw Error(res.statusText)
+    }
+    return res.json()
+  })
 }
 
 export function getFeatures(

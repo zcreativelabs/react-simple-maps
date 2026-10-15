@@ -1,5 +1,5 @@
 import React from "react"
-import { renderHook, waitFor } from "@testing-library/react"
+import { act, renderHook, waitFor } from "@testing-library/react"
 import { describe, it, expect, vi, afterEach } from "vitest"
 import useGeographies from "./useGeographies"
 import { MapProvider } from "../components/MapProvider"
@@ -171,7 +171,9 @@ describe("useGeographies", () => {
         expect(result.current.geographies).toHaveLength(2)
       })
 
-      expect(fetch).toHaveBeenCalledWith(geoUrl)
+      expect(fetch).toHaveBeenCalledWith(geoUrl, {
+        signal: expect.any(AbortSignal),
+      })
       expect(result.current.geographies[0].properties?.name).toBe(
         "Test Polygon"
       )
@@ -236,7 +238,9 @@ describe("useGeographies", () => {
           json: () => Promise.reject(new Error("should not be called")),
         })
       )
-      const consoleSpy = vi.spyOn(console, "log").mockImplementation(() => {})
+      const consoleSpy = vi
+        .spyOn(console, "error")
+        .mockImplementation(() => {})
 
       const { result } = renderHook(
         () => useGeographies({ geography: geoUrl }),
@@ -272,6 +276,61 @@ describe("useGeographies", () => {
       rerender()
 
       expect(fetchMock).toHaveBeenCalledTimes(1)
+    })
+
+    it("ignores a stale response when the URL changes", async () => {
+      const staleCollection = {
+        ...mockFeatureCollection,
+        features: mockFeatureCollection.features.slice(0, 1),
+      }
+      let resolveFirst: (value: unknown) => void = () => {}
+      const fetchMock = vi.fn((url: string) =>
+        url === "/first.json"
+          ? new Promise((resolve) => {
+              resolveFirst = resolve
+            })
+          : Promise.resolve({
+              ok: true,
+              json: () => Promise.resolve(mockFeatureCollection),
+            })
+      )
+      vi.stubGlobal("fetch", fetchMock)
+
+      const { result, rerender } = renderHook(
+        ({ url }) => useGeographies({ geography: url }),
+        { wrapper, initialProps: { url: "/first.json" } }
+      )
+      rerender({ url: "/second.json" })
+
+      await waitFor(() => {
+        expect(result.current.geographies).toHaveLength(2)
+      })
+
+      await act(async () => {
+        resolveFirst({
+          ok: true,
+          json: () => Promise.resolve(staleCollection),
+        })
+        await new Promise((resolve) => setTimeout(resolve, 0))
+      })
+
+      expect(result.current.geographies).toHaveLength(2)
+    })
+
+    it("aborts the request on unmount", async () => {
+      const fetchMock = vi.fn(() => new Promise(() => {}))
+      vi.stubGlobal("fetch", fetchMock)
+
+      const { unmount } = renderHook(
+        () => useGeographies({ geography: geoUrl }),
+        { wrapper }
+      )
+      const { signal } = fetchMock.mock.calls[0][1] as { signal: AbortSignal }
+      expect(signal.aborted).toBe(false)
+
+      unmount()
+
+      expect(signal.aborted).toBe(true)
     })
   })
 })

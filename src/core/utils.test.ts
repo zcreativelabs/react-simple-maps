@@ -1,6 +1,7 @@
-import { describe, it, expect, vi } from "vitest"
+import { describe, it, expect, vi, afterEach } from "vitest"
 import {
   getCoords,
+  fetchGeographies,
   createConnectorPath,
   prepareMesh,
   prepareFeatures,
@@ -158,5 +159,38 @@ describe("isString", () => {
     expect(
       isString([{ type: "FeatureCollection", features: [] }] as any)
     ).toBe(false)
+  })
+})
+
+describe("fetchGeographies", () => {
+  afterEach(() => {
+    vi.unstubAllGlobals()
+  })
+
+  it("resolves with the parsed JSON", async () => {
+    const data = { type: "FeatureCollection", features: [] }
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({ ok: true, json: () => Promise.resolve(data) })
+    )
+    await expect(fetchGeographies("/map.json")).resolves.toBe(data)
+  })
+
+  it("rejects when the response is not ok", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({ ok: false, statusText: "Not Found" })
+    )
+    await expect(fetchGeographies("/map.json")).rejects.toThrow("Not Found")
+  })
+
+  it("forwards the abort signal to fetch", async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValue({ ok: true, json: () => Promise.resolve({}) })
+    vi.stubGlobal("fetch", fetchMock)
+    const { signal } = new AbortController()
+    await fetchGeographies("/map.json", { signal })
+    expect(fetchMock).toHaveBeenCalledWith("/map.json", { signal })
   })
 })
