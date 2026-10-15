@@ -31,8 +31,6 @@ const umdGlobals = {
   "topojson-client": "topojson",
   "d3-zoom": "d3",
   "d3-selection": "d3",
-  "d3-color": "d3",
-  "d3-interpolate": "d3",
 }
 
 const umdNames = {
